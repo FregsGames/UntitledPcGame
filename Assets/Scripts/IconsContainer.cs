@@ -14,6 +14,11 @@ public class IconsContainer : MonoBehaviour
 
     private Dictionary<Vector3, Icon> grid = new Dictionary<Vector3, Icon>();
 
+#if UNITY_EDITOR
+    [SerializeField]
+    private bool gizmosOn = true;
+#endif
+
     private void OnValidate()
     {
         InitializeGrid();
@@ -22,19 +27,29 @@ public class IconsContainer : MonoBehaviour
         SceneView.RepaintAll();
     }
 
-    public void MoveIconTo(Icon icon, Vector3 pos)
+    public bool MoveIconTo(Icon icon, Vector3 pos)
     {
         Vector3 assignedPos = GetClosestFreeSlot(pos, icon);
 
         if (assignedPos.x != -1)
         {
-            if (grid.ContainsValue(icon))
-            {
-                Vector3 key = grid.FirstOrDefault(g => g.Value == icon).Key;
-                grid[key] = null;
-            }
+            RemoveIcon(icon);
             grid[assignedPos] = icon;
             icon.SetPos(assignedPos);
+            icon.transform.SetParent(transform);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public void RemoveIcon(Icon icon)
+    {
+        if (grid.ContainsValue(icon))
+        {
+            Vector3 key = grid.FirstOrDefault(g => g.Value == icon).Key;
+            grid[key] = null;
         }
     }
 
@@ -100,13 +115,26 @@ public class IconsContainer : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
+        if (!gizmosOn)
+            return;
+
         Gizmos.color = Color.red;
 
         for (int i = 0; i < cols; i++)
         {
             for (int j = 0; j < rows; j++)
             {
-                Gizmos.DrawSphere(new Vector3(rect.position.x + rect.rect.width / (cols + 1) * (i + 1), rect.position.y + rect.rect.height / (rows + 1) * (j + 1), 0), 20);
+                Vector3 key = new Vector3(rect.position.x + rect.rect.width / (cols + 1) * (i + 1), rect.position.y + rect.rect.height / (rows + 1) * (j + 1), 0);
+
+                if (grid.ContainsKey(key) && grid[key] != null)
+                {
+                    Gizmos.DrawCube(key, Vector3.one * 20);
+                }
+                else
+                {
+                    Gizmos.DrawSphere(key, 20);
+                }
+
             }
         }
     }
