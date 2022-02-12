@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class Icon : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IP
     [SerializeField]
     private EventManager eventManager;
 
+
     // Properties
     public IconsContainer Container { get; set; }
     public Vector3 Position { get => rect.position; }
@@ -25,7 +27,12 @@ public class Icon : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IP
 
     private void OnEnable()
     {
+        eventManager.OnUIScaleChanged += UpdateSize;
+    }
 
+    private void UpdateSize(float uiScale)
+    {
+        rect.sizeDelta = uiScale * ComputerScreen.Instance.IconsBaseSize;
     }
 
     public void SetPos(Vector3 pos)

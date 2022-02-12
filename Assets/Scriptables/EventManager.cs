@@ -6,5 +6,6 @@ public class EventManager : ScriptableObject
 {
     public Action<Icon> OnIconStartDrag;
     public Action<Icon> OnEndStartDrag;
+    public Action<float> OnUIScaleChanged;
 
 }

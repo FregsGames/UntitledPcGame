@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class IconsContainer : MonoBehaviour
 {
@@ -11,14 +12,15 @@ public class IconsContainer : MonoBehaviour
     private int cols;
     [SerializeField]
     private RectTransform rect;
+    [SerializeField]
+    private WindowTopBar windowTopBar;
+
 
     private Dictionary<Vector3, Icon> grid = new Dictionary<Vector3, Icon>();
 
 #if UNITY_EDITOR
     [SerializeField]
     private bool gizmosOn = true;
-#endif
-
     private void OnValidate()
     {
         InitializeGrid();
@@ -26,6 +28,30 @@ public class IconsContainer : MonoBehaviour
 
         SceneView.RepaintAll();
     }
+#endif
+
+    private void OnEnable()
+    {
+        if (windowTopBar != null)
+        {
+            windowTopBar.OnWindowEndDrag += RefreshGridPositions;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (windowTopBar != null)
+        {
+            windowTopBar.OnWindowEndDrag -= RefreshGridPositions;
+        }
+    }
+
+    private void RefreshGridPositions()
+    {
+        InitializeGrid();
+        PositionateIcons();
+    }
+
 
     public bool MoveIconTo(Icon icon, Vector3 pos)
     {
