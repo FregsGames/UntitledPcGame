@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -20,8 +18,8 @@ public class WindowTopBar : MonoBehaviour, IPointerClickHandler, IPointerDownHan
 
     public void OnDrag(PointerEventData eventData)
     {
-        if(Input.mousePosition.x < Screen.width && 
-            Input.mousePosition.y < Screen.height && 
+        if (Input.mousePosition.x < Screen.width &&
+            Input.mousePosition.y < Screen.height &&
             Input.mousePosition.y > ComputerScreen.Instance.BottomBarHeight &&
             Input.mousePosition.x > 0)
         {

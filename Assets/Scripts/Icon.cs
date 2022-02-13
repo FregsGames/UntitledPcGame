@@ -1,11 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Sirenix.OdinInspector;
 
-public class Icon : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IDragHandler, IEndDragHandler, IBeginDragHandler
+public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IDragHandler, IEndDragHandler, IBeginDragHandler
 {
     [SerializeField]
     private RectTransform rect;
@@ -13,17 +14,21 @@ public class Icon : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IP
     private Image image;
     [SerializeField]
     private EventManager eventManager;
-
+    [SerializeField]
+    private TextMeshProUGUI iconName;
 
     // Properties
     public IconsContainer Container { get; set; }
     public Vector3 Position { get => rect.position; }
+
+    // Persistence
     public Sprite Sprite { get => image.sprite; }
+    public string Text { get => iconName.text; }
     public Color SpriteColor { get => image.color; }
 
     // Drag
     private bool dragging = false;
-    private Vector3 originalPos = Vector3.zero;
+    protected Vector3 originalPos = Vector3.zero;
 
     private void OnEnable()
     {
@@ -33,6 +38,7 @@ public class Icon : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IP
     private void UpdateSize(float uiScale)
     {
         rect.sizeDelta = uiScale * ComputerScreen.Instance.IconsBaseSize;
+        iconName.fontSize = uiScale * ComputerScreen.Instance.DefaultIconTextSize;
     }
 
     public void SetPos(Vector3 pos)
@@ -41,12 +47,12 @@ public class Icon : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IP
         originalPos = pos;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public virtual void OnPointerClick(PointerEventData eventData)
     {
 
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public virtual void OnPointerUp(PointerEventData eventData)
     {
         if (Input.mousePosition != originalPos && Container != null)
         {
@@ -67,7 +73,7 @@ public class Icon : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IP
         }
     }
 
-    private IconsContainer GetContainerUnderMouse()
+    protected IconsContainer GetContainerUnderMouse()
     {
         IconsContainer container = null;
         var m_PointerEventData = new PointerEventData(EventSystem.current);
@@ -106,5 +112,12 @@ public class Icon : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IP
     public void OnBeginDrag(PointerEventData eventData)
     {
         eventManager.OnIconStartDrag?.Invoke(this);
+    }
+
+    [PropertySpace(10, 0)]
+    [Button("New ID", ButtonSizes.Medium)]
+    protected void RegenerateID()
+    {
+        RegenerateGUID();
     }
 }

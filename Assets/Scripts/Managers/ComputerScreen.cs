@@ -23,10 +23,14 @@ public class ComputerScreen : Singleton<ComputerScreen>
     private Vector2 iconsBaseSize = new Vector2(100, 100);
     [SerializeField]
     private float bottomBarBaseSize = 108f;
+    [SerializeField]
+    private float defaultIconTextSize = 30f;
 
     public float BottomBarHeight { get => bottomBar.rect.height; }
     public GraphicRaycaster GraphicRaycaster { get => raycaster; }
     public Vector2 IconsBaseSize { get => iconsBaseSize; }
+    public float DefaultIconTextSize { get => defaultIconTextSize; }
+    public Vector2 BackgroundSize { get => background.rect.size; }
 
     private void OnEnable()
     {
@@ -57,5 +61,15 @@ public class ComputerScreen : Singleton<ComputerScreen>
             uiScale -= 0.05f;
             eventManager.OnUIScaleChanged?.Invoke(uiScale);
         }
+    }
+
+    protected override void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
     }
 }

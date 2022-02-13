@@ -1,8 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using System.Linq;
-using System;
 
 public class IconsContainer : MonoBehaviour
 {
@@ -15,20 +14,8 @@ public class IconsContainer : MonoBehaviour
     [SerializeField]
     private WindowTopBar windowTopBar;
 
+    private Dictionary<FolderPosition, Icon> grid = new Dictionary<FolderPosition, Icon>();
 
-    private Dictionary<Vector3, Icon> grid = new Dictionary<Vector3, Icon>();
-
-#if UNITY_EDITOR
-    [SerializeField]
-    private bool gizmosOn = true;
-    private void OnValidate()
-    {
-        InitializeGrid();
-        PositionateIcons();
-
-        SceneView.RepaintAll();
-    }
-#endif
 
     private void OnEnable()
     {
@@ -55,13 +42,13 @@ public class IconsContainer : MonoBehaviour
 
     public bool MoveIconTo(Icon icon, Vector3 pos)
     {
-        Vector3 assignedPos = GetClosestFreeSlot(pos, icon);
+        FolderPosition assignedPos = GetClosestFreeSlot(pos, icon);
 
-        if (assignedPos.x != -1)
+        if (assignedPos.absolutePosition.x != -1)
         {
             RemoveIcon(icon);
             grid[assignedPos] = icon;
-            icon.SetPos(assignedPos);
+            icon.SetPos(assignedPos.absolutePosition);
             icon.transform.SetParent(transform);
 
             return true;
@@ -74,7 +61,7 @@ public class IconsContainer : MonoBehaviour
     {
         if (grid.ContainsValue(icon))
         {
-            Vector3 key = grid.FirstOrDefault(g => g.Value == icon).Key;
+            FolderPosition key = grid.FirstOrDefault(g => g.Value == icon).Key;
             grid[key] = null;
         }
     }
@@ -85,15 +72,15 @@ public class IconsContainer : MonoBehaviour
 
         foreach (var icon in icons)
         {
-            Vector3 assignedPos = GetClosestFreeSlot(icon.Position);
+            FolderPosition assignedPos = GetClosestFreeSlot(icon.Position);
 
-            if (assignedPos.x != -1)
+            if (assignedPos.absolutePosition.x != -1)
             {
                 icon.Container = this;
                 grid[assignedPos] = icon;
             }
 
-            icon.SetPos(assignedPos);
+            icon.SetPos(assignedPos.absolutePosition);
         }
     }
 
@@ -105,7 +92,9 @@ public class IconsContainer : MonoBehaviour
         {
             for (int j = 0; j < rows; j++)
             {
-                Vector3 key = new Vector3(rect.position.x + rect.rect.width / (cols + 1) * (i + 1), rect.position.y + rect.rect.height / (rows + 1) * (j + 1), 0);
+                Vector3 position = new Vector3(rect.position.x + rect.rect.width / (cols + 1) * (i + 1), rect.position.y + rect.rect.height / (rows + 1) * (j + 1), 0);
+                FolderPosition key = new FolderPosition(new Vector2Int(i, j), position);
+
                 if (!grid.ContainsKey(key))
                 {
                     grid.Add(key, null);
@@ -114,13 +103,13 @@ public class IconsContainer : MonoBehaviour
         }
     }
 
-    private Vector3 GetClosestFreeSlot(Vector3 pos, Icon icon = null)
+    private FolderPosition GetClosestFreeSlot(Vector3 pos, Icon icon = null)
     {
-        List<Vector3> freeSlots = grid.Where(g => g.Value == null || g.Value == icon).Select(g => g.Key).ToList();
+        List<FolderPosition> freeSlots = grid.Where(g => g.Value == null || g.Value == icon).Select(g => g.Key).ToList();
 
-        if(freeSlots.Count == 0)
+        if (freeSlots.Count == 0)
         {
-            return Vector3.one * -1;
+            return new FolderPosition(new Vector2Int(- 1, -1), Vector3.one * -1);
         }
         else
         {
@@ -128,7 +117,7 @@ public class IconsContainer : MonoBehaviour
 
             for (int i = 0; i < freeSlots.Count; i++)
             {
-                if(Vector3.Distance(freeSlots[i], pos) < Vector3.Distance(freeSlots[closestIndex], pos))
+                if (Vector3.Distance(freeSlots[i].absolutePosition, pos) < Vector3.Distance(freeSlots[closestIndex].absolutePosition, pos))
                 {
                     closestIndex = i;
                 }
@@ -138,7 +127,28 @@ public class IconsContainer : MonoBehaviour
 
     }
 
+    public struct FolderPosition
+    {
+        public Vector2Int gridPosition;
+        public Vector3 absolutePosition;
+
+        public FolderPosition(Vector2Int gridPosition, Vector3 absolutePosition)
+        {
+            this.gridPosition = gridPosition;
+            this.absolutePosition = absolutePosition;
+        }
+    }
+
 #if UNITY_EDITOR
+    [SerializeField]
+    private bool gizmosOn = true;
+    private void OnValidate()
+    {
+        InitializeGrid();
+        PositionateIcons();
+
+        SceneView.RepaintAll();
+    }
     private void OnDrawGizmos()
     {
         if (!gizmosOn)
@@ -150,15 +160,17 @@ public class IconsContainer : MonoBehaviour
         {
             for (int j = 0; j < rows; j++)
             {
-                Vector3 key = new Vector3(rect.position.x + rect.rect.width / (cols + 1) * (i + 1), rect.position.y + rect.rect.height / (rows + 1) * (j + 1), 0);
+                Vector3 position = new Vector3(rect.position.x + rect.rect.width / (cols + 1) * (i + 1), rect.position.y + rect.rect.height / (rows + 1) * (j + 1), 0);
+
+                FolderPosition key = new FolderPosition(new Vector2Int(i , j), position);
 
                 if (grid.ContainsKey(key) && grid[key] != null)
                 {
-                    Gizmos.DrawCube(key, Vector3.one * 20);
+                    Gizmos.DrawCube(key.absolutePosition, Vector3.one * 20);
                 }
                 else
                 {
-                    Gizmos.DrawSphere(key, 20);
+                    Gizmos.DrawSphere(key.absolutePosition, 20);
                 }
 
             }
