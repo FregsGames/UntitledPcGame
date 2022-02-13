@@ -1,10 +1,14 @@
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-public class IconsContainer : MonoBehaviour
+public class IconsContainer : UniqueID, ICustomSerializable
 {
+    [SerializeField]
+    private Icon iconPrefab;
+
     [SerializeField]
     private int rows;
     [SerializeField]
@@ -15,6 +19,7 @@ public class IconsContainer : MonoBehaviour
     private WindowTopBar windowTopBar;
 
     private Dictionary<FolderPosition, Icon> grid = new Dictionary<FolderPosition, Icon>();
+    string ICustomSerializable.ID { get => ID; }
 
 
     private void OnEnable()
@@ -39,6 +44,23 @@ public class IconsContainer : MonoBehaviour
         PositionateIcons();
     }
 
+    private void Start()
+    {
+        if(SaveManager.instance.RetrieveString(ID) != string.Empty)
+        {
+            foreach (var icon in GetComponentsInChildren<Icon>())
+            {
+                Destroy(icon.gameObject);
+            }
+            
+            Deserialize();
+        }
+        else
+        {
+            InitializeGrid();
+            PositionateIcons();
+        }
+    }
 
     public bool MoveIconTo(Icon icon, Vector3 pos)
     {
@@ -46,18 +68,35 @@ public class IconsContainer : MonoBehaviour
 
         if (assignedPos.absolutePosition.x != -1)
         {
-            RemoveIcon(icon);
+            RemoveIconIfAlreadyExists(icon);
             grid[assignedPos] = icon;
             icon.SetPos(assignedPos.absolutePosition);
             icon.transform.SetParent(transform);
 
             return true;
         }
-
         return false;
     }
 
-    public void RemoveIcon(Icon icon)
+    public void MoveIconTo(Icon icon, Vector2Int gridPos)
+    {
+        FolderPosition folderPos = grid.FirstOrDefault(g => g.Key.gridPosition == gridPos).Key;
+
+        if (folderPos != null && grid[folderPos] == null)
+        {
+            grid[folderPos] = icon;
+            icon.SetPos(folderPos.absolutePosition);
+            icon.transform.SetParent(transform);
+            icon.Container = this;
+        }
+        else
+        {
+            Debug.Log($"Error Moving Icon to grid pos {gridPos} in folder {gameObject.name}. " +
+                $"Either pos does not exist or pos is already occupied");
+        }
+    }
+
+    public void RemoveIconIfAlreadyExists(Icon icon)
     {
         if (grid.ContainsValue(icon))
         {
@@ -127,7 +166,43 @@ public class IconsContainer : MonoBehaviour
 
     }
 
-    public struct FolderPosition
+    public Dictionary<string, string> Serialize()
+    {
+        Dictionary<string, string> serialized = new Dictionary<string, string>();
+
+        serialized.Add($"{ID}", ID);
+        serialized.Add($"{ID}_rows", rows.ToString());
+        serialized.Add($"{ID}_cols", cols.ToString());
+
+        foreach (var item in grid.Where(pos => pos.Value != null))
+        {
+            serialized.Add($"{ID}_iconAt_{item.Key.gridPosition.x}_{item.Key.gridPosition.y}", item.Value.ID);
+        }
+
+        return serialized;
+    }
+
+    public void Deserialize()
+    {
+        rows = int.Parse(SaveManager.instance.RetrieveString($"{ID}_rows"));
+        cols = int.Parse(SaveManager.instance.RetrieveString($"{ID}_cols"));
+
+        InitializeGrid();
+
+        Dictionary<string, string> iconsIDs = SaveManager.instance.RetrieveStringThatContains($"{ID}_iconAt_");
+
+        foreach (var iconID in iconsIDs)
+        {
+            Icon icon = Instantiate(iconPrefab, transform);
+            icon.ID = iconID.Value;
+            icon.Deserialize();
+            string[] splittedId = iconID.Key.Split('_');
+
+            MoveIconTo(icon, new Vector2Int(int.Parse(splittedId[2]), int.Parse(splittedId[3])));
+        }
+    }
+
+    public class FolderPosition
     {
         public Vector2Int gridPosition;
         public Vector3 absolutePosition;
@@ -139,15 +214,26 @@ public class IconsContainer : MonoBehaviour
         }
     }
 
+    // Odin Stuff
+    [PropertySpace(10, 0)]
+    [Button("New ID", ButtonSizes.Medium)]
+    protected void RegenerateID()
+    {
+        RegenerateGUID();
+    }
+
 #if UNITY_EDITOR
     [SerializeField]
     private bool gizmosOn = true;
+
+
     private void OnValidate()
     {
+        /*
         InitializeGrid();
         PositionateIcons();
-
-        SceneView.RepaintAll();
+        
+        SceneView.RepaintAll();*/
     }
     private void OnDrawGizmos()
     {

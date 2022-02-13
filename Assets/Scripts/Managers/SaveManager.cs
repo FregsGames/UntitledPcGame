@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using System.Linq;
+using Sirenix.OdinInspector;
 
 public class SaveManager : MonoBehaviour
 {
@@ -11,6 +13,39 @@ public class SaveManager : MonoBehaviour
     string intFile = "/intSaves.txt";
     string floatFile = "/floatSaves.txt";
     string stringFile = "/stringSaves.txt";
+
+    // Odin Stuff
+    [PropertySpace(10, 0)]
+    [Button("Clear Save Data", ButtonSizes.Medium)]
+    protected void ClearSaved()
+    {
+        File.Delete(Application.persistentDataPath + intFile);
+        File.Delete(Application.persistentDataPath + floatFile);
+        File.Delete(Application.persistentDataPath + stringFile);
+    }
+
+    public void RemoveEntriesThatContains(string fragment)
+    {
+        List<string> keys = stringSaves.Where(e => e.Key.Contains(fragment)).Select(e => e.Key).ToList();
+
+        foreach (string key in keys)
+        {
+            stringSaves.Remove(key);
+        }
+
+        keys = intSaves.Where(e => e.Key.Contains(fragment)).Select(e => e.Key).ToList();
+
+        foreach (string key in keys)
+        {
+            stringSaves.Remove(key);
+        }
+
+        keys = floatSaves.Where(e => e.Key.Contains(fragment)).Select(e => e.Key).ToList();
+        foreach (string key in keys)
+        {
+            stringSaves.Remove(key);
+        }
+    }
 
     public void Save(string id, int value)
     {
@@ -60,6 +95,7 @@ public class SaveManager : MonoBehaviour
         else
             return 0.0f;
     }
+
     public float RetrieveFloat(string id, float def)
     {
         if (floatSaves.ContainsKey(id))
@@ -67,12 +103,18 @@ public class SaveManager : MonoBehaviour
         else
             return def;
     }
+
     public string RetrieveString(string id)
     {
         if (stringSaves.ContainsKey(id))
             return stringSaves[id];
         else
             return "";
+    }
+
+    public Dictionary<string, string> RetrieveStringThatContains(string idFragment)
+    {
+        return stringSaves.Where(item => item.Key.Contains(idFragment)).ToDictionary(t => t.Key, t => t.Value);
     }
 
     void WriteInts()

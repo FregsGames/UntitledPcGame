@@ -28,7 +28,7 @@ public class IconFolder : Icon
 
                     if (newContainer.MoveIconTo(this, Input.mousePosition) && Container != newContainer)
                     {
-                        Container.RemoveIcon(this);
+                        Container.RemoveIconIfAlreadyExists(this);
                         Container = newContainer;
                     }
                     return;
