@@ -126,6 +126,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
 
     public void Deserialize()
     {
+
         string spriteKey = SaveManager.instance.RetrieveString($"{ID}_sprite");
         string textValue = SaveManager.instance.RetrieveString($"{ID}_text");
 
