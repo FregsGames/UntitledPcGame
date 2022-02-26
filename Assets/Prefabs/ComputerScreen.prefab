@@ -165,9 +165,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4008ce3c14cf7c8419bba409e311823d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 825d2b15-d795-4e24-a858-9b04de432c7f
+  iconPrefab: {fileID: 0}
   rows: 5
   cols: 5
   rect: {fileID: 9102011672176945303}
+  windowTopBar: {fileID: 0}
+  gizmosOn: 1
 --- !u!1 &9102011672349916262
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,4 +273,4 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55

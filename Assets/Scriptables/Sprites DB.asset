@@ -16,8 +16,8 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-    - {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+    - {fileID: 21300000, guid: 1060170f3117af04a96f6bb30199923c, type: 3}
+    - {fileID: 21300000, guid: 23d9d73d86d74a54794ff4c1099bbcea, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -42,7 +42,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: circle
+      Data: basic
     - Name: $v
       Entry: 10
       Data: 0
@@ -54,7 +54,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: basic
+      Data: folder
     - Name: $v
       Entry: 10
       Data: 1

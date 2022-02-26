@@ -6,7 +6,7 @@ public class FolderManager : Singleton<FolderManager>
 {
     private ComputerScreen computerScreen;
     private List<GameObject> folderPool = new List<GameObject>();
-    private Dictionary<IconFolder, GameObject> currentlyOpenedFolders = new Dictionary<IconFolder, GameObject>();
+    private Dictionary<Icon, GameObject> currentlyOpenedFolders = new Dictionary<Icon, GameObject>();
 
     [SerializeField]
     private GameObject folderPrefab;
@@ -24,29 +24,36 @@ public class FolderManager : Singleton<FolderManager>
 
         for (int i = 0; i < poolBaseSize; i++)
         {
-            InstantiateWindow();
+            InstantiateFolder();
         }
     }
 
-    public GameObject OpenFolder(Vector2 size, IconFolder icon = null)
+    public GameObject OpenFolder(string id = "")
     {
         GameObject folder = folderPool.FirstOrDefault(w => !w.activeInHierarchy);
         RectTransform rect = folder.GetComponent<RectTransform>();
 
         if (folder == null)
         {
-            folder = InstantiateWindow();
+            folder = InstantiateFolder();
         }
 
-        rect.sizeDelta = size == Vector2.zero ? defaultFolderSize : size;
+        rect.sizeDelta = defaultFolderSize;
         rect.position = new Vector3((ComputerScreen.instance.BackgroundSize.x - rect.sizeDelta.x) / 2,
             (ComputerScreen.instance.BackgroundSize.y - rect.sizeDelta.y) / 2, 0);
 
+        if(id != string.Empty)
+        {
+            folder.GetComponentInChildren<FolderContainer>().ID = id;
+        }
+
         folder.SetActive(true);
+        folder.GetComponentInChildren<FolderContainer>().LoadState();
+
         return folder;
     }
 
-    private GameObject InstantiateWindow()
+    private GameObject InstantiateFolder ()
     {
         var window = Instantiate(folderPrefab, poolInstantiatePos, Quaternion.identity, computerScreen.transform);
         window.SetActive(false);
@@ -68,7 +75,7 @@ public class FolderManager : Singleton<FolderManager>
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            ICustomSerializable[] customSerializables = FindObjectsOfType<MonoBehaviour>().OfType<ICustomSerializable>().ToArray();
+            ISaveableState[] customSerializables = FindObjectsOfType<MonoBehaviour>().OfType<ISaveableState>().ToArray();
 
 
             foreach (var serializable in customSerializables)

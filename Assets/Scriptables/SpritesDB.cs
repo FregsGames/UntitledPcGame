@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Sirenix.OdinInspector;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "Sprites DB", menuName = "ScriptableObjects/Sprites DB", order = 2)]
 public class SpritesDB : SerializedScriptableObject
@@ -24,6 +23,7 @@ public class SpritesDB : SerializedScriptableObject
 
     public string GetID(Sprite sprite)
     {
-        return sprites.FirstOrDefault(s => s.Value == sprite).Key;
+        string key = sprites.FirstOrDefault(s => s.Value == sprite).Key;
+        return key;
     }
 }

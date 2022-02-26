@@ -3,23 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using static PrefabsDB;
 
-public class IconsContainer : UniqueID, ICustomSerializable
+public class IconsContainer : UniqueID, ISaveableState
 {
     [SerializeField]
-    private Icon iconPrefab;
+    protected Icon iconPrefab;
 
     [SerializeField]
-    private int rows;
+    protected int rows;
     [SerializeField]
-    private int cols;
+    protected int cols;
     [SerializeField]
     private RectTransform rect;
     [SerializeField]
     private WindowTopBar windowTopBar;
+    [SerializeField]
+    private AppType type;
 
-    private Dictionary<FolderPosition, Icon> grid = new Dictionary<FolderPosition, Icon>();
-    string ICustomSerializable.ID { get => ID; }
+    public AppType Type { get => type; }
+    protected Dictionary<FolderPosition, Icon> grid = new Dictionary<FolderPosition, Icon>();
+    string ISaveableState.ID { get => ID; }
 
 
     private void OnEnable()
@@ -38,21 +42,16 @@ public class IconsContainer : UniqueID, ICustomSerializable
         }
     }
 
-    private void RefreshGridPositions()
+    public void LoadState()
     {
-        InitializeGrid();
-        PositionateIcons();
-    }
-
-    private void Start()
-    {
-        if(SaveManager.instance.RetrieveString(ID) != string.Empty)
+        if (SaveManager.instance.RetrieveString(ID) != string.Empty)
         {
-            foreach (var icon in GetComponentsInChildren<Icon>())
+            Icon[] childrenIcons = GetComponentsInChildren<Icon>();
+            for (int i = childrenIcons.Length - 1; i >= 0; i--)
             {
-                Destroy(icon.gameObject);
+                Destroy(childrenIcons[i].gameObject);
             }
-            
+
             Deserialize();
         }
         else
@@ -62,20 +61,40 @@ public class IconsContainer : UniqueID, ICustomSerializable
         }
     }
 
-    public bool MoveIconTo(Icon icon, Vector3 pos)
+    private void RefreshGridPositions()
     {
-        FolderPosition assignedPos = GetClosestFreeSlot(pos, icon);
+        InitializeGrid();
+        PositionateIcons();
+    }
 
-        if (assignedPos.absolutePosition.x != -1)
+    protected void InitializeGrid()
+    {
+        grid.Clear();
+
+        for (int i = 0; i < cols; i++)
         {
-            RemoveIconIfAlreadyExists(icon);
-            grid[assignedPos] = icon;
-            icon.SetPos(assignedPos.absolutePosition);
-            icon.transform.SetParent(transform);
+            for (int j = 0; j < rows; j++)
+            {
+                Vector3 position = new Vector3(rect.position.x + rect.rect.width / (cols + 1) * (i + 1), (rect.position.y + rect.rect.height) - rect.rect.height / (rows + 1) * (j + 1), 0);
+                FolderPosition key = new FolderPosition(new Vector2Int(i, j), position);
 
-            return true;
+                if (!grid.ContainsKey(key))
+                {
+                    grid.Add(key, null);
+                }
+            }
         }
-        return false;
+    }
+
+    protected virtual void PositionateIcons()
+    {
+
+    }
+
+
+    public virtual bool MoveIconTo(Icon icon, Vector3 pos)
+    {
+        return true;
     }
 
     public void MoveIconTo(Icon icon, Vector2Int gridPos)
@@ -105,50 +124,14 @@ public class IconsContainer : UniqueID, ICustomSerializable
         }
     }
 
-    private void PositionateIcons()
-    {
-        Icon[] icons = GetComponentsInChildren<Icon>();
 
-        foreach (var icon in icons)
-        {
-            FolderPosition assignedPos = GetClosestFreeSlot(icon.Position);
-
-            if (assignedPos.absolutePosition.x != -1)
-            {
-                icon.Container = this;
-                grid[assignedPos] = icon;
-            }
-
-            icon.SetPos(assignedPos.absolutePosition);
-        }
-    }
-
-    private void InitializeGrid()
-    {
-        grid.Clear();
-
-        for (int i = 0; i < cols; i++)
-        {
-            for (int j = 0; j < rows; j++)
-            {
-                Vector3 position = new Vector3(rect.position.x + rect.rect.width / (cols + 1) * (i + 1), rect.position.y + rect.rect.height / (rows + 1) * (j + 1), 0);
-                FolderPosition key = new FolderPosition(new Vector2Int(i, j), position);
-
-                if (!grid.ContainsKey(key))
-                {
-                    grid.Add(key, null);
-                }
-            }
-        }
-    }
-
-    private FolderPosition GetClosestFreeSlot(Vector3 pos, Icon icon = null)
+    protected FolderPosition GetClosestFreeSlot(Vector3 pos, Icon icon = null)
     {
         List<FolderPosition> freeSlots = grid.Where(g => g.Value == null || g.Value == icon).Select(g => g.Key).ToList();
 
         if (freeSlots.Count == 0)
         {
-            return new FolderPosition(new Vector2Int(- 1, -1), Vector3.one * -1);
+            return new FolderPosition(new Vector2Int(-1, -1), Vector3.one * -1);
         }
         else
         {
@@ -177,6 +160,7 @@ public class IconsContainer : UniqueID, ICustomSerializable
         foreach (var item in grid.Where(pos => pos.Value != null))
         {
             serialized.Add($"{ID}_iconAt_{item.Key.gridPosition.x}_{item.Key.gridPosition.y}", item.Value.ID);
+       
         }
 
         return serialized;
@@ -227,14 +211,6 @@ public class IconsContainer : UniqueID, ICustomSerializable
     private bool gizmosOn = true;
 
 
-    private void OnValidate()
-    {
-        /*
-        InitializeGrid();
-        PositionateIcons();
-        
-        SceneView.RepaintAll();*/
-    }
     private void OnDrawGizmos()
     {
         if (!gizmosOn)
@@ -248,7 +224,7 @@ public class IconsContainer : UniqueID, ICustomSerializable
             {
                 Vector3 position = new Vector3(rect.position.x + rect.rect.width / (cols + 1) * (i + 1), rect.position.y + rect.rect.height / (rows + 1) * (j + 1), 0);
 
-                FolderPosition key = new FolderPosition(new Vector2Int(i , j), position);
+                FolderPosition key = new FolderPosition(new Vector2Int(i, j), position);
 
                 if (grid.ContainsKey(key) && grid[key] != null)
                 {

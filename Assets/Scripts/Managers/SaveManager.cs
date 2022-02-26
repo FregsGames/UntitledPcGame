@@ -3,6 +3,7 @@ using System.IO;
 using UnityEngine;
 using System.Linq;
 using Sirenix.OdinInspector;
+using System;
 
 public class SaveManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class SaveManager : MonoBehaviour
     string intFile = "/intSaves.txt";
     string floatFile = "/floatSaves.txt";
     string stringFile = "/stringSaves.txt";
+
+    public Action OnLoadFinished;
 
     // Odin Stuff
     [PropertySpace(10, 0)]
@@ -193,6 +196,8 @@ public class SaveManager : MonoBehaviour
             stringSaves.Add(item.Split('$')[0], (item.Split('$')[1]));
         }
         reader.Close();
+
+        OnLoadFinished?.Invoke();
     }
 
     #region singleton
@@ -210,12 +215,11 @@ public class SaveManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        Read();
     }
 
     private void Start()
     {
-
+        Read();
     }
 
     #endregion

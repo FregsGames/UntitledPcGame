@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public interface ICustomSerializable
+public interface ISaveableState
 {
     Dictionary<string, string> Serialize();
     void Deserialize();
