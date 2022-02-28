@@ -1,17 +1,13 @@
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Sirenix.OdinInspector;
+using static App;
 
 [CreateAssetMenu(fileName = "Prefabs DB", menuName = "ScriptableObjects/Prefabs DB", order = 3)]
 public class PrefabsDB : SerializedScriptableObject
 {
-    public enum AppType 
-    { 
-        Folder,
-        TextFile,
-        Desktop
-    }
+
 
     [SerializeField]
     private Dictionary<AppType, GameObject> prefabs;

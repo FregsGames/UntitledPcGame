@@ -1,8 +1,9 @@
 using UnityEngine;
-using static PrefabsDB;
+using static App;
 
 public class InstantiatorManager : Singleton<InstantiatorManager>
 {
+    [SerializeField]
     private PrefabManager prefabManager;
     [SerializeField]
     private FolderManager folderManager;
@@ -14,7 +15,7 @@ public class InstantiatorManager : Singleton<InstantiatorManager>
             case AppType.Folder:
                 return folderManager.OpenFolder(id);
             case AppType.TextFile:
-                return null;
+                return prefabManager.InstantiatePrefab(type);
             case AppType.Desktop:
                 return null;
             default:

@@ -20,7 +20,7 @@ public class FolderManager : Singleton<FolderManager>
 
     private void Start()
     {
-        computerScreen = ComputerScreen.instance;
+        computerScreen = ComputerScreen.Instance;
 
         for (int i = 0; i < poolBaseSize; i++)
         {

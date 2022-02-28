@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using static PrefabsDB;
 
-public class IconsContainer : UniqueID, ISaveableState
+public class IconsContainer : App, ISaveableState
 {
     [SerializeField]
     protected Icon iconPrefab;
@@ -18,10 +18,7 @@ public class IconsContainer : UniqueID, ISaveableState
     private RectTransform rect;
     [SerializeField]
     private WindowTopBar windowTopBar;
-    [SerializeField]
-    private AppType type;
 
-    public AppType Type { get => type; }
     protected Dictionary<FolderPosition, Icon> grid = new Dictionary<FolderPosition, Icon>();
     string ISaveableState.ID { get => ID; }
 
@@ -149,6 +146,36 @@ public class IconsContainer : UniqueID, ISaveableState
 
     }
 
+    protected bool IconContainsContainerRecursive(Icon icon)
+    {
+        if(icon != null && icon.AssociatedApp != null)
+        {
+            if (icon.AssociatedApp == this)
+            {
+                return true;
+            }
+            else
+            {
+                if(icon.AssociatedApp is IconsContainer)
+                {
+                    foreach (var subIcon in ((IconsContainer)icon.AssociatedApp).grid.Values)
+                    {
+                        bool isSubContainerOfIcon = IconContainsContainerRecursive(subIcon);
+
+                        if (isSubContainerOfIcon)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    #region Serialization
+
     public Dictionary<string, string> Serialize()
     {
         Dictionary<string, string> serialized = new Dictionary<string, string>();
@@ -186,6 +213,8 @@ public class IconsContainer : UniqueID, ISaveableState
         }
     }
 
+    #endregion
+
     public class FolderPosition
     {
         public Vector2Int gridPosition;
@@ -196,14 +225,6 @@ public class IconsContainer : UniqueID, ISaveableState
             this.gridPosition = gridPosition;
             this.absolutePosition = absolutePosition;
         }
-    }
-
-    // Odin Stuff
-    [PropertySpace(10, 0)]
-    [Button("New ID", ButtonSizes.Medium)]
-    protected void RegenerateID()
-    {
-        RegenerateGUID();
     }
 
 #if UNITY_EDITOR

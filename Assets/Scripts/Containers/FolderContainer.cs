@@ -33,7 +33,7 @@ public class FolderContainer : IconsContainer
 
     public override bool MoveIconTo(Icon icon, Vector3 pos)
     {
-        if (grid.ContainsValue(icon))
+        if (IconContainsContainerRecursive(icon))
             return false;
 
         FolderPosition assignedPos = GetFirstFreeSlot();

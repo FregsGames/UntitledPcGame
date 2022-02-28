@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 0.6}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.8}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -729,17 +729,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 951066937}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f866ee15230ce5343ac964152b5720e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c77fa498677ca8489938c0d08e1917b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: c900e450-c62a-4d1f-ab88-96b0fb0f2a39
+  id: 7328bf81-7538-4645-8606-cd562bffcdc8
+  type: 2
   iconPrefab: {fileID: 6816965203371603959, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
   rows: 5
   cols: 10
   rect: {fileID: 951066938}
   windowTopBar: {fileID: 0}
-  type: 2
-  gizmosOn: 1
+  gizmosOn: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -994,6 +994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d6e63cdd66a00f40a22c81f2f6b0c41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabManager: {fileID: 460371461}
   folderManager: {fileID: 5350537240276034781}
 --- !u!4 &1273578085
 Transform:
@@ -1294,6 +1295,10 @@ PrefabInstance:
     - target: {fileID: 6760995745189192316, guid: f5c9abed896756c428ff2b0949e867bc, type: 3}
       propertyPath: m_Name
       value: DragGhost
+      objectReference: {fileID: 0}
+    - target: {fileID: 6760995746556153396, guid: f5c9abed896756c428ff2b0949e867bc, type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 6760995746556153397, guid: f5c9abed896756c428ff2b0949e867bc, type: 3}
       propertyPath: m_UiScaleMode

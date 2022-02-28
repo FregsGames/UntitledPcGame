@@ -1,12 +1,12 @@
+using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Sirenix.OdinInspector;
-using static PrefabsDB;
-using System;
+using static App;
 
 public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IDragHandler, IEndDragHandler, IBeginDragHandler, ISaveableState
 {
@@ -21,7 +21,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
 
     [Header("Associated app")]
     [SerializeField]
-    private IconsContainer associatedApp;
+    private App associatedApp;
     [SerializeField]
     private AppType associatedAppType;
     [SerializeField]
@@ -30,7 +30,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     // Properties
     public IconsContainer Container { get; set; }
     public Vector3 Position { get => rect.position; }
-    public IconsContainer AssociatedContainer { get => associatedApp; }
+    public App AssociatedApp { get => associatedApp; }
 
     // Persistence
     public Sprite Sprite { get => image.sprite; }
@@ -62,7 +62,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     {
         if (eventData.clickCount == 2)
         {
-            associatedApp = InstantiatorManager.Instance.Instantiate(associatedAppType).GetComponentInChildren<IconsContainer>();
+            associatedApp = InstantiatorManager.Instance.Instantiate(associatedAppType).GetComponentInChildren<App>();
 
             if (associatedAppID == string.Empty)
             {
@@ -142,14 +142,14 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
 
         serialized.Add($"{ID}_sprite", SpriteManager.Instance.SpritesDB.GetID(Sprite));
         serialized.Add($"{ID}_text", Text);
-        if(associatedAppID != string.Empty)
+        if (associatedAppID != string.Empty)
         {
             serialized.Add($"{ID}_associatedId", associatedAppID);
         }
 
-        if(AssociatedContainer != null)
+        if (AssociatedApp != null)
         {
-            serialized.Add($"{ID}_associatedTypeOf", AssociatedContainer.Type.ToString());
+            serialized.Add($"{ID}_associatedTypeOf", AssociatedApp.Type.ToString());
         }
 
         return serialized;
@@ -162,9 +162,9 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
         string textValue = SaveManager.instance.RetrieveString($"{ID}_text");
         string typeOfAssociated = SaveManager.instance.RetrieveString($"{ID}_associatedTypeOf");
 
-        if(typeOfAssociated != string.Empty)
+        if (typeOfAssociated != string.Empty)
         {
-            associatedAppType = (AppType) Enum.Parse(typeof(AppType), SaveManager.instance.RetrieveString($"{ID}_associatedTypeOf"));
+            associatedAppType = (AppType)Enum.Parse(typeof(AppType), SaveManager.instance.RetrieveString($"{ID}_associatedTypeOf"));
         }
 
         associatedAppID = SaveManager.instance.RetrieveString($"{ID}_associatedId");
