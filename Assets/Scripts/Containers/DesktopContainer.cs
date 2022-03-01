@@ -7,10 +7,12 @@ public class DesktopContainer : IconsContainer
 {
     protected override void PositionateIcons()
     {
-        Icon[] icons = GetComponentsInChildren<Icon>();
-
-        foreach (var icon in icons)
+        foreach (Transform child in transform)
         {
+            Icon icon = child.gameObject.GetComponent<Icon>();
+            if (icon == null)
+                continue;
+
             FolderPosition assignedPos = GetClosestFreeSlot(icon.Position);
 
             if (assignedPos.absolutePosition.x != -1)

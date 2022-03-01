@@ -29,7 +29,7 @@ public class FolderManager : Singleton<FolderManager>
         }
     }
 
-    public GameObject OpenFolder(string id = "")
+    public GameObject OpenFolder(string id = "", bool lockedFolder = false)
     {
         GameObject folder = folderPool.FirstOrDefault(w => !w.activeInHierarchy);
         RectTransform rect = folder.GetComponent<RectTransform>();
@@ -43,17 +43,24 @@ public class FolderManager : Singleton<FolderManager>
         rect.position = new Vector3((ComputerScreen.instance.BackgroundSize.x - rect.sizeDelta.x) / 2,
             (ComputerScreen.instance.BackgroundSize.y - rect.sizeDelta.y) / 2, 0);
 
-        if(id != string.Empty)
+        FolderContainer folderContainer = folder.GetComponentInChildren<FolderContainer>();
+
+        if (id != string.Empty)
         {
-            folder.GetComponentInChildren<FolderContainer>().ID = id;
+            folderContainer.ID = id;
         }
         else
         {
-            folder.GetComponentInChildren<FolderContainer>().ID = Guid.NewGuid().ToString();
+            folderContainer.ID = Guid.NewGuid().ToString();
+        }
+
+        if (lockedFolder)
+        {
+            folderContainer.Type = App.AppType.LockedFolder;
         }
 
         folder.SetActive(true);
-        folder.GetComponentInChildren<FolderContainer>().LoadState();
+        folderContainer.LoadState();
 
         return folder;
     }

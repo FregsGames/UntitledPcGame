@@ -24,6 +24,12 @@ public class FolderContainer : IconsContainer
         }
     }
 
+    public override void RecenterOnUI()
+    {
+        RectTransform rectTransform = transform.parent.GetComponent<RectTransform>();
+        rectTransform.anchoredPosition = new Vector2(Screen.width - rectTransform.rect.width, Screen.height - rectTransform.rect.height) / 2;
+    }
+
     private FolderPosition GetFirstFreeSlot()
     {
         FolderPosition firstFreePosition = grid.FirstOrDefault(g => g.Value == null).Key;
@@ -52,13 +58,6 @@ public class FolderContainer : IconsContainer
 
     private bool MaxSubfolderReached(Icon icon)
     {
-        if (icon.AssociatedAppType != AppType.Folder)
-            return true;
-
-        int currentSublevel = 1;
-
-
-
         return false;
     }
 }

@@ -40,10 +40,9 @@ public class IconsContainer : App
     {
         if (SaveManager.instance.RetrieveString(ID) != string.Empty)
         {
-            Icon[] childrenIcons = GetComponentsInChildren<Icon>();
-            for (int i = childrenIcons.Length - 1; i >= 0; i--)
+            for (int i = transform.childCount - 1; i >= 0; i--)
             {
-                Destroy(childrenIcons[i].gameObject);
+                Destroy(transform.GetChild(i).gameObject);
             }
 
             Deserialize();

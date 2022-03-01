@@ -65,12 +65,20 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     {
         if (eventData.clickCount == 2 && !dragging)
         {
-            associatedApp = InstantiatorManager.Instance.Instantiate(associatedAppType).GetComponentInChildren<App>();
-            associatedApp.Open();
-
-            if (associatedAppID == string.Empty)
+            if(associatedApp != null)
             {
-                associatedAppID = associatedApp.ID;
+                associatedApp.RecenterOnUI();
+            }
+            else
+            {
+
+                associatedApp = InstantiatorManager.Instance.Instantiate(associatedAppType).GetComponentInChildren<App>();
+                associatedApp.Open();
+
+                if (associatedAppID == string.Empty)
+                {
+                    associatedAppID = associatedApp.ID;
+                }
             }
         }
     }
@@ -174,6 +182,10 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
         immovable = SaveManager.instance.RetrieveString($"{ID}_immovable").Equals("true");
         image.sprite = SpriteManager.Instance.SpritesDB.GetSprite(spriteKey);
         iconName.text = textValue;
+
+#if UNITY_EDITOR
+        gameObject.name = textValue;
+#endif
     }
 
     // Odin Stuff

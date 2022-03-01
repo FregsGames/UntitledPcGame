@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Initializator : MonoBehaviour
+public class Booter : MonoBehaviour
 {
     private void Start()
     {

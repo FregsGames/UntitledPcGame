@@ -8,14 +8,15 @@ public class App : UniqueID, ISaveableState
     {
         Folder = 1,
         TextFile = 2,
-        Desktop = 3
+        Desktop = 3,
+        LockedFolder = 4
     }
     [SerializeField]
     protected AppType type;
     [SerializeField]
     protected SystemEventManager systemEventManager;
     
-    public AppType Type { get => type; }
+    public AppType Type { get => type; set => type = value; }
 
 
     public virtual void Open()
@@ -26,6 +27,12 @@ public class App : UniqueID, ISaveableState
     public virtual void Close()
     {
         systemEventManager.OnAppClosed?.Invoke(ID);
+    }
+
+    public virtual void RecenterOnUI()
+    {
+        RectTransform rectTransform = GetComponent<RectTransform>();
+        rectTransform.anchoredPosition = new Vector2(Screen.width - rectTransform.rect.width, Screen.height - rectTransform.rect.height)/2;
     }
 
     // Odin Stuff

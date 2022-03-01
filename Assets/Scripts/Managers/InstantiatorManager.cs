@@ -18,6 +18,8 @@ public class InstantiatorManager : Singleton<InstantiatorManager>
                 return prefabManager.InstantiatePrefab(type, id = "");
             case AppType.Desktop:
                 return null;
+            case AppType.LockedFolder:
+                return folderManager.OpenFolder(id, lockedFolder: true);
             default:
                 return null;
         }
