@@ -12,14 +12,15 @@ public class InstantiatorManager : Singleton<InstantiatorManager>
     {
         switch (type)
         {
-            case AppType.Folder:
-                return folderManager.OpenFolder(id);
             case AppType.TextFile:
-                return prefabManager.InstantiatePrefab(type, id = "");
+            case AppType.LockedTextFile:
+                return prefabManager.InstantiatePrefab(type, id);
             case AppType.Desktop:
                 return null;
             case AppType.LockedFolder:
                 return folderManager.OpenFolder(id, lockedFolder: true);
+            case AppType.Folder:
+                return folderManager.OpenFolder(id, lockedFolder: false);
             default:
                 return null;
         }

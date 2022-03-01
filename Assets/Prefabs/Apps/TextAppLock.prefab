@@ -101,9 +101,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2760273146191847847}
   - component: {fileID: 2760273146191847842}
-  - component: {fileID: 2995020234229475168}
+  - component: {fileID: 6171157984417511253}
   m_Layer: 5
-  m_Name: TextApp
+  m_Name: TextAppLock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,7 +139,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2760273146191847846}
   m_CullTransparentMesh: 1
---- !u!114 &2995020234229475168
+--- !u!114 &6171157984417511253
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,8 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ac2bd788a3a8b449800f2f814e9087e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 1e0a7466-e699-452f-a584-8f74ff4f6ac0
-  type: 2
+  id: 24d1b594-d9b4-412b-8eab-b0b59c18c26e
+  type: 5
   systemEventManager: {fileID: 11400000, guid: 9aaa532c3ce371c4087327a6c4361902, type: 2}
   inputField: {fileID: 6389706446177305349}
 --- !u!1 &2760273146892322186
@@ -590,7 +590,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -606,7 +606,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 6389706446177305348}
   m_TextViewport: {fileID: 6389706447466839162}
   m_TextComponent: {fileID: 6389706446378635283}

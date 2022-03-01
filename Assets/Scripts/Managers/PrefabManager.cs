@@ -23,7 +23,9 @@ public class PrefabManager : MonoBehaviour
 
         if (id != string.Empty)
         {
-            prefab.GetComponentInChildren<App>().ID = id;
+            App appComponent = prefab.GetComponentInChildren<App>();
+            appComponent.ID = id;
+            appComponent.Deserialize();
         }
         else
         {

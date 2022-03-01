@@ -9,7 +9,8 @@ public class App : UniqueID, ISaveableState
         Folder = 1,
         TextFile = 2,
         Desktop = 3,
-        LockedFolder = 4
+        LockedFolder = 4,
+        LockedTextFile = 5
     }
     [SerializeField]
     protected AppType type;

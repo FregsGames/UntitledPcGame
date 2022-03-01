@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -51,6 +52,7 @@ public class IconsContainer : App
         {
             InitializeGrid();
             PositionateIcons();
+            InitializeInnerContainers();
         }
     }
 
@@ -84,6 +86,16 @@ public class IconsContainer : App
 
     }
 
+    private void InitializeInnerContainers()
+    {
+        foreach (var childContainer in GetComponentsInChildren<IconsContainer>())
+        {
+            if(childContainer != this)
+            {
+                childContainer.LoadState();
+            }
+        }
+    }
 
     public virtual bool MoveIconTo(Icon icon, Vector3 pos)
     {

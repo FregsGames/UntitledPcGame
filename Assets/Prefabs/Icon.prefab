@@ -93,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 0
@@ -173,7 +173,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6816965203371603956
 CanvasRenderer:
@@ -230,6 +230,7 @@ MonoBehaviour:
   image: {fileID: 6816965203371603957}
   eventManager: {fileID: 11400000, guid: aec22e18a2f8fa240985198520e6577f, type: 2}
   iconName: {fileID: 6816965203222222887}
+  immovable: 0
   associatedApp: {fileID: 0}
   associatedAppType: 1
   associatedAppID: 
