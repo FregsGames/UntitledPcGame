@@ -225,7 +225,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2db675deec4e0e84cabf2535309a64d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 099b3c4e-f548-4181-b6ae-f216e432b32d
   rect: {fileID: 6816965203371603963}
   image: {fileID: 6816965203371603957}
   eventManager: {fileID: 11400000, guid: aec22e18a2f8fa240985198520e6577f, type: 2}
   iconName: {fileID: 6816965203222222887}
+  associatedApp: {fileID: 0}
+  associatedAppType: 1
+  associatedAppID: 

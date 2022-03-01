@@ -152,7 +152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 411e8c0c-2885-4d5a-838b-9f1a5f26d6f1
-  type: 1
+  type: 2
+  systemEventManager: {fileID: 11400000, guid: 9aaa532c3ce371c4087327a6c4361902, type: 2}
 --- !u!1 &2760273146892322186
 GameObject:
   m_ObjectHideFlags: 0

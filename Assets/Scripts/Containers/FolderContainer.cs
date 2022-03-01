@@ -33,7 +33,7 @@ public class FolderContainer : IconsContainer
 
     public override bool MoveIconTo(Icon icon, Vector3 pos)
     {
-        if (IconContainsContainerRecursive(icon))
+        if (IconContainsContainerRecursive(icon) || grid.ContainsValue(icon) || MaxSubfolderReached(icon))
             return false;
 
         FolderPosition assignedPos = GetFirstFreeSlot();
@@ -50,4 +50,15 @@ public class FolderContainer : IconsContainer
         return false;
     }
 
+    private bool MaxSubfolderReached(Icon icon)
+    {
+        if (icon.AssociatedAppType != AppType.Folder)
+            return true;
+
+        int currentSublevel = 1;
+
+
+
+        return false;
+    }
 }

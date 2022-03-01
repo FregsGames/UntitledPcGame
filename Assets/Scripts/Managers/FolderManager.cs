@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -45,6 +46,10 @@ public class FolderManager : Singleton<FolderManager>
         if(id != string.Empty)
         {
             folder.GetComponentInChildren<FolderContainer>().ID = id;
+        }
+        else
+        {
+            folder.GetComponentInChildren<FolderContainer>().ID = Guid.NewGuid().ToString();
         }
 
         folder.SetActive(true);

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using static App;
 
@@ -15,9 +16,20 @@ public class PrefabManager : MonoBehaviour
         computerScreen = ComputerScreen.Instance;
     }
 
-    public GameObject InstantiatePrefab(AppType type)
+    public GameObject InstantiatePrefab(AppType type, string id = "")
     {
         GameObject toInstantiate = prefabsDB.GetPrefab(type);
-        return  Instantiate(toInstantiate, computerScreen.transform);
+        var prefab = Instantiate(toInstantiate, computerScreen.transform);
+
+        if (id != string.Empty)
+        {
+            prefab.GetComponentInChildren<App>().ID = id;
+        }
+        else
+        {
+            prefab.GetComponentInChildren<App>().ID = Guid.NewGuid().ToString();
+        }
+
+        return prefab;
     }
 }

@@ -11,7 +11,7 @@ public class DragGhost : MonoBehaviour
     private bool ghostActive = false;
 
     [SerializeField]
-    private EventManager eventManager;
+    private UIEventManager eventManager;
 
     private void OnEnable()
     {

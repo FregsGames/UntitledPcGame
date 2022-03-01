@@ -1,11 +1,9 @@
-using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using static PrefabsDB;
 
-public class IconsContainer : App, ISaveableState
+public class IconsContainer : App
 {
     [SerializeField]
     protected Icon iconPrefab;
@@ -20,7 +18,6 @@ public class IconsContainer : App, ISaveableState
     private WindowTopBar windowTopBar;
 
     protected Dictionary<FolderPosition, Icon> grid = new Dictionary<FolderPosition, Icon>();
-    string ISaveableState.ID { get => ID; }
 
 
     private void OnEnable()
@@ -148,7 +145,7 @@ public class IconsContainer : App, ISaveableState
 
     protected bool IconContainsContainerRecursive(Icon icon)
     {
-        if(icon != null && icon.AssociatedApp != null)
+        if (icon != null && icon.AssociatedApp != null)
         {
             if (icon.AssociatedApp == this)
             {
@@ -156,7 +153,7 @@ public class IconsContainer : App, ISaveableState
             }
             else
             {
-                if(icon.AssociatedApp is IconsContainer)
+                if (icon.AssociatedApp is IconsContainer)
                 {
                     foreach (var subIcon in ((IconsContainer)icon.AssociatedApp).grid.Values)
                     {
@@ -176,7 +173,7 @@ public class IconsContainer : App, ISaveableState
 
     #region Serialization
 
-    public Dictionary<string, string> Serialize()
+    public override Dictionary<string, string> Serialize()
     {
         Dictionary<string, string> serialized = new Dictionary<string, string>();
 
@@ -187,13 +184,13 @@ public class IconsContainer : App, ISaveableState
         foreach (var item in grid.Where(pos => pos.Value != null))
         {
             serialized.Add($"{ID}_iconAt_{item.Key.gridPosition.x}_{item.Key.gridPosition.y}", item.Value.ID);
-       
+
         }
 
         return serialized;
     }
 
-    public void Deserialize()
+    public override void Deserialize()
     {
         rows = int.Parse(SaveManager.instance.RetrieveString($"{ID}_rows"));
         cols = int.Parse(SaveManager.instance.RetrieveString($"{ID}_cols"));
@@ -226,6 +223,7 @@ public class IconsContainer : App, ISaveableState
             this.absolutePosition = absolutePosition;
         }
     }
+
 
 #if UNITY_EDITOR
     [SerializeField]

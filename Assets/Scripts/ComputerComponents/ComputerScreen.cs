@@ -14,7 +14,7 @@ public class ComputerScreen : Singleton<ComputerScreen>
     private RectTransform background;
 
     [SerializeField]
-    private EventManager eventManager;
+    private UIEventManager eventManager;
 
     [Header("UI Scaling")]
     [SerializeField]

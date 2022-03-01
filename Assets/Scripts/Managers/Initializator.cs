@@ -2,25 +2,10 @@ using UnityEngine;
 
 public class Initializator : MonoBehaviour
 {
-    [SerializeField]
-    private SaveManager saveManager;
-    [SerializeField]
-    private IconsContainer desktopContainer;
-
-    private void OnEnable()
+    private void Start()
     {
-        saveManager.OnLoadFinished += InitializeDesktop;
-    }
+        // TODO: AQUÍ METER UNA PANTALLA DE CARGA
 
-
-    private void OnDisable()
-    {
-        saveManager.OnLoadFinished -= InitializeDesktop;
-    }
-
-
-    private void InitializeDesktop()
-    {
-        desktopContainer.LoadState();
+        Computer.Instance.FileSystem.MainDisk.Initialize();
     }
 }

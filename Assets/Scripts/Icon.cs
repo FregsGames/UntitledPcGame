@@ -15,9 +15,11 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     [SerializeField]
     private Image image;
     [SerializeField]
-    private EventManager eventManager;
+    private UIEventManager eventManager;
     [SerializeField]
     private TextMeshProUGUI iconName;
+    [SerializeField]
+    private bool immovable;
 
     [Header("Associated app")]
     [SerializeField]
@@ -31,6 +33,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     public IconsContainer Container { get; set; }
     public Vector3 Position { get => rect.position; }
     public App AssociatedApp { get => associatedApp; }
+    public AppType AssociatedAppType { get => associatedAppType; }
 
     // Persistence
     public Sprite Sprite { get => image.sprite; }
@@ -60,9 +63,10 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.clickCount == 2)
+        if (eventData.clickCount == 2 && !dragging)
         {
             associatedApp = InstantiatorManager.Instance.Instantiate(associatedAppType).GetComponentInChildren<App>();
+            associatedApp.Open();
 
             if (associatedAppID == string.Empty)
             {
@@ -71,27 +75,28 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
         }
     }
 
-    public virtual void OnPointerUp(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
-        if (Input.mousePosition != originalPos && Container != null)
+        if (Input.mousePosition != originalPos && Container != null && dragging)
         {
             IconsContainer newContainer = GetContainerUnderMouse();
+            if (newContainer != null)
             {
-                if (newContainer != null)
-                {
-                    if (newContainer == associatedApp)
-                        return;
-
-                    if (newContainer.MoveIconTo(this, Input.mousePosition) && Container != newContainer)
-                    {
-                        Container.RemoveIconIfAlreadyExists(this);
-                        Container = newContainer;
-                    }
+                if (immovable && newContainer != Container)
                     return;
-                }
 
-                Container.MoveIconTo(this, Input.mousePosition);
+                if (newContainer == associatedApp)
+                    return;
+
+                if (newContainer.MoveIconTo(this, Input.mousePosition) && Container != newContainer)
+                {
+                    Container.RemoveIconIfAlreadyExists(this);
+                    Container = newContainer;
+                }
+                return;
             }
+
+            Container.MoveIconTo(this, Input.mousePosition);
         }
     }
 
@@ -142,15 +147,13 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
 
         serialized.Add($"{ID}_sprite", SpriteManager.Instance.SpritesDB.GetID(Sprite));
         serialized.Add($"{ID}_text", Text);
+        serialized.Add($"{ID}_immovable", immovable ? "true" : "false");
         if (associatedAppID != string.Empty)
         {
             serialized.Add($"{ID}_associatedId", associatedAppID);
         }
 
-        if (AssociatedApp != null)
-        {
-            serialized.Add($"{ID}_associatedTypeOf", AssociatedApp.Type.ToString());
-        }
+        serialized.Add($"{ID}_associatedTypeOf", associatedAppType.ToString());
 
         return serialized;
     }
@@ -168,6 +171,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
         }
 
         associatedAppID = SaveManager.instance.RetrieveString($"{ID}_associatedId");
+        immovable = SaveManager.instance.RetrieveString($"{ID}_immovable").Equals("true");
         image.sprite = SpriteManager.Instance.SpritesDB.GetSprite(spriteKey);
         iconName.text = textValue;
     }

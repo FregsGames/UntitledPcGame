@@ -15,7 +15,7 @@ public class InstantiatorManager : Singleton<InstantiatorManager>
             case AppType.Folder:
                 return folderManager.OpenFolder(id);
             case AppType.TextFile:
-                return prefabManager.InstantiatePrefab(type);
+                return prefabManager.InstantiatePrefab(type, id = "");
             case AppType.Desktop:
                 return null;
             default:
