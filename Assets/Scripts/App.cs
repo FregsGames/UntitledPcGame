@@ -27,6 +27,7 @@ public class App : UniqueID, ISaveableState
 
     public virtual void Close()
     {
+        gameObject.SetActive(false);
         systemEventManager.OnAppClosed?.Invoke(ID);
     }
 
@@ -34,6 +35,7 @@ public class App : UniqueID, ISaveableState
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
         rectTransform.anchoredPosition = new Vector2(Screen.width - rectTransform.rect.width, Screen.height - rectTransform.rect.height)/2;
+        gameObject.SetActive(true);
     }
 
     // Odin Stuff

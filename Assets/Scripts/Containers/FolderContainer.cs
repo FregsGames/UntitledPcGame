@@ -28,6 +28,13 @@ public class FolderContainer : IconsContainer
     {
         RectTransform rectTransform = transform.parent.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = new Vector2(Screen.width - rectTransform.rect.width, Screen.height - rectTransform.rect.height) / 2;
+        transform.parent.gameObject.SetActive(true);
+    }
+
+    public override void Close()
+    {
+        transform.parent.gameObject.SetActive(false);
+        systemEventManager.OnAppClosed?.Invoke(ID);
     }
 
     private FolderPosition GetFirstFreeSlot()
