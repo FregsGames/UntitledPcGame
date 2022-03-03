@@ -33,6 +33,7 @@ public class FolderContainer : IconsContainer
 
     public override void Close()
     {
+        Serialize();
         transform.parent.gameObject.SetActive(false);
         systemEventManager.OnAppClosed?.Invoke(ID);
     }
@@ -57,6 +58,8 @@ public class FolderContainer : IconsContainer
             grid[assignedPos] = icon;
             icon.SetPos(assignedPos.absolutePosition);
             icon.transform.SetParent(transform);
+
+            Serialize();
 
             return true;
         }

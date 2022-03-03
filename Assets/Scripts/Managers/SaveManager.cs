@@ -1,9 +1,11 @@
-using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
-using System.Linq;
+using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
@@ -27,23 +29,23 @@ public class SaveManager : MonoBehaviour
         File.Delete(Application.persistentDataPath + stringFile);
     }
 
-    public void RemoveEntriesThatContains(string fragment)
+    private void RemoveEntriesThatContains(string fragment)
     {
-        List<string> keys = stringSaves.Where(e => e.Key.Contains(fragment)).Select(e => e.Key).ToList();
+        List<string> keys = stringSaves.Where(e => e.Key.Contains(fragment))?.Select(e => e.Key).ToList();
 
         foreach (string key in keys)
         {
             stringSaves.Remove(key);
         }
 
-        keys = intSaves.Where(e => e.Key.Contains(fragment)).Select(e => e.Key).ToList();
+        keys = intSaves.Where(e => e.Key.Contains(fragment))?.Select(e => e.Key).ToList();
 
         foreach (string key in keys)
         {
             stringSaves.Remove(key);
         }
 
-        keys = floatSaves.Where(e => e.Key.Contains(fragment)).Select(e => e.Key).ToList();
+        keys = floatSaves.Where(e => e.Key.Contains(fragment))?.Select(e => e.Key).ToList();
         foreach (string key in keys)
         {
             stringSaves.Remove(key);
@@ -57,7 +59,6 @@ public class SaveManager : MonoBehaviour
         else
             intSaves.Add(id, value);
 
-        WriteInts();
     }
     public void Save(string id, float value)
     {
@@ -66,17 +67,31 @@ public class SaveManager : MonoBehaviour
         else
             floatSaves.Add(id, value);
 
-        WriteFloats();
     }
+
     public void Save(string id, string value)
     {
         if (stringSaves.ContainsKey(id))
             stringSaves[id] = value;
         else
             stringSaves.Add(id, value);
-
-        WriteStrings();
     }
+
+    public void Save(Dictionary<string, string> toSave, string id)
+    {
+        RemoveEntriesThatContains(id);
+
+        foreach (var item in toSave)
+        {
+            Save(item.Key, item.Value);
+        }
+    }
+
+    public async Task SaveChanges()
+    {
+        await Task.WhenAll(WriteStrings(), WriteFloats(), WriteInts());
+    }
+
     public int RetrieveInt(string id)
     {
         if (intSaves.ContainsKey(id))
@@ -98,7 +113,6 @@ public class SaveManager : MonoBehaviour
         else
             return 0.0f;
     }
-
     public float RetrieveFloat(string id, float def)
     {
         if (floatSaves.ContainsKey(id))
@@ -120,36 +134,23 @@ public class SaveManager : MonoBehaviour
         return stringSaves.Where(item => item.Key.Contains(idFragment)).ToDictionary(t => t.Key, t => t.Value);
     }
 
-    void WriteInts()
+    private async Task WriteInts()
     {
-        string ints = "";
-        foreach (var item in intSaves)
-        {
-            ints += item.Key + "$" + item.Value + "\n";
-        }
-        File.WriteAllText(Application.persistentDataPath + intFile, ints);
+        string intJson = JsonConvert.SerializeObject(intSaves);
+        await File.WriteAllTextAsync(Application.persistentDataPath + intFile, intJson);
     }
-    void WriteFloats()
+    private async Task WriteFloats()
     {
-        //Floats
-        string floats = "";
-        foreach (var item in floatSaves)
-        {
-            floats += item.Key + "$" + item.Value + "\n";
-        }
-        File.WriteAllText(Application.persistentDataPath + floatFile, floats);
+        string floatJson = JsonConvert.SerializeObject(floatSaves);
+        await File.WriteAllTextAsync(Application.persistentDataPath + floatFile, floatJson);
     }
-    void WriteStrings()
+    private async Task WriteStrings()
     {
-        //strings
-        string strings = "";
-        foreach (var item in stringSaves)
-        {
-            strings += item.Key + "$" + item.Value + "\n";
-        }
-        File.WriteAllText(Application.persistentDataPath + stringFile, strings);
+        string stringJson = JsonConvert.SerializeObject(stringSaves, Formatting.Indented);
+        await File.WriteAllTextAsync(Application.persistentDataPath + stringFile, stringJson);
     }
-    void Read()
+
+    private void Read()
     {
         if (!File.Exists(Application.persistentDataPath + intFile))
         {
@@ -157,13 +158,12 @@ public class SaveManager : MonoBehaviour
         }
 
         StreamReader reader = new StreamReader(Application.persistentDataPath + intFile, true);
-        string[] splitted = reader.ReadToEnd().Split('\n');
-        intSaves = new Dictionary<string, int>();
-        foreach (var item in splitted)
+        string jsonInts = reader.ReadToEnd();
+        intSaves = JsonConvert.DeserializeObject<Dictionary<string, int>>(jsonInts);
+
+        if (intSaves == null)
         {
-            if (!item.Contains("$"))
-                continue;
-            intSaves.Add(item.Split('$')[0], int.Parse(item.Split('$')[1]));
+            intSaves = new Dictionary<string, int>();
         }
 
         if (!File.Exists(Application.persistentDataPath + floatFile))
@@ -172,13 +172,13 @@ public class SaveManager : MonoBehaviour
         }
         reader.Close();
         reader = new StreamReader(Application.persistentDataPath + floatFile, true);
-        splitted = reader.ReadToEnd().Split('\n');
-        floatSaves = new Dictionary<string, float>();
-        foreach (var item in splitted)
+
+        string jsonFloats = reader.ReadToEnd();
+        floatSaves = JsonConvert.DeserializeObject<Dictionary<string, float>>(jsonFloats);
+
+        if (floatSaves == null)
         {
-            if (!item.Contains("$"))
-                continue;
-            floatSaves.Add(item.Split('$')[0], float.Parse(item.Split('$')[1]));
+            floatSaves = new Dictionary<string, float>();
         }
 
         if (!File.Exists(Application.persistentDataPath + stringFile))
@@ -187,14 +187,15 @@ public class SaveManager : MonoBehaviour
         }
         reader.Close();
         reader = new StreamReader(Application.persistentDataPath + stringFile, true);
-        splitted = reader.ReadToEnd().Split('\n');
-        stringSaves = new Dictionary<string, string>();
-        foreach (var item in splitted)
+        string jsonStrings = reader.ReadToEnd();
+        stringSaves = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonStrings);
+
+        if (stringSaves == null)
         {
-            if (!item.Contains("$"))
-                continue;
-            stringSaves.Add(item.Split('$')[0], (item.Split('$')[1]));
+            stringSaves = new Dictionary<string, string>();
         }
+
+
         reader.Close();
 
         OnLoadFinished?.Invoke();
@@ -202,12 +203,12 @@ public class SaveManager : MonoBehaviour
 
     #region singleton
     //Singleton
-    public static SaveManager instance;
+    public static SaveManager Instance;
     void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
         else

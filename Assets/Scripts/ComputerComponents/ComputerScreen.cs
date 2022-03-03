@@ -12,6 +12,8 @@ public class ComputerScreen : Singleton<ComputerScreen>
     private RectTransform bottomBar;
     [SerializeField]
     private RectTransform background;
+    [SerializeField]
+    private BlockPanel blockPanel;
 
     [SerializeField]
     private UIEventManager eventManager;
@@ -31,6 +33,7 @@ public class ComputerScreen : Singleton<ComputerScreen>
     public Vector2 IconsBaseSize { get => iconsBaseSize; }
     public float DefaultIconTextSize { get => defaultIconTextSize; }
     public Vector2 BackgroundSize { get => background.rect.size; }
+    public BlockPanel BlockPanel { get => blockPanel; }
 
     private void OnEnable()
     {

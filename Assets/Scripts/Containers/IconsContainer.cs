@@ -39,7 +39,7 @@ public class IconsContainer : App
 
     public void LoadState()
     {
-        if (SaveManager.instance.RetrieveString(ID) != string.Empty)
+        if (SaveManager.Instance.RetrieveString(ID) != string.Empty)
         {
             for (int i = transform.childCount - 1; i >= 0; i--)
             {
@@ -52,7 +52,21 @@ public class IconsContainer : App
         {
             InitializeGrid();
             PositionateIcons();
+            SerializeFirstDepthChildren();
+            Serialize();
             InitializeInnerContainers();
+        }
+    }
+
+    private void SerializeFirstDepthChildren()
+    {
+        foreach (Transform child in transform)
+        {
+            Icon childIcon = child.GetComponent<Icon>();
+            if (childIcon != null)
+            {
+                childIcon.Serialize();
+            }
         }
     }
 
@@ -126,6 +140,7 @@ public class IconsContainer : App
         {
             FolderPosition key = grid.FirstOrDefault(g => g.Value == icon).Key;
             grid[key] = null;
+            Serialize();
         }
     }
 
@@ -184,7 +199,7 @@ public class IconsContainer : App
 
     #region Serialization
 
-    public override Dictionary<string, string> Serialize()
+    public override void Serialize()
     {
         Dictionary<string, string> serialized = new Dictionary<string, string>();
 
@@ -198,17 +213,17 @@ public class IconsContainer : App
 
         }
 
-        return serialized;
+        SaveManager.Instance.Save(serialized, ID);
     }
 
     public override void Deserialize()
     {
-        rows = int.Parse(SaveManager.instance.RetrieveString($"{ID}_rows"));
-        cols = int.Parse(SaveManager.instance.RetrieveString($"{ID}_cols"));
+        rows = int.Parse(SaveManager.Instance.RetrieveString($"{ID}_rows"));
+        cols = int.Parse(SaveManager.Instance.RetrieveString($"{ID}_cols"));
 
         InitializeGrid();
 
-        Dictionary<string, string> iconsIDs = SaveManager.instance.RetrieveStringThatContains($"{ID}_iconAt_");
+        Dictionary<string, string> iconsIDs = SaveManager.Instance.RetrieveStringThatContains($"{ID}_iconAt_");
 
         foreach (var iconID in iconsIDs)
         {

@@ -23,10 +23,12 @@ public class App : UniqueID, ISaveableState
     public virtual void Open()
     {
         systemEventManager.OnAppOpen?.Invoke(this);
+        Serialize();
     }
 
     public virtual void Close()
     {
+        Serialize();
         gameObject.SetActive(false);
         systemEventManager.OnAppClosed?.Invoke(ID);
     }
@@ -46,9 +48,8 @@ public class App : UniqueID, ISaveableState
         RegenerateGUID();
     }
 
-    public virtual Dictionary<string, string> Serialize()
+    public virtual void Serialize()
     {
-        return new Dictionary<string, string>();
     }
 
     public virtual void Deserialize()

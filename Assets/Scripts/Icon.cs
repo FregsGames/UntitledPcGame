@@ -71,13 +71,13 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
             }
             else
             {
-
                 associatedApp = InstantiatorManager.Instance.Instantiate(associatedAppType, associatedAppID).GetComponentInChildren<App>();
                 associatedApp.Open();
 
                 if (associatedAppID == string.Empty)
                 {
                     associatedAppID = associatedApp.ID;
+                    Serialize();
                 }
             }
         }
@@ -149,7 +149,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
         eventManager.OnIconStartDrag?.Invoke(this);
     }
 
-    public virtual Dictionary<string, string> Serialize()
+    public virtual void Serialize()
     {
         Dictionary<string, string> serialized = new Dictionary<string, string>();
 
@@ -163,23 +163,22 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
 
         serialized.Add($"{ID}_associatedTypeOf", associatedAppType.ToString());
 
-        return serialized;
+        SaveManager.Instance.Save(serialized, ID);
     }
 
     public virtual void Deserialize()
     {
-
-        string spriteKey = SaveManager.instance.RetrieveString($"{ID}_sprite");
-        string textValue = SaveManager.instance.RetrieveString($"{ID}_text");
-        string typeOfAssociated = SaveManager.instance.RetrieveString($"{ID}_associatedTypeOf");
+        string spriteKey = SaveManager.Instance.RetrieveString($"{ID}_sprite");
+        string textValue = SaveManager.Instance.RetrieveString($"{ID}_text");
+        string typeOfAssociated = SaveManager.Instance.RetrieveString($"{ID}_associatedTypeOf");
 
         if (typeOfAssociated != string.Empty)
         {
-            associatedAppType = (AppType)Enum.Parse(typeof(AppType), SaveManager.instance.RetrieveString($"{ID}_associatedTypeOf"));
+            associatedAppType = (AppType)Enum.Parse(typeof(AppType), SaveManager.Instance.RetrieveString($"{ID}_associatedTypeOf"));
         }
 
-        associatedAppID = SaveManager.instance.RetrieveString($"{ID}_associatedId");
-        immovable = SaveManager.instance.RetrieveString($"{ID}_immovable").Equals("true");
+        associatedAppID = SaveManager.Instance.RetrieveString($"{ID}_associatedId");
+        immovable = SaveManager.Instance.RetrieveString($"{ID}_immovable").Equals("true");
         image.sprite = SpriteManager.Instance.SpritesDB.GetSprite(spriteKey);
         iconName.text = textValue;
 

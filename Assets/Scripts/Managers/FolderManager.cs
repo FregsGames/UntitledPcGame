@@ -82,24 +82,4 @@ public class FolderManager : Singleton<FolderManager>
         }
         instance = this;
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            ISaveableState[] customSerializables = FindObjectsOfType<MonoBehaviour>().OfType<ISaveableState>().ToArray();
-
-
-            foreach (var serializable in customSerializables)
-            {
-                SaveManager.instance.RemoveEntriesThatContains(serializable.ID);
-
-                foreach (var entry in serializable.Serialize())
-                {
-                    SaveManager.instance.Save(entry.Key, entry.Value);
-                }
-            }
-        }
-    }
-
 }

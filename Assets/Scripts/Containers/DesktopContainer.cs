@@ -35,7 +35,7 @@ public class DesktopContainer : IconsContainer
             grid[assignedPos] = icon;
             icon.SetPos(assignedPos.absolutePosition);
             icon.transform.SetParent(transform);
-
+            Serialize();
             return true;
         }
         return false;
