@@ -7,7 +7,6 @@ public class FolderManager : Singleton<FolderManager>
 {
     private ComputerScreen computerScreen;
     private List<GameObject> folderPool = new List<GameObject>();
-    private Dictionary<Icon, GameObject> currentlyOpenedFolders = new Dictionary<Icon, GameObject>();
 
     [SerializeField]
     private GameObject folderPrefab;
@@ -67,7 +66,7 @@ public class FolderManager : Singleton<FolderManager>
 
     private GameObject InstantiateFolder ()
     {
-        var window = Instantiate(folderPrefab, poolInstantiatePos, Quaternion.identity, computerScreen.transform);
+        var window = Instantiate(folderPrefab, poolInstantiatePos, Quaternion.identity, computerScreen.Desktop);
         window.SetActive(false);
         folderPool.Add(window);
         return window;

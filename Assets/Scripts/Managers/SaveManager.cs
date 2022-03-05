@@ -221,6 +221,7 @@ public class SaveManager : MonoBehaviour
     private void Start()
     {
         Read();
+        Translations.Instance.LoadTranslationsOfCurrentLang();
     }
 
     #endregion

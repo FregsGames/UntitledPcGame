@@ -6,4 +6,5 @@ public class SystemEventManager : ScriptableObject
 {
     public Action<App> OnAppOpen;
     public Action<string> OnAppClosed;
+    public Action OnLanguagueLoaded;
 }

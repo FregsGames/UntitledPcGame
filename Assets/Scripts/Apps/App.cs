@@ -16,10 +16,14 @@ public class App : UniqueID, ISaveableState
     protected AppType type;
     [SerializeField]
     protected SystemEventManager systemEventManager;
+    [SerializeField]
+    protected UIEventManager uiEventManager;
+    [SerializeField]
+    protected Transform root;
     
     public AppType Type { get => type; set => type = value; }
 
-
+    public Transform Root { get => root; }
     public virtual void Open()
     {
         systemEventManager.OnAppOpen?.Invoke(this);

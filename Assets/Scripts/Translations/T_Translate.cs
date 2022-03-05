@@ -6,10 +6,16 @@ public class T_Translate : MonoBehaviour
 {
     public string id;
     public TextMeshProUGUI customText; //if not asigned it will take the existing text in the gameobject if exists
-    IEnumerator Start()
+    public SystemEventManager eventManager;
+
+    private void OnEnable()
     {
-        yield return null;
-        UpdateText();
+        eventManager.OnLanguagueLoaded += UpdateText;
+    }
+
+    private void OnDisable()
+    {
+        eventManager.OnLanguagueLoaded -= UpdateText;
     }
 
     public void UpdateText()
@@ -18,12 +24,12 @@ public class T_Translate : MonoBehaviour
         {
             if (GetComponent<TextMeshProUGUI>() != null)
             {
-                GetComponent<TextMeshProUGUI>().text = Translations.instance.GetText(id).Replace("\\n", "\n");
+                GetComponent<TextMeshProUGUI>().text = Translations.Instance.GetText(id).Replace("\\n", "\n");
             }
         }
         else
         {
-            customText.text = Translations.instance.GetText(id).Replace("\\n", "\n");
+            customText.text = Translations.Instance.GetText(id).Replace("\\n", "\n");
         }
     }
 }

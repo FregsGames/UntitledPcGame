@@ -1,27 +1,47 @@
-﻿using System;
-using System.Collections;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Translations : MonoBehaviour
 {
-    public Piece[] pieces;
-    public Dictionary<string, Piece> dictionary;
+    public Dictionary<string, string> currentDictionary;
     public SystemLanguage currentLanguage;
     public SystemLanguage[] availableLanguages;
 
-    public string GetText(string id)
-    {
-        if (!dictionary.ContainsKey(id))
-            return id;
+    [SerializeField]
+    private SystemEventManager eventManager;
 
+    public void LoadTranslationsOfCurrentLang()
+    {
+        currentLanguage = availableLanguages[0]; //Set by default in case we cannot find the system language
+
+        if (SaveManager.Instance.RetrieveInt("lang", -1) == -1)
+        {
+            currentLanguage = Application.systemLanguage;
+        }
+        else
+        {
+            currentLanguage = availableLanguages[SaveManager.Instance.RetrieveInt("lang", 0)];
+        }
+
+        currentDictionary = new Dictionary<string, string>();
         switch (currentLanguage)
         {
-            case SystemLanguage.Spanish:
-                return dictionary[id].es;
             default:
-                return dictionary[id].en;
+                var jsonTextFile = Resources.Load<TextAsset>("english");
+                currentDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonTextFile.text);
+                break;
         }
+
+        eventManager.OnLanguagueLoaded?.Invoke();
+    }
+
+    public string GetText(string id)
+    {
+        if (!currentDictionary.ContainsKey(id))
+            return id;
+
+        return currentDictionary[id];
     }
 
     void ChangeLanguage(int index)
@@ -64,52 +84,16 @@ public class Translations : MonoBehaviour
             ChangeLanguage(currentIndex - 1);
     }
 
-    [Serializable]
-    public struct Piece
-    {
-        public string id;
-
-        public string en;
-        public string es;
-    }
 
     #region singleton
     //Singleton
-    public static Translations instance;
-    public void LoadTranslations()
-    {
-        dictionary = new Dictionary<string, Piece>();
-
-        currentLanguage = availableLanguages[0]; //Set by default in case we cannot find the system language
-
-        if (SaveManager.Instance.RetrieveInt("lang", -1) == -1)
-        {
-            for (int i = 0; i < availableLanguages.Length; i++)
-            {
-                if (Application.systemLanguage == availableLanguages[i])
-                {
-                    currentLanguage = Application.systemLanguage;
-                    SaveManager.Instance.Save("lang", i);
-                    break;
-                }
-            }
-        }
-        else
-        {
-            currentLanguage = availableLanguages[SaveManager.Instance.RetrieveInt("lang", 0)];
-        }
-
-        foreach (Piece piece in pieces)
-        {
-            dictionary.Add(piece.id, piece);
-        }
-    }
+    public static Translations Instance;
 
     void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
         else

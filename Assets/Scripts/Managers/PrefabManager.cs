@@ -19,7 +19,7 @@ public class PrefabManager : MonoBehaviour
     public GameObject InstantiatePrefab(AppType type, string id = "")
     {
         GameObject toInstantiate = prefabsDB.GetPrefab(type);
-        var prefab = Instantiate(toInstantiate, computerScreen.transform);
+        var prefab = Instantiate(toInstantiate, computerScreen.Desktop);
 
         if (id != string.Empty)
         {

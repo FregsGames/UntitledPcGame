@@ -11,6 +11,13 @@ public class WindowTopBar : MonoBehaviour, IPointerClickHandler, IPointerDownHan
     private Vector3 dragOffset;
     public Action OnWindowEndDrag;
 
+    public App App { get; set; }
+
+    private void Start()
+    {
+        App = window.GetComponentInChildren<App>();
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
 

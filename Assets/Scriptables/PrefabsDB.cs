@@ -7,8 +7,6 @@ using static App;
 [CreateAssetMenu(fileName = "Prefabs DB", menuName = "ScriptableObjects/Prefabs DB", order = 3)]
 public class PrefabsDB : SerializedScriptableObject
 {
-
-
     [SerializeField]
     private Dictionary<AppType, GameObject> prefabs;
 

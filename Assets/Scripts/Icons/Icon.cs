@@ -20,6 +20,8 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     private TextMeshProUGUI iconName;
     [SerializeField]
     private bool immovable;
+    [SerializeField]
+    private GameObject backgroundHover;
 
     [Header("Associated app")]
     [SerializeField]
@@ -34,6 +36,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     public Vector3 Position { get => rect.position; }
     public App AssociatedApp { get => associatedApp; }
     public AppType AssociatedAppType { get => associatedAppType; }
+    public GameObject BackgroundHover { get => backgroundHover; }
 
     // Persistence
     public Sprite Sprite { get => image.sprite; }
@@ -63,6 +66,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
 
     public void OnPointerClick(PointerEventData eventData)
     {
+
         if (eventData.clickCount == 2 && !dragging)
         {
             if(associatedApp != null)
@@ -128,6 +132,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     public void OnPointerDown(PointerEventData eventData)
     {
         originalPos = Position;
+        eventManager.OnIconPointerDown?.Invoke(this);
     }
 
     public void OnDrag(PointerEventData eventData)
