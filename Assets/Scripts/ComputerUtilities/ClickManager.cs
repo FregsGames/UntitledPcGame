@@ -48,7 +48,7 @@ public class ClickManager : MonoBehaviour
             pointerEventData.position = Input.mousePosition;
             List<RaycastResult> results = new List<RaycastResult>();
             raycaster.Raycast(pointerEventData, results);
-
+            ActivateHoverBackground(null);
             foreach (var item in results)
             {
                 Icon icon = item.gameObject.GetComponent<Icon>();
@@ -74,7 +74,6 @@ public class ClickManager : MonoBehaviour
                     break;
                 }
             }
-
         }
     }
 }
