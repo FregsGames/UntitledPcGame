@@ -20,16 +20,6 @@ public class ClickManager : MonoBehaviour
         eventSystem = EventSystem.current;
     }
 
-    private void OnEnable()
-    {
-        // uIEventManager.OnIconPointerDown += ActivateHoverBackground;
-    }
-
-    private void OnDisable()
-    {
-        //uIEventManager.OnIconPointerDown -= ActivateHoverBackground;
-    }
-
     private void ActivateHoverBackground(Icon icon)
     {
         icon?.BackgroundHover.SetActive(true);
@@ -44,10 +34,7 @@ public class ClickManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            pointerEventData = new PointerEventData(eventSystem);
-            pointerEventData.position = Input.mousePosition;
-            List<RaycastResult> results = new List<RaycastResult>();
-            raycaster.Raycast(pointerEventData, results);
+            List<RaycastResult> results = GetWhatsUnderMouse();
             ActivateHoverBackground(null);
             foreach (var item in results)
             {
@@ -75,5 +62,14 @@ public class ClickManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    private List<RaycastResult> GetWhatsUnderMouse()
+    {
+        pointerEventData = new PointerEventData(eventSystem);
+        pointerEventData.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        raycaster.Raycast(pointerEventData, results);
+        return results;
     }
 }

@@ -37,6 +37,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     public App AssociatedApp { get => associatedApp; }
     public AppType AssociatedAppType { get => associatedAppType; }
     public GameObject BackgroundHover { get => backgroundHover; }
+    private bool HasMoved { get => Input.mousePosition != originalPos && Container != null && dragging; }
 
     // Persistence
     public Sprite Sprite { get => image.sprite; }
@@ -66,7 +67,6 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
 
     public void OnPointerClick(PointerEventData eventData)
     {
-
         if (eventData.clickCount == 2 && !dragging)
         {
             if (associatedApp != null)
@@ -89,15 +89,12 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (Input.mousePosition != originalPos && Container != null && dragging)
+        if (HasMoved)
         {
-            IconsContainer newContainer = GetContainerUnderMouse();
+            IconsContainer newContainer = ContainerUnderMouse();
             if (newContainer != null)
             {
-                if (immovable && newContainer != Container)
-                    return;
-
-                if (newContainer == associatedApp)
+                if ((immovable && newContainer != Container) || (newContainer == associatedApp))
                     return;
 
                 if (newContainer.MoveIconTo(this, Input.mousePosition) && Container != newContainer)
@@ -105,14 +102,15 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
                     Container.RemoveIconIfAlreadyExists(this);
                     Container = newContainer;
                 }
-                return;
             }
-
-            Container.MoveIconTo(this, Input.mousePosition);
+            else
+            {
+                Container.MoveIconTo(this, Input.mousePosition);
+            }
         }
     }
 
-    protected IconsContainer GetContainerUnderMouse()
+    protected IconsContainer ContainerUnderMouse()
     {
         IconsContainer container = null;
         var m_PointerEventData = new PointerEventData(EventSystem.current);
@@ -132,7 +130,6 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     public void OnPointerDown(PointerEventData eventData)
     {
         originalPos = Position;
-        eventManager.OnIconPointerDown?.Invoke(this);
     }
 
     public void OnDrag(PointerEventData eventData)
