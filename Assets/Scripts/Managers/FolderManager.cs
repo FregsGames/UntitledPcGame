@@ -64,7 +64,7 @@ public class FolderManager : Singleton<FolderManager>
         return folder;
     }
 
-    private GameObject InstantiateFolder ()
+    private GameObject InstantiateFolder()
     {
         var window = Instantiate(folderPrefab, poolInstantiatePos, Quaternion.identity, computerScreen.Desktop);
         window.SetActive(false);

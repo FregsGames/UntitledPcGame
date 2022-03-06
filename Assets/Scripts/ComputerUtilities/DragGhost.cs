@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,7 +29,7 @@ public class DragGhost : MonoBehaviour
         ghostActive = true;
         image.sprite = icon.Sprite;
         image.gameObject.SetActive(true);
-        image.color = new Color(icon.SpriteColor.r, icon.SpriteColor.g, icon.SpriteColor.b,0.5f);
+        image.color = new Color(icon.SpriteColor.r, icon.SpriteColor.g, icon.SpriteColor.b, 0.5f);
         StartCoroutine(MoveGhost());
     }
 

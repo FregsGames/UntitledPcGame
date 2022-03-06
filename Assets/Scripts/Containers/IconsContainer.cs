@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -104,7 +103,7 @@ public class IconsContainer : App
     {
         foreach (var childContainer in GetComponentsInChildren<IconsContainer>())
         {
-            if(childContainer != this)
+            if (childContainer != this)
             {
                 childContainer.LoadState();
             }

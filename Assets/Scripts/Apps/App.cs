@@ -1,5 +1,4 @@
 using Sirenix.OdinInspector;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class App : UniqueID, ISaveableState
@@ -20,7 +19,7 @@ public class App : UniqueID, ISaveableState
     protected UIEventManager uiEventManager;
     [SerializeField]
     protected Transform root;
-    
+
     public AppType Type { get => type; set => type = value; }
 
     public Transform Root { get => root; }
@@ -40,7 +39,7 @@ public class App : UniqueID, ISaveableState
     public virtual void RecenterOnUI()
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
-        rectTransform.anchoredPosition = new Vector2(Screen.width - rectTransform.rect.width, Screen.height - rectTransform.rect.height)/2;
+        rectTransform.anchoredPosition = new Vector2(Screen.width - rectTransform.rect.width, Screen.height - rectTransform.rect.height) / 2;
         gameObject.SetActive(true);
     }
 

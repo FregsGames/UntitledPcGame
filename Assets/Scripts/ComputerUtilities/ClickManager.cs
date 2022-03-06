@@ -59,7 +59,7 @@ public class ClickManager : MonoBehaviour
                 }
 
                 App app = item.gameObject.GetComponent<App>();
-                if(app != null && app.Type != App.AppType.Desktop)
+                if (app != null && app.Type != App.AppType.Desktop)
                 {
                     app.Root.SetAsLastSibling();
                     ActivateHoverBackground(null);

@@ -69,7 +69,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
 
         if (eventData.clickCount == 2 && !dragging)
         {
-            if(associatedApp != null)
+            if (associatedApp != null)
             {
                 associatedApp.RecenterOnUI();
             }
