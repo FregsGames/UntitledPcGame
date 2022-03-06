@@ -2744,10 +2744,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockPanel
       objectReference: {fileID: 0}
-    - target: {fileID: 4019485129760556383, guid: 2c8f97234af2ce345acba9af1330aee8, type: 3}
-      propertyPath: rotationSpeed
-      value: -50
-      objectReference: {fileID: 0}
     - target: {fileID: 6743035184809951471, guid: 2c8f97234af2ce345acba9af1330aee8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
