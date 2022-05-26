@@ -16,12 +16,9 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 21300000, guid: 1060170f3117af04a96f6bb30199923c, type: 3}
-    - {fileID: 21300000, guid: 23d9d73d86d74a54794ff4c1099bbcea, type: 3}
-    - {fileID: 21300000, guid: d93a1637675e7cb459616fb74d1059da, type: 3}
-    - {fileID: 21300000, guid: 3776f45b82703bd4994b612b2c948384, type: 3}
-    - {fileID: 21300000, guid: cd634499a70d1b34184ecd158090fe1a, type: 3}
-    - {fileID: 21300000, guid: 652c89d06ec50cc45a4c604682f8afed, type: 3}
+    - {fileID: 21300000, guid: c48fe5994611229429a69c99dc12b4f0, type: 3}
+    - {fileID: 21300000, guid: 27734e3238f6cf647a8ed3653a361c48, type: 3}
+    - {fileID: 21300000, guid: 8b9211e44ab0bfa4da50c3e614511ebd, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -61,7 +58,7 @@ MonoBehaviour:
       Data: folder
     - Name: $v
       Entry: 10
-      Data: 1
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -73,7 +70,7 @@ MonoBehaviour:
       Data: computer
     - Name: $v
       Entry: 10
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -85,7 +82,7 @@ MonoBehaviour:
       Data: hdd
     - Name: $v
       Entry: 10
-      Data: 3
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -97,7 +94,7 @@ MonoBehaviour:
       Data: desktop
     - Name: $v
       Entry: 10
-      Data: 4
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -109,7 +106,7 @@ MonoBehaviour:
       Data: info
     - Name: $v
       Entry: 10
-      Data: 5
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
