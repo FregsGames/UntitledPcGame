@@ -9,7 +9,7 @@ public class App : UniqueID, ISaveableState
         TextFile = 2,
         Desktop = 3,
         LockedFolder = 4,
-        LockedTextFile = 5
+        LockedTextFile = 5,
     }
     [SerializeField]
     protected AppType type;

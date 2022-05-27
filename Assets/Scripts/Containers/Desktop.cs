@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DesktopContainer : IconsContainer
+public class Desktop : IconsContainer
 {
     protected override void PositionateIcons()
     {
