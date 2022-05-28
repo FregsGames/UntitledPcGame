@@ -1,3 +1,4 @@
+using Assets.Scripts.Apps;
 using UnityEngine;
 
 public class Computer : Singleton<Computer>

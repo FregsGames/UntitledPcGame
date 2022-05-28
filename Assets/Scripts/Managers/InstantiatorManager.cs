@@ -21,6 +21,8 @@ public class InstantiatorManager : Singleton<InstantiatorManager>
                 return folderManager.OpenFolder(id, lockedFolder: true);
             case AppType.Folder:
                 return folderManager.OpenFolder(id, lockedFolder: false);
+            case AppType.ConfirmationPopup:
+                return prefabManager.InstantiatePrefab(type, id);
             default:
                 return null;
         }

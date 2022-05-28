@@ -1,6 +1,8 @@
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
+using static App;
+using System.Linq;
 
 public class Ram : SerializedMonoBehaviour
 {
@@ -21,6 +23,12 @@ public class Ram : SerializedMonoBehaviour
         systemEventManager.OnAppOpen -= PushApp;
         systemEventManager.OnAppClosed -= RemoveApp;
     }
+
+    public bool IsAppOpen(AppType appType)
+    {
+        return currentlyOpenApps.Values.FirstOrDefault(app => app.Type == appType) != null;
+    }
+
     private void PushApp(App app)
     {
         if (currentlyOpenApps.ContainsValue(app))
