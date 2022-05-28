@@ -33,8 +33,9 @@ public class App : UniqueID, ISaveableState
     public virtual void Close()
     {
         Serialize();
-        gameObject.SetActive(false);
         systemEventManager.OnAppClosed?.Invoke(ID);
+
+        Destroy(gameObject);
     }
 
     public virtual void RecenterOnUI()
