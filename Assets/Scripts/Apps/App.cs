@@ -10,7 +10,8 @@ public class App : UniqueID, ISaveableState
         Desktop = 3,
         LockedFolder = 4,
         LockedTextFile = 5,
-        ConfirmationPopup
+        ConfirmationPopup = 6,
+        StringPopup = 7
     }
     [SerializeField]
     protected AppType type;

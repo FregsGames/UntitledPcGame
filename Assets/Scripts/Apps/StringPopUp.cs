@@ -1,19 +1,22 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Assets.Scripts.Apps
 {
-    public class ConfirmationPopUp : App
+    public class StringPopUp : App
     {
         [SerializeField]
         private Button confirmButton;
         [SerializeField]
         private Button cancelButton;
+        [SerializeField]
+        private TMP_InputField inputField;
 
         private void OnEnable()
         {
-            confirmButton.onClick.AddListener(() => { systemEventManager.OnPopUpSubmit?.Invoke(true); Close(); });
-            cancelButton.onClick.AddListener(() => { systemEventManager.OnPopUpSubmit?.Invoke(false); Close(); });
+            confirmButton.onClick.AddListener(() => { systemEventManager.OnStringPopUpSubmit?.Invoke(inputField.text); Close(); });
+            cancelButton.onClick.AddListener(() => { systemEventManager.OnStringPopUpSubmit?.Invoke(null); Close(); });
         }
 
         private void OnDisable()

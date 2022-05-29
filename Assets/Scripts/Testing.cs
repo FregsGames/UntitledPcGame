@@ -22,7 +22,7 @@ public class Testing : MonoBehaviour
         //}
         if (Input.GetKeyDown(KeyCode.L))
         {
-            eventManager.RequestPopUp();
+            eventManager.RequestPopUp(App.AppType.StringPopup);
         }
     }
 #endif

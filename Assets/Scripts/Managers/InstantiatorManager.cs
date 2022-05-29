@@ -14,15 +14,14 @@ public class InstantiatorManager : Singleton<InstantiatorManager>
         {
             case AppType.TextFile:
             case AppType.LockedTextFile:
+            case AppType.ConfirmationPopup:
+            case AppType.StringPopup:
                 return prefabManager.InstantiatePrefab(type, id);
-            case AppType.Desktop:
-                return null;
             case AppType.LockedFolder:
                 return folderManager.OpenFolder(id, lockedFolder: true);
             case AppType.Folder:
                 return folderManager.OpenFolder(id, lockedFolder: false);
-            case AppType.ConfirmationPopup:
-                return prefabManager.InstantiatePrefab(type, id);
+            case AppType.Desktop:
             default:
                 return null;
         }

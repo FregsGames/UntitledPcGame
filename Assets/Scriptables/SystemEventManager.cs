@@ -9,17 +9,17 @@ public class SystemEventManager : ScriptableObject
     public Action OnLanguagueLoaded;
     
     public Action<bool> OnPopUpSubmit;
+    public Action<string> OnStringPopUpSubmit;
 
-
-
-    public bool RequestPopUp()
+    public bool RequestPopUp(App.AppType appType = App.AppType.ConfirmationPopup)
     {
-        if (Computer.Instance.Ram.IsAppOpen(App.AppType.ConfirmationPopup))
-        {
+        if (appType != App.AppType.ConfirmationPopup && appType != App.AppType.StringPopup)
             return false;
-        }
 
-        InstantiatorManager.Instance.Instantiate(App.AppType.ConfirmationPopup);
+        if (Computer.Instance.Ram.IsAppOpen(appType))
+            return false;
+
+        InstantiatorManager.Instance.Instantiate(appType);
         return true;
     }
 }
