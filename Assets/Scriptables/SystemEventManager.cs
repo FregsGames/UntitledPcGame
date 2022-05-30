@@ -10,16 +10,16 @@ public class SystemEventManager : ScriptableObject
     
     public Action<bool> OnPopUpSubmit;
     public Action<string> OnStringPopUpSubmit;
+    public Action<bool> OnNumericPopUpSubmit;
 
-    public bool RequestPopUp(App.AppType appType = App.AppType.ConfirmationPopup)
+    public App RequestPopUp(App.AppType appType = App.AppType.ConfirmationPopup)
     {
-        if (appType != App.AppType.ConfirmationPopup && appType != App.AppType.StringPopup)
-            return false;
+        if (appType != App.AppType.ConfirmationPopup && appType != App.AppType.StringPopup && appType != App.AppType.NumericPopup)
+            return null;
 
         if (Computer.Instance.Ram.IsAppOpen(appType))
-            return false;
+            return null;
 
-        InstantiatorManager.Instance.Instantiate(appType);
-        return true;
+        return InstantiatorManager.Instance.Instantiate(appType).GetComponent<App>();
     }
 }

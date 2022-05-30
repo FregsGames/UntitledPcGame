@@ -11,7 +11,8 @@ public class App : UniqueID, ISaveableState
         LockedFolder = 4,
         LockedTextFile = 5,
         ConfirmationPopup = 6,
-        StringPopup = 7
+        StringPopup = 7,
+        NumericPopup = 8
     }
     [SerializeField]
     protected AppType type;

@@ -29,7 +29,9 @@ public class PrefabManager : MonoBehaviour
         }
         else
         {
-            prefab.GetComponentInChildren<App>().ID = Guid.NewGuid().ToString();
+            App app = prefab.GetComponentInChildren<App>();
+            app.ID = Guid.NewGuid().ToString();
+            app.Open();
         }
 
         return prefab;

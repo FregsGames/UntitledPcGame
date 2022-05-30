@@ -16,6 +16,7 @@ public class InstantiatorManager : Singleton<InstantiatorManager>
             case AppType.LockedTextFile:
             case AppType.ConfirmationPopup:
             case AppType.StringPopup:
+            case AppType.NumericPopup:
                 return prefabManager.InstantiatePrefab(type, id);
             case AppType.LockedFolder:
                 return folderManager.OpenFolder(id, lockedFolder: true);

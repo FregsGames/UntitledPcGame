@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -5,6 +6,21 @@ public class Testing : MonoBehaviour
 {
     [SerializeField]
     private SystemEventManager eventManager;
+
+    private void OnEnable()
+    {
+        eventManager.OnNumericPopUpSubmit += Check;
+    }
+
+    private void Check(bool obj)
+    {
+        Debug.Log("the key is " + (obj ? "correct" : "incorrect"));
+    }
+
+    private void OnDisable()
+    {
+        eventManager.OnNumericPopUpSubmit -= Check;
+    }
 
 #if UNITY_EDITOR
     private void Update()
@@ -22,7 +38,7 @@ public class Testing : MonoBehaviour
         //}
         if (Input.GetKeyDown(KeyCode.L))
         {
-            eventManager.RequestPopUp(App.AppType.StringPopup);
+            ((NumericPopup)eventManager.RequestPopUp(App.AppType.NumericPopup)).Setup("145612");
         }
     }
 #endif
