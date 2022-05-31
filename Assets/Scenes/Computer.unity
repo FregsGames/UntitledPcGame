@@ -1272,6 +1272,7 @@ MonoBehaviour:
   ram: {fileID: 1435708800}
   computerSettings: {fileID: 459047582}
   desktop: {fileID: 951066943}
+  eventManager: {fileID: 11400000, guid: 9aaa532c3ce371c4087327a6c4361902, type: 2}
 --- !u!4 &998085578
 Transform:
   m_ObjectHideFlags: 0
@@ -1638,6 +1639,34 @@ PrefabInstance:
     - target: {fileID: 7829750993801445673, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8939189128756332041, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8939189128756332041, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8939189128756332041, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 998085577}
+    - target: {fileID: 8939189128756332041, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8939189128756332041, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowTurnOffPopUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8939189128756332041, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Computer, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8939189128756332041, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}

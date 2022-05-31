@@ -7,5 +7,6 @@ public class Booter : MonoBehaviour
         // TODO: AQUÍ METER UNA PANTALLA DE CARGA
 
         Computer.Instance.Desktop.LoadState();
+        FolderManager.Instance.Initialize();
     }
 }

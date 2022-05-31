@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class NumericPopup : App
+public class NumericPopup : App, IPopUp
 {
     [SerializeField]
     private Button confirmButton;
@@ -15,6 +15,8 @@ public class NumericPopup : App
     private Transform screenPanel;
     [SerializeField]
     private GameObject screenElementPrefab;
+    [SerializeField]
+    private TextMeshProUGUI text;
 
     public string Key { get; set; }
     public string CurrentInputKey { get; set; } = "";
@@ -84,5 +86,9 @@ public class NumericPopup : App
         confirmButton.onClick.RemoveAllListeners();
         cancelButton.onClick.RemoveAllListeners();
         OnKeyPressed -= ProcessInput;
+    }
+    public void SetText(string text)
+    {
+        this.text.text = text;
     }
 }

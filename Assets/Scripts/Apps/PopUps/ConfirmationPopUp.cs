@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Assets.Scripts.Apps
 {
-    public class ConfirmationPopUp : App
+    public class ConfirmationPopUp : App, IPopUp
     {
         [SerializeField]
         private Button confirmButton;
         [SerializeField]
         private Button cancelButton;
+        [SerializeField]
+        private TextMeshProUGUI text;
 
         private void OnEnable()
         {
@@ -20,6 +23,11 @@ namespace Assets.Scripts.Apps
         {
             confirmButton.onClick.RemoveAllListeners();
             cancelButton.onClick.RemoveAllListeners();
+        }
+
+        public void SetText(string text)
+        {
+            this.text.text = text;
         }
     }
 }

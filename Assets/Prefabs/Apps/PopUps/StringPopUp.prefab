@@ -928,6 +928,7 @@ MonoBehaviour:
   root: {fileID: 3585767323366967258}
   confirmButton: {fileID: 3585767322059339974}
   cancelButton: {fileID: 3585767323301837154}
+  text: {fileID: 3585767322816765266}
 --- !u!1 &3585767323425031554
 GameObject:
   m_ObjectHideFlags: 0

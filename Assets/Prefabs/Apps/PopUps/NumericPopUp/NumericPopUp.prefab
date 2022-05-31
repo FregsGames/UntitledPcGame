@@ -1290,6 +1290,7 @@ MonoBehaviour:
   cancelButton: {fileID: 3585767323301837154}
   screenPanel: {fileID: 4535100247827347795}
   screenElementPrefab: {fileID: 5778771461275832802, guid: cfa308363385d2442ab08e50cef89f6e, type: 3}
+  text: {fileID: 3585767322816765266}
 --- !u!1 &3585767323425031554
 GameObject:
   m_ObjectHideFlags: 0

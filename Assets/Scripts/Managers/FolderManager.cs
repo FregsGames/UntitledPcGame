@@ -18,7 +18,7 @@ public class FolderManager : Singleton<FolderManager>
     [SerializeField]
     private Vector2 poolInstantiatePos = new Vector2(10000, 10000);
 
-    private void Start()
+    public void Initialize()
     {
         computerScreen = ComputerScreen.Instance;
 
