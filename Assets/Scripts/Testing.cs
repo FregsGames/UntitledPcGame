@@ -25,7 +25,10 @@ public class Testing : MonoBehaviour
 #if UNITY_EDITOR
     private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            ((NumericPopup) eventManager.RequestPopUp("Pruebesita", App.AppType.NumericPopup)).Setup("1234");
+        }
     }
 #endif
 }

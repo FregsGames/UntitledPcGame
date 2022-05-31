@@ -53,17 +53,17 @@ public class ComputerScreen : Singleton<ComputerScreen>
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            uiScale += 0.05f;
-            eventManager.OnUIScaleChanged?.Invoke(uiScale);
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    uiScale += 0.05f;
+        //    eventManager.OnUIScaleChanged?.Invoke(uiScale);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            uiScale -= 0.05f;
-            eventManager.OnUIScaleChanged?.Invoke(uiScale);
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    uiScale -= 0.05f;
+        //    eventManager.OnUIScaleChanged?.Invoke(uiScale);
+        //}
     }
 
     protected override void Awake()

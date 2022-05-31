@@ -12,6 +12,8 @@ public class SystemEventManager : ScriptableObject
     public Action<string> OnStringPopUpSubmit;
     public Action<bool> OnNumericPopUpSubmit;
 
+    public Action<KeyCode> OnKeyPressed;
+
     public App RequestPopUp(string text, App.AppType appType)
     {
         if (!appType.ToString().Contains("Popup",StringComparison.OrdinalIgnoreCase))

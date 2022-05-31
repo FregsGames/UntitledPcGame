@@ -91,4 +91,25 @@ public class NumericPopup : App, IPopUp
     {
         this.text.text = text;
     }
+
+    private void Update()
+    {
+        if (gameObject.activeInHierarchy)
+        {
+            if (!string.IsNullOrEmpty(Input.inputString))
+            {
+                int key = -1;
+                if(int.TryParse(Input.inputString, out key))
+                {
+                    if(key < 9)
+                    {
+                        ProcessInput(key);
+                    }
+                }else if (Input.GetKeyDown(KeyCode.Backspace))
+                {
+                    ProcessInput(-1);
+                }
+            }
+        }
+    }
 }
