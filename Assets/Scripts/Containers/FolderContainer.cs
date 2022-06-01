@@ -25,7 +25,11 @@ public class FolderContainer : IconsContainer
     {
         RectTransform rectTransform = transform.parent.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = new Vector2(Screen.width - rectTransform.rect.width, Screen.height - rectTransform.rect.height) / 2;
-        transform.parent.gameObject.SetActive(true);
+        if (!transform.parent.gameObject.activeInHierarchy)
+        {
+            transform.parent.gameObject.SetActive(true);
+            Open();
+        }
     }
 
     public override void Close()

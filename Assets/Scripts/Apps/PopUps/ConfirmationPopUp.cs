@@ -16,7 +16,7 @@ namespace Assets.Scripts.Apps
         private void OnEnable()
         {
             confirmButton.onClick.AddListener(() => { systemEventManager.OnPopUpSubmit?.Invoke(true); Close(); });
-            cancelButton.onClick.AddListener(() => { systemEventManager.OnPopUpSubmit?.Invoke(false); Close(); });
+            cancelButton.onClick.AddListener(() => { systemEventManager.OnPopUpCancel?.Invoke(); Close(); });
         }
 
         private void OnDisable()

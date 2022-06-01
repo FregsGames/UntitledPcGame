@@ -44,7 +44,11 @@ public class App : UniqueID, ISaveableState
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
         rectTransform.anchoredPosition = new Vector2(Screen.width - rectTransform.rect.width, Screen.height - rectTransform.rect.height) / 2;
-        gameObject.SetActive(true);
+        if (!gameObject.activeInHierarchy)
+        {
+            gameObject.SetActive(true);
+            Open();
+        }
     }
 
     // Odin Stuff

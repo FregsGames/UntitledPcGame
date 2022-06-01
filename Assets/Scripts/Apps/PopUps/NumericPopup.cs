@@ -70,7 +70,7 @@ public class NumericPopup : App, IPopUp
     private void OnEnable()
     {
         confirmButton.onClick.AddListener(CheckKey);
-        cancelButton.onClick.AddListener(() => { systemEventManager.OnNumericPopUpSubmit?.Invoke(false); Close(); });
+        cancelButton.onClick.AddListener(() => { systemEventManager.OnPopUpCancel?.Invoke(); Close(); });
 
         OnKeyPressed += ProcessInput;
     }

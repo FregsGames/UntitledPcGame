@@ -19,7 +19,7 @@ namespace Assets.Scripts.Apps
         private void OnEnable()
         {
             confirmButton.onClick.AddListener(() => { systemEventManager.OnStringPopUpSubmit?.Invoke(inputField.text); Close(); });
-            cancelButton.onClick.AddListener(() => { systemEventManager.OnStringPopUpSubmit?.Invoke(null); Close(); });
+            cancelButton.onClick.AddListener(() => { systemEventManager.OnPopUpCancel?.Invoke(); Close(); });
         }
 
         private void OnDisable()

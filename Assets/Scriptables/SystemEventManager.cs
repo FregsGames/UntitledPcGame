@@ -11,6 +11,9 @@ public class SystemEventManager : ScriptableObject
     public Action<bool> OnPopUpSubmit;
     public Action<string> OnStringPopUpSubmit;
     public Action<bool> OnNumericPopUpSubmit;
+    public Action OnPopUpCancel;
+
+
 
     public Action<KeyCode> OnKeyPressed;
 
@@ -21,6 +24,8 @@ public class SystemEventManager : ScriptableObject
 
         if (Computer.Instance.Ram.IsAppOpen(appType))
             return null;
+
+        SoundManager.Instance.PlaySound(SoundManager.Sound.PopUpOpen);
 
         GameObject gameObject = InstantiatorManager.Instance.Instantiate(appType);
         gameObject.GetComponent<IPopUp>().SetText(text);

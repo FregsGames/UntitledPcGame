@@ -1,8 +1,8 @@
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static App;
-using System.Linq;
 
 public class Ram : SerializedMonoBehaviour
 {
@@ -16,12 +16,14 @@ public class Ram : SerializedMonoBehaviour
     {
         systemEventManager.OnAppOpen += PushApp;
         systemEventManager.OnAppClosed += RemoveApp;
+        systemEventManager.OnPopUpCancel = () => { SoundManager.Instance.PlaySound(SoundManager.Sound.Cancel); };
     }
 
     private void OnDisable()
     {
         systemEventManager.OnAppOpen -= PushApp;
         systemEventManager.OnAppClosed -= RemoveApp;
+        systemEventManager.OnPopUpCancel = null;
     }
 
     public bool IsAppOpen(AppType appType)
@@ -34,6 +36,11 @@ public class Ram : SerializedMonoBehaviour
         if (currentlyOpenApps.ContainsValue(app))
             return;
 
+        if (app is not IPopUp)
+        {
+            SoundManager.Instance.PlaySound(SoundManager.Sound.AppOpen, 1 + currentlyOpenApps.Count * 0.025f);
+        }
+
         currentlyOpenApps.Add(app.ID, app);
     }
 
@@ -41,6 +48,11 @@ public class Ram : SerializedMonoBehaviour
     {
         if (!currentlyOpenApps.ContainsKey(appID))
             return;
+
+        if (currentlyOpenApps[appID] is not IPopUp)
+        {
+            SoundManager.Instance.PlaySound(SoundManager.Sound.Cancel);
+        }
 
         currentlyOpenApps.Remove(appID);
     }
