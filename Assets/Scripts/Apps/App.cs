@@ -37,6 +37,7 @@ public class App : UniqueID, ISaveableState
         Serialize();
         systemEventManager.OnAppClosed?.Invoke(ID);
 
+
         Destroy(gameObject);
     }
 

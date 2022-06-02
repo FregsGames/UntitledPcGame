@@ -24,7 +24,7 @@ public class NotificationCard : MonoBehaviour, IPointerClickHandler
     {
         if(associatedApp != null)
         {
-            // open app
+            associatedApp.Open();
         }
     }
 

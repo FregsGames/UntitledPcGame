@@ -15,9 +15,8 @@ public class NotificationCenter : MonoBehaviour
 
     private bool showingNotification;
 
-    private async void Start()
+    public void Initialize()
     {
-        await Task.Delay(1000);
         notificationCard = Instantiate(notificationCardPrefab, Computer.Instance.Desktop.transform).GetComponent<NotificationCard>();
     }
 
@@ -41,6 +40,8 @@ public class NotificationCenter : MonoBehaviour
 
     private async void ShowNotification()
     {
+        SoundManager.Instance.PlaySound(SoundManager.Sound.Notification);
+
         showingNotification = true;
         Notification notification = notificationQueue.Dequeue();
         notificationCard.Setup(notification);

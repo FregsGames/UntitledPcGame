@@ -8,7 +8,8 @@ public class SoundManager : SerializedMonoBehaviour
     {
         AppOpen,
         PopUpOpen,
-        Cancel
+        Cancel,
+        Notification
     }
 
     [SerializeField]
