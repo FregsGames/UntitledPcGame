@@ -10,6 +10,7 @@ public class PrefabsDB : SerializedScriptableObject
     [SerializeField]
     private Dictionary<AppType, GameObject> prefabs;
 
+
     public GameObject GetPrefab(AppType type)
     {
         if (prefabs.ContainsKey(type))
