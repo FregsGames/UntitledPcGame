@@ -86,7 +86,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
+    m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -225,9 +225,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 5a5b0000
-      m_LastClickedID: 23386
-      m_ExpandedIDs: cefaffff3afbfffff4ffffff0a5b0000485b0000
+      m_SelectedIDs: 84f4ffff
+      m_LastClickedID: -2940
+      m_ExpandedIDs: e2f2ffff84f4ffff3afbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -310,8 +310,8 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: -100, y: -25.599976}
-      snapOffsetDelta: {x: 0, y: 0}
+      snapOffset: {x: 0, y: 0}
+      snapOffsetDelta: {x: -100, y: -25.599976}
       snapCorner: 3
       id: Tool Settings
       index: 0
@@ -332,7 +332,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 0, y: 24.8}
+      snapOffset: {x: 0, y: 0}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: unity-scene-view-toolbar
@@ -502,9 +502,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 116.40819, y: 1029.107, z: 0.0947229}
+    m_Target: {x: 696.3909, y: 1129.1206, z: 6.7143645}
     speed: 2
-    m_Value: {x: 116.40819, y: 1029.107, z: 0.0947229}
+    m_Value: {x: 696.3909, y: 1129.1206, z: 6.7143645}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -555,9 +555,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 126.10538
+    m_Target: 1310.6725
     speed: 2
-    m_Value: 126.10538
+    m_Value: 1310.6725
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -601,8 +601,8 @@ MonoBehaviour:
     y: 0
     width: 752
     height: 679.2
-  m_MinSize: {x: 102, y: 121}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 2}
@@ -676,22 +676,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs/Apps
+    - Assets/Scripts/ComputerComponents
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Prefabs/Apps
+  - Assets/Scripts/ComputerComponents
   m_LastFoldersGridSize: 16
   m_LastProjectPath: D:\Proyectos Unity\UntitledPcGame
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 64.60004}
-    m_SelectedIDs: 88600000
-    m_LastClickedID: 24712
-    m_ExpandedIDs: 000000008460000086600000886000008a6000008c6000008e60000090600000926000009460000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: c2600000
+    m_LastClickedID: 24770
+    m_ExpandedIDs: 00000000906000009260000094600000966000009a6000009c600000a060000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -719,7 +719,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000008460000086600000886000008a6000008c6000008e60000090600000926000009460000000ca9a3bffffff7f
+    m_ExpandedIDs: 0000000090600000926000009460000096600000986000009a6000009c6000009e600000a060000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -744,10 +744,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 5a5b0000
-    m_LastClickedInstanceID: 23386
-    m_HadKeyboardFocusLastEvent: 0
-    m_ExpandedInstanceIDs: c62300000000000000690000b85b0000d65b0000
+    m_SelectedInstanceIDs: 84f4ffff
+    m_LastClickedInstanceID: -2940
+    m_HadKeyboardFocusLastEvent: 1
+    m_ExpandedInstanceIDs: c62300000000000000690000b85b0000d65b000090610000d0610000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -864,7 +864,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 0
+  m_LastVerticalScrollValue: 104.80011
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:

@@ -1,15 +1,24 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Booter : MonoBehaviour
 {
-    private void Start()
+    [SerializeField]
+    private BootScreen bootScreen;
+
+    [SerializeField]
+    private bool showBootScreen = true;
+
+    private async Task Start()
     {
-        // TODO: AQUÍ METER UNA PANTALLA DE CARGA
+        if (showBootScreen)
+            await bootScreen.ShowBootScreen();
 
         Computer.Instance.Desktop.LoadState();
         Computer.Instance.NotificationCenter.Initialize();
         FolderManager.Instance.Initialize();
         Computer.Instance.NotificationCenter.RequestNotification(null, "Buenos días", "Todo listo", null);
 
+        await bootScreen.HideBootScreen();
     }
 }
