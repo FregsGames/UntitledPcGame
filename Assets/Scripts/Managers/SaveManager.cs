@@ -222,6 +222,7 @@ public class SaveManager : MonoBehaviour
     {
         Read();
         Translations.Instance.LoadTranslationsOfCurrentLang();
+        SoundManager.Instance.LoadSettings();
     }
 
     #endregion

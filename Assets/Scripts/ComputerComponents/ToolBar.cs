@@ -10,4 +10,9 @@ public class ToolBar : MonoBehaviour
         await Task.Delay(1000);
         ComputerScreen.Instance.BlockPanel.EnableBlock(false);
     }
+
+    public void OpenSettings()
+    {
+        InstantiatorManager.Instance.Instantiate(App.AppType.Settings);
+    }
 }

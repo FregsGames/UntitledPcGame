@@ -23,6 +23,7 @@ public class SoundManager : SerializedMonoBehaviour
     {
         Volume = vol;
         soundAudioSource.volume = vol;
+        SaveManager.Instance.Save("volume", vol);
     }
 
     public void PlaySound(Sound sound, float pitch = 1)
@@ -35,6 +36,11 @@ public class SoundManager : SerializedMonoBehaviour
             soundAudioSource.PlayOneShot(audioClip);
             Debug.Log($"[AUDIO] playing {audioClip.name}");
         }
+    }
+
+    public void LoadSettings()
+    {
+        SetVolume(SaveManager.Instance.RetrieveFloat("volume", 1f));
     }
 
     #region Singleton
