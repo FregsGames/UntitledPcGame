@@ -83,7 +83,8 @@ public class IconsContainer : App
         {
             for (int j = 0; j < rows; j++)
             {
-                Vector3 position = new Vector3(rect.position.x + rect.rect.width / (cols + 1) * (i + 1), (rect.position.y + rect.rect.height) - rect.rect.height / (rows + 1) * (j + 1), 0);
+                Vector3 position = GetGridPositionOfPoint(i, j);
+
                 FolderPosition key = new FolderPosition(new Vector2Int(i, j), position);
 
                 if (!grid.ContainsKey(key))
@@ -92,6 +93,23 @@ public class IconsContainer : App
                 }
             }
         }
+    }
+
+    private Vector3 GetGridPositionOfPoint(int i, int j)
+    {
+        var stepX = rect.rect.width / cols;
+        var startX = rect.position.x + (stepX / 2f);
+
+        var topBarHeight = (windowTopBar != null) ?
+            0 // Top bar not included in the container, so it is not neccesary to substract
+            : FindObjectOfType<ToolBar>().GetComponent<RectTransform>().rect.height;
+
+        var stepY = (rect.rect.height - topBarHeight) / rows;
+        var startY = rect.position.y + (stepY / 2f);
+
+        Vector3 position = new Vector3(
+            startX + stepX * i, startY + stepY * j, 0);
+        return position;
     }
 
     protected virtual void PositionateIcons()
@@ -266,17 +284,17 @@ public class IconsContainer : App
         {
             for (int j = 0; j < rows; j++)
             {
-                Vector3 position = new Vector3(rect.position.x + rect.rect.width / (cols + 1) * (i + 1), rect.position.y + rect.rect.height / (rows + 1) * (j + 1), 0);
+                Vector3 position = GetGridPositionOfPoint(i, j);
 
                 FolderPosition key = new FolderPosition(new Vector2Int(i, j), position);
 
                 if (grid.ContainsKey(key) && grid[key] != null)
                 {
-                    Gizmos.DrawCube(key.absolutePosition, Vector3.one * 20);
+                    Gizmos.DrawCube(key.absolutePosition, Vector3.one * 15);
                 }
                 else
                 {
-                    Gizmos.DrawSphere(key.absolutePosition, 20);
+                    Gizmos.DrawSphere(key.absolutePosition, 15);
                 }
 
             }
