@@ -13,7 +13,8 @@ public class App : UniqueID, ISaveableState
         ConfirmationPopup = 6,
         StringPopup = 7,
         NumericPopup = 8,
-        Settings = 9
+        Settings = 9,
+        Alarms = 10
     }
     [SerializeField]
     protected AppType type;
