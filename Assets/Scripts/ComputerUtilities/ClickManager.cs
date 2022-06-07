@@ -22,6 +22,9 @@ public class ClickManager : MonoBehaviour
 
     private void ActivateHoverBackground(Icon icon)
     {
+        if (icon?.BackgroundHover == null)
+            return;
+
         icon?.BackgroundHover.SetActive(true);
         if ((icon == null && previousSelectedIcon != null) || (icon != null && previousSelectedIcon != null && icon != previousSelectedIcon))
         {

@@ -100,12 +100,18 @@ public class IconsContainer : App
         var stepX = rect.rect.width / cols;
         var startX = rect.position.x + (stepX / 2f);
 
-        var topBarHeight = (windowTopBar != null) ?
+        var barsHeight = (windowTopBar != null) ?
             0 // Top bar not included in the container, so it is not neccesary to substract
-            : FindObjectOfType<ToolBar>().GetComponent<RectTransform>().rect.height;
+            : FindObjectOfType<ToolBar>().GetComponent<RectTransform>().rect.height +
+            GameObject.Find("BottomBar").GetComponent<RectTransform>().rect.height;
 
-        var stepY = (rect.rect.height - topBarHeight) / rows;
-        var startY = rect.position.y + (stepY / 2f);
+        var stepY = (rect.rect.height - barsHeight) / rows;
+        var startY = (
+            (windowTopBar != null) ? 
+            rect.position.y : 
+            rect.position.y + GameObject.Find("BottomBar").GetComponent<RectTransform>().rect.height +
+            GameObject.Find("BottomBar").GetComponent<RectTransform>().position.y
+            ) + (stepY / 2f);
 
         Vector3 position = new Vector3(
             startX + stepX * i, startY + stepY * j, 0);

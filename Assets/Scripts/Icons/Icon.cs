@@ -25,11 +25,11 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
 
     [Header("Associated app")]
     [SerializeField]
-    private App associatedApp;
+    protected App associatedApp;
     [SerializeField]
-    private AppType associatedAppType;
+    protected AppType associatedAppType;
     [SerializeField]
-    private string associatedAppID;
+    protected string associatedAppID;
 
     // Properties
     public IconsContainer Container { get; set; }
@@ -45,7 +45,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     public Color SpriteColor { get => image.color; }
 
     // Drag
-    private bool dragging = false;
+    protected bool dragging = false;
     protected Vector3 originalPos = Vector3.zero;
 
     private void OnEnable()
@@ -65,7 +65,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
         originalPos = pos;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public virtual void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.clickCount == 2 && !dragging)
         {
