@@ -1,8 +1,18 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Alarm : MonoBehaviour
+public struct AlarmData
+{
+    public string id;
+    public string description;
+    public (int, int) time;
+    public bool enabled;
+}
+
+public class Alarm : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField]
     private TextMeshProUGUI text;
@@ -10,6 +20,11 @@ public class Alarm : MonoBehaviour
     private Toggle toggle;
     [SerializeField]
     private TextMeshProUGUI desc;
+    [SerializeField]
+    private SystemEventManager eventManager;
+
+    public AlarmData AlarmData { get => alarmData; set => alarmData = value; }
+    private AlarmData alarmData;
 
     public bool AlarmEnabled { get; set; }
 
@@ -25,7 +40,7 @@ public class Alarm : MonoBehaviour
 
     public void RemoveAlarm()
     {
-
+        AlarmsManager.Instance.OnAlarmRemoved?.Invoke(AlarmData);
     }
 
     private void OnDisable()
@@ -33,13 +48,47 @@ public class Alarm : MonoBehaviour
         toggle.onValueChanged.RemoveAllListeners();
     }
 
-    public void Setup(int hours, int minutes, bool enabled, string desc)
+    public void Setup(AlarmData alarmData)
     {
-        string hourFormatted = (hours < 10) ? $"0{hours}" : $"{hours}";
-        string minutesFormatted = (minutes < 10) ? $"0{minutes}" : $"{minutes}";
+        AlarmData = alarmData;
 
-        this.desc.text = desc;
-        text.text = $"{hourFormatted}:{minutesFormatted}";
+        this.alarmData.id = string.IsNullOrEmpty(alarmData.id) ? Guid.NewGuid().ToString() : alarmData.id;
+        SetFormatedTime(alarmData.time);
+        desc.text = alarmData.description;
         toggle.SetIsOnWithoutNotify(enabled);
+        AlarmsManager.Instance.OnAlarmCreated?.Invoke(alarmData);
+    }
+
+    private void SetFormatedTime((int, int) time)
+    {
+        string hourFormatted = (time.Item1 < 10) ? $"0{time.Item1}" : $"{time.Item1}";
+        string minutesFormatted = (time.Item2 < 10) ? $"0{time.Item2}" : $"{time.Item2}";
+
+        text.text = $"{hourFormatted}:{minutesFormatted}";
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        ((NumericPopup)eventManager.RequestPopUp("Introduce la hora (hh:mm)", App.AppType.NumericPopup)).Setup(4);
+        eventManager.OnPopUpCancel += UnsubscribePopup;
+        eventManager.OnNumericPopUpNumberSubmit += SetAlarmTime;
+    }
+
+    private void SetAlarmTime(string time)
+    {
+        int hour = int.Parse(time.Substring(0, 2));
+        int minutes = int.Parse(time.Substring(2, 2));
+
+        if (hour > 23 || minutes > 59)
+            return;
+
+        alarmData.time = (hour, minutes);
+        SetFormatedTime(alarmData.time);
+        AlarmsManager.Instance.OnAlarmCreated?.Invoke(alarmData);
+    }
+
+    private void UnsubscribePopup()
+    {
+
     }
 }

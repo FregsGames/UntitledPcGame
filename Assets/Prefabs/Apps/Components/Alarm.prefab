@@ -65,6 +65,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 867499894122056149}
   toggle: {fileID: 9121274155242528591}
+  desc: {fileID: 4251821933982017254}
+  eventManager: {fileID: 11400000, guid: 9aaa532c3ce371c4087327a6c4361902, type: 2}
 --- !u!114 &3203940808911255342
 MonoBehaviour:
   m_ObjectHideFlags: 0

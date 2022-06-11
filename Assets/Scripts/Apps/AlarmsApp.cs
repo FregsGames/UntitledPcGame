@@ -32,7 +32,13 @@ public class AlarmsApp : App
         }
 
         Alarm alarm = Instantiate(alarmPrefab, contanier).GetComponent<Alarm>();
-        alarm.Setup(0, 0, false, "Esto es una alarma.");
+        AlarmData alarmData = new AlarmData()
+        {
+            time = (18, 07),
+            description = "Esto es una alarma.",
+            enabled = true
+        };
+        alarm.Setup(alarmData);
     }
 
 

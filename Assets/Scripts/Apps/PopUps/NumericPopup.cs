@@ -25,18 +25,35 @@ public class NumericPopup : App, IPopUp
 
     private Dictionary<int, string> screenElements = new Dictionary<int, string>();
 
+    private bool sendNumbers = false;
+    private int size = 0;
+
     public void Setup(string key)
     {
         Key = key;
         CleanScreenElements();
         InstantiateScreenElements(key);
+        sendNumbers = false;
+    }
+
+    public void Setup(int count)
+    {
+        CleanScreenElements();
+        InstantiateScreenElements(count);
+        sendNumbers = true;
     }
 
     private void InstantiateScreenElements(string key)
     {
+        InstantiateScreenElements(key.Length);
+    }
+
+    private void InstantiateScreenElements(int count)
+    {
+        size = count;
         screenElements.Clear();
 
-        for (int i = 0; i < key.Length; i++)
+        for (int i = 0; i < count; i++)
         {
             screenElements.Add(i, "");
             Instantiate(screenElementPrefab, screenPanel);
@@ -60,7 +77,7 @@ public class NumericPopup : App, IPopUp
                 screenPanel.GetChild(CurrentInputKey.Length).GetComponentInChildren<TextMeshProUGUI>().text = "";
             }
         }
-        else if(CurrentInputKey.Length < Key.Length)
+        else if(CurrentInputKey.Length < size)
         {
             CurrentInputKey += key.ToString();
             screenPanel.GetChild(CurrentInputKey.Length -1).GetComponentInChildren<TextMeshProUGUI>().text = key.ToString();
@@ -69,16 +86,24 @@ public class NumericPopup : App, IPopUp
 
     private void OnEnable()
     {
-        confirmButton.onClick.AddListener(CheckKey);
+        confirmButton.onClick.AddListener(Send);
         cancelButton.onClick.AddListener(() => { systemEventManager.OnPopUpCancel?.Invoke(); Close(); });
 
         OnKeyPressed += ProcessInput;
     }
 
-    private void CheckKey()
+    private void Send()
     {
-        systemEventManager.OnNumericPopUpSubmit?.Invoke(CurrentInputKey == Key);
-        if (CurrentInputKey == Key) Close();
+        if (!sendNumbers)
+        {
+            systemEventManager.OnNumericPopUpSubmit?.Invoke(CurrentInputKey == Key);
+            if (CurrentInputKey == Key) Close();
+        }
+        else
+        {
+            systemEventManager.OnNumericPopUpNumberSubmit?.Invoke(CurrentInputKey);
+            Close();
+        }
     }
 
     private void OnDisable()

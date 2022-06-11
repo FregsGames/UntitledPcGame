@@ -18,8 +18,8 @@ public class ComputerScreen : Singleton<ComputerScreen>
     private UIEventManager eventManager;
 
     [Header("UI Scaling")]
-    [SerializeField]
-    private float uiScale = 1f;
+    //[SerializeField]
+    //private float uiScale = 1f;
     [SerializeField]
     private Vector2 iconsBaseSize = new Vector2(100, 100);
     [SerializeField]

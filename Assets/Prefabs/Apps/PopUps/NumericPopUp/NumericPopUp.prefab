@@ -2392,7 +2392,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1385560512524105846, guid: ed6151114c1bccb438888c0ee23f3c1b, type: 3}
       propertyPath: m_text
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3067360636540686398, guid: ed6151114c1bccb438888c0ee23f3c1b, type: 3}
       propertyPath: m_Pivot.x
@@ -2480,11 +2480,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5658875302588944719, guid: ed6151114c1bccb438888c0ee23f3c1b, type: 3}
       propertyPath: m_Name
-      value: NumericButton_8
+      value: NumericButton_3
       objectReference: {fileID: 0}
     - target: {fileID: 9160706010388867819, guid: ed6151114c1bccb438888c0ee23f3c1b, type: 3}
       propertyPath: key
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed6151114c1bccb438888c0ee23f3c1b, type: 3}
