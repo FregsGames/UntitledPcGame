@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,10 +17,21 @@ public class AlarmsApp : App
     private void OnEnable()
     {
         addAlarmButton.onClick.AddListener(CreateNewAlarm);
+        InstantiateAlarms();
     }
+
     private void OnDisable()
     {
         addAlarmButton.onClick.RemoveAllListeners();
+    }
+
+    private void InstantiateAlarms()
+    {
+        foreach (var alarmData in AlarmsManager.Instance.Alarms)
+        {
+            var alarmGO = Instantiate(alarmPrefab, contanier);
+            alarmGO.GetComponent<Alarm>().Setup(alarmData, false);
+        }
     }
 
     private void CreateNewAlarm()
@@ -34,11 +46,11 @@ public class AlarmsApp : App
         Alarm alarm = Instantiate(alarmPrefab, contanier).GetComponent<Alarm>();
         AlarmData alarmData = new AlarmData()
         {
-            time = (18, 07),
+            time = (00, 00),
             description = "Esto es una alarma.",
             enabled = true
         };
-        alarm.Setup(alarmData);
+        alarm.Setup(alarmData, true);
     }
 
 

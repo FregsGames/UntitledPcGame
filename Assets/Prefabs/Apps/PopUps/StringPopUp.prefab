@@ -842,7 +842,7 @@ GameObject:
   - component: {fileID: 3585767323366967258}
   - component: {fileID: 3585767323366967268}
   - component: {fileID: 3585767323366967269}
-  - component: {fileID: 3291284402950509389}
+  - component: {fileID: 8151345374127648867}
   m_Layer: 5
   m_Name: StringPopUp
   m_TagString: Untagged
@@ -909,7 +909,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3291284402950509389
+--- !u!114 &8151345374127648867
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -918,16 +918,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 3585767323366967259}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 385e7a0e1be72b041a35c08344ad91f9, type: 3}
+  m_Script: {fileID: 11500000, guid: d734d75a00320e24a810b9e60befc3f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 4a17f429-b890-4a82-bd59-e6aacf8a1c61
+  id: ea84fdf4-559e-46f6-a43a-d181258d9b7b
   type: 7
   systemEventManager: {fileID: 11400000, guid: 9aaa532c3ce371c4087327a6c4361902, type: 2}
   uiEventManager: {fileID: 11400000, guid: aec22e18a2f8fa240985198520e6577f, type: 2}
   root: {fileID: 3585767323366967258}
   confirmButton: {fileID: 3585767322059339974}
   cancelButton: {fileID: 3585767323301837154}
+  inputField: {fileID: 6579427485033257689}
   text: {fileID: 3585767322816765266}
 --- !u!1 &3585767323425031554
 GameObject:

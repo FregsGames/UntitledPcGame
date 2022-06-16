@@ -12,7 +12,7 @@ public struct AlarmData
     public bool enabled;
 }
 
-public class Alarm : MonoBehaviour, IPointerClickHandler
+public class Alarm : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI text;
@@ -30,17 +30,8 @@ public class Alarm : MonoBehaviour, IPointerClickHandler
 
     private void OnEnable()
     {
-        toggle.onValueChanged.AddListener(SetAlamrEnabled);
-    }
-
-    private void SetAlamrEnabled(bool state)
-    {
-        AlarmEnabled = state;
-    }
-
-    public void RemoveAlarm()
-    {
-        AlarmsManager.Instance.OnAlarmRemoved?.Invoke(AlarmData);
+        toggle.onValueChanged.AddListener(SetAlarmEnabled);
+        
     }
 
     private void OnDisable()
@@ -48,15 +39,31 @@ public class Alarm : MonoBehaviour, IPointerClickHandler
         toggle.onValueChanged.RemoveAllListeners();
     }
 
-    public void Setup(AlarmData alarmData)
+    private void SetAlarmEnabled(bool state)
+    {
+        AlarmEnabled = state;
+        alarmData.enabled = state;
+        AlarmsManager.Instance.OnAlarmCreated?.Invoke(alarmData);
+    }
+
+    public void RemoveAlarm()
+    {
+        AlarmsManager.Instance.OnAlarmRemoved?.Invoke(AlarmData);
+        Destroy(gameObject);
+    }
+
+    public void Setup(AlarmData alarmData, bool notify)
     {
         AlarmData = alarmData;
 
         this.alarmData.id = string.IsNullOrEmpty(alarmData.id) ? Guid.NewGuid().ToString() : alarmData.id;
         SetFormatedTime(alarmData.time);
         desc.text = alarmData.description;
-        toggle.SetIsOnWithoutNotify(enabled);
-        AlarmsManager.Instance.OnAlarmCreated?.Invoke(alarmData);
+        toggle.SetIsOnWithoutNotify(alarmData.enabled);
+        if (notify)
+        {
+            AlarmsManager.Instance.OnAlarmCreated?.Invoke(AlarmData);
+        }
     }
 
     private void SetFormatedTime((int, int) time)
@@ -67,11 +74,31 @@ public class Alarm : MonoBehaviour, IPointerClickHandler
         text.text = $"{hourFormatted}:{minutesFormatted}";
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void ModifyAlarm()
     {
         ((NumericPopup)eventManager.RequestPopUp("Introduce la hora (hh:mm)", App.AppType.NumericPopup)).Setup(4);
-        eventManager.OnPopUpCancel += UnsubscribePopup;
+        eventManager.OnPopUpCancel += UnsubscribeNumericPopup;
         eventManager.OnNumericPopUpNumberSubmit += SetAlarmTime;
+    }
+
+    public void ModifyDescription()
+    {
+        eventManager.RequestPopUp("Descripción", App.AppType.StringPopup);
+        eventManager.OnPopUpCancel += UnsubscribeStringPopup;
+        eventManager.OnStringPopUpSubmit += SetDescription;
+    }
+
+    private void SetDescription(string newDesc)
+    {
+        alarmData.description = newDesc;
+        desc.text = newDesc;
+        UnsubscribeStringPopup();
+        AlarmsManager.Instance.OnAlarmCreated?.Invoke(alarmData);
+    }
+
+    private void UnsubscribeStringPopup()
+    {
+        eventManager.OnPopUpCancel -= UnsubscribeNumericPopup;
     }
 
     private void SetAlarmTime(string time)
@@ -85,10 +112,12 @@ public class Alarm : MonoBehaviour, IPointerClickHandler
         alarmData.time = (hour, minutes);
         SetFormatedTime(alarmData.time);
         AlarmsManager.Instance.OnAlarmCreated?.Invoke(alarmData);
+        UnsubscribeNumericPopup();
     }
 
-    private void UnsubscribePopup()
+    private void UnsubscribeNumericPopup()
     {
-
+        eventManager.OnPopUpCancel -= UnsubscribeNumericPopup;
+        eventManager.OnNumericPopUpNumberSubmit -= SetAlarmTime;
     }
 }

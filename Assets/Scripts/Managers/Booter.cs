@@ -14,10 +14,14 @@ public class Booter : MonoBehaviour
         if (showBootScreen)
             await bootScreen.ShowBootScreen();
 
+        SaveManager.Instance.LoadSave();
         Computer.Instance.Desktop.LoadState();
         Computer.Instance.NotificationCenter.Initialize();
+
+        await Task.Delay(1000);
+
         FolderManager.Instance.Initialize();
-        Computer.Instance.NotificationCenter.RequestNotification(null, "Buenos días", "Todo listo", null);
+        AlarmsManager.Instance.LoadSettings();
 
         await bootScreen.HideBootScreen();
     }

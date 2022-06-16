@@ -14,9 +14,14 @@ public class AlarmsManager : Singleton<AlarmsManager>
 
     private Dictionary<string, AlarmData> alarmList = new Dictionary<string, AlarmData>();
 
+    public List<AlarmData> Alarms { get => alarmList.Values.ToList(); }
+
     private Dictionary<string, (int,int)> soundedAlarms = new Dictionary<string, (int, int)>();
 
     private WaitForSeconds wait = new WaitForSeconds(5f);
+    private bool AtLeastOneEnabledAlarm => alarmList.Count > 0 && alarmList.Any(a => a.Value.enabled);
+
+    private bool checkingAlarms;
 
     private void OnEnable()
     {
@@ -28,6 +33,8 @@ public class AlarmsManager : Singleton<AlarmsManager>
     {
         SoundManager.Instance.PlaySound(SoundManager.Sound.Cancel);
         alarmList.Remove(alarm.id);
+
+        SaveAlarms();
     }
 
     private void AddAlarm(AlarmData alarm)
@@ -35,16 +42,23 @@ public class AlarmsManager : Singleton<AlarmsManager>
         if (alarmList.ContainsKey(alarm.id))
         {
             alarmList[alarm.id] = alarm;
-            return;
+            if (soundedAlarms.ContainsKey(alarm.id))
+            {
+                soundedAlarms.Remove(alarm.id);
+            }
+        }
+        else
+        {
+            alarmList.Add(alarm.id, alarm);
+            SoundManager.Instance.PlaySound(SoundManager.Sound.AppOpen);
         }
 
-        alarmList.Add(alarm.id, alarm);
-        SoundManager.Instance.PlaySound(SoundManager.Sound.AppOpen);
-
-        if(alarmList.Count == 1)
-        {
+        if(AtLeastOneEnabledAlarm && !checkingAlarms)
+        { 
             StartCoroutine(AlarmCheck());
         }
+
+        SaveAlarms();
     }
 
     private void OnDisable()
@@ -55,12 +69,48 @@ public class AlarmsManager : Singleton<AlarmsManager>
 
     public void LoadSettings()
     {
+        Dictionary<string, string> dictionary = SaveManager.Instance.RetrieveStringThatContains("alarm_");
+        List<string> keys =  dictionary.Where(e => e.Key.Equals("alarm_key")).Select(x => x.Value).ToList();
 
+        foreach (var key in keys)
+        {
+            AlarmData alarmData = new AlarmData()
+            {
+                id = key,
+                description = dictionary[$"alarm_{key}_description"],
+                enabled = dictionary[$"alarm_{key}_enabled"].Equals("true")? true : false,
+                time = (int.Parse(dictionary[$"alarm_{key}_hour"]), int.Parse(dictionary[$"alarm_{key}_minute"]))
+            };
+
+            alarmList.Add(key, alarmData);
+        }
+
+        if (alarmList.Count > 0)
+        {
+            StartCoroutine(AlarmCheck());
+        }
     }
+
+    private void SaveAlarms()
+    {
+        foreach (var alarm in alarmList)
+        {
+            Dictionary<string, string> alarmInfo = new Dictionary<string, string>();
+            alarmInfo.Add($"alarm_key", alarm.Key);
+            alarmInfo.Add($"alarm_{alarm.Key}_enabled", alarm.Value.enabled? "true" : "false");
+            alarmInfo.Add($"alarm_{alarm.Key}_hour", alarm.Value.time.Item1.ToString());
+            alarmInfo.Add($"alarm_{alarm.Key}_minute", alarm.Value.time.Item2.ToString());
+            alarmInfo.Add($"alarm_{alarm.Key}_description", alarm.Value.description);
+            SaveManager.Instance.Save(alarmInfo, alarm.Key);
+        }
+    }
+
 
     IEnumerator AlarmCheck()
     {
-        while(alarmList.Count > 0)
+        checkingAlarms = true;
+
+        while (AtLeastOneEnabledAlarm)
         {
             foreach (var alarm in alarmList.Values)
             {
@@ -68,7 +118,8 @@ public class AlarmsManager : Singleton<AlarmsManager>
                 {
                     if (soundedAlarms.ContainsKey(alarm.id))
                     {
-                        if (soundedAlarms[alarm.id].Item1 == DateTime.Now.Hour && soundedAlarms[alarm.id].Item2 == DateTime.Now.Minute)
+                        if (soundedAlarms[alarm.id].Item1 == DateTime.Now.Hour && 
+                            soundedAlarms[alarm.id].Item2 == DateTime.Now.Minute)
                         {
                             continue;
                         }
@@ -84,5 +135,7 @@ public class AlarmsManager : Singleton<AlarmsManager>
             }
             yield return wait;
         }
+
+        checkingAlarms = false;
     }
 }

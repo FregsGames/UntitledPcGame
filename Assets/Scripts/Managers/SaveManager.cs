@@ -218,12 +218,11 @@ public class SaveManager : MonoBehaviour
 
     }
 
-    private void Start()
+    public void LoadSave()
     {
         Read();
         Translations.Instance.LoadTranslationsOfCurrentLang();
         SoundManager.Instance.LoadSettings();
-        AlarmsManager.Instance.LoadSettings();
     }
 
     #endregion
