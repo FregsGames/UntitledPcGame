@@ -14,7 +14,8 @@ public class App : UniqueID, ISaveableState
         StringPopup = 7,
         NumericPopup = 8,
         Settings = 9,
-        Alarms = 10
+        Alarms = 10,
+        SecurityCameras
     }
     [SerializeField]
     protected AppType type;
