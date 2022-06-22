@@ -24,6 +24,11 @@ public class SecurityCameraManager : SerializedSingleton<SecurityCameraManager>
         return securityCameras[name];
     }
 
+    public async void CloseCamera(string name)
+    {
+        await SceneManager.UnloadSceneAsync(name);
+    }
+
     private void Start()
     {
         //await UniTask.Delay(10000);

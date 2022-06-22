@@ -27,9 +27,11 @@ public class CameraButton : MonoBehaviour
         button.onClick.RemoveAllListeners();
     }
 
-    private void ShowCamera()
+    private async void ShowCamera()
     {
         GetComponentInParent<CamerasApp>().LoadState(AppsStates.CameraState.Camera);
-        SecurityCameraManager.Instance.LoadSecurityCamera(cameraName);
+        var texture = await SecurityCameraManager.Instance.LoadSecurityCamera(cameraName);
+        GetComponentInParent<CamerasApp>().SetCamera(texture, cameraName);
+
     }
 }

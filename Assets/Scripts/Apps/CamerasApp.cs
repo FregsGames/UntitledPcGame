@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CamerasApp : App, IStateableApp
 {
@@ -14,6 +15,20 @@ public class CamerasApp : App, IStateableApp
     [SerializeField]
     private AppStateDictionary states;
 
+    [SerializeField]
+    private RawImage rawImage;
+
+    private string currentCameraName = "";
+
+    public override void Close()
+    {
+        if (!string.IsNullOrEmpty(currentCameraName))
+        {
+            SecurityCameraManager.Instance.CloseCamera(currentCameraName);
+        }
+        base.Close();
+    }
+
     public void LoadState(Enum state)
     {
         if (state is not AppsStates.CameraState)
@@ -21,8 +36,21 @@ public class CamerasApp : App, IStateableApp
 
         foreach (var s in States.States)
         {
-            s.Value.SetActive(s.Key == state);
+            s.Value.gameObject.SetActive(s.Key.ToString() == state.ToString());
         }
+    }
+
+    public void SetCamera(Texture texure, string name)
+    {
+        currentCameraName = name;
+        rawImage.texture = texure;
+    }
+
+    public void BackButton()
+    {
+        SecurityCameraManager.Instance.CloseCamera(currentCameraName);
+        LoadState(AppsStates.CameraState.General);
+        currentCameraName = "";
     }
 
 
