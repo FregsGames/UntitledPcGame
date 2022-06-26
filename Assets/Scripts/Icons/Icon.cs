@@ -75,7 +75,11 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
             }
             else
             {
-                associatedApp = InstantiatorManager.Instance.Instantiate(associatedAppType, associatedAppID).GetComponentInChildren<App>();
+                var associatedGO = InstantiatorManager.Instance.Instantiate(associatedAppType, associatedAppID);
+                if (associatedGO == null)
+                    return;
+
+                associatedApp = associatedGO.GetComponentInChildren<App>();
                 associatedApp.Open();
 
                 if (associatedAppID == string.Empty)

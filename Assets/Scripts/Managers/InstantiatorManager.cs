@@ -10,6 +10,12 @@ public class InstantiatorManager : Singleton<InstantiatorManager>
 
     public GameObject Instantiate(AppType type, string id = "")
     {
+        if (LockManager.Instance.IsLocked(type))
+        {
+            LockManager.Instance.ResolveOpenAttempt(type);
+            return null;
+        }
+
         switch (type)
         {
             case AppType.LockedFolder:

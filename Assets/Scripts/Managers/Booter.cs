@@ -22,6 +22,7 @@ public class Booter : MonoBehaviour
 
         FolderManager.Instance.Initialize();
         AlarmsManager.Instance.LoadSettings();
+        LockManager.Instance.LoadSettings();
 
         await bootScreen.HideBootScreen();
     }
