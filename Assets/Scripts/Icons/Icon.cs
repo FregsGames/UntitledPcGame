@@ -17,11 +17,15 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     [SerializeField]
     private UIEventManager eventManager;
     [SerializeField]
+    private SystemEventManager systemEventManager;
+    [SerializeField]
     private TextMeshProUGUI iconName;
     [SerializeField]
     private bool immovable;
     [SerializeField]
     private GameObject backgroundHover;
+    [SerializeField]
+    private Image lockIcon;
 
     [Header("Associated app")]
     [SerializeField]
@@ -51,6 +55,21 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     private void OnEnable()
     {
         eventManager.OnUIScaleChanged += UpdateSize;
+        systemEventManager.OnAppUnlocked += CheckUnlock;
+    }
+
+    private void OnDisable()
+    {
+        eventManager.OnUIScaleChanged -= UpdateSize;
+        systemEventManager.OnAppUnlocked -= CheckUnlock;
+    }
+
+    private void CheckUnlock(AppType appType)
+    {
+        if(associatedAppType == appType)
+        {
+            lockIcon.gameObject.SetActive(false);
+        }
     }
 
     private void UpdateSize(float uiScale)
@@ -181,6 +200,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
         if (typeOfAssociated != string.Empty)
         {
             associatedAppType = (AppType)Enum.Parse(typeof(AppType), SaveManager.Instance.RetrieveString($"{ID}_associatedTypeOf"));
+            lockIcon.gameObject.SetActive(LockManager.Instance.IsLocked(associatedAppType));
         }
 
         associatedAppID = SaveManager.Instance.RetrieveString($"{ID}_associatedId");

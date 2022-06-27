@@ -15,6 +15,7 @@ public class Booter : MonoBehaviour
             await bootScreen.ShowBootScreen();
 
         SaveManager.Instance.LoadSave();
+        LockManager.Instance.LoadSettings();
         Computer.Instance.Desktop.LoadState();
         Computer.Instance.NotificationCenter.Initialize();
 
@@ -22,7 +23,6 @@ public class Booter : MonoBehaviour
 
         FolderManager.Instance.Initialize();
         AlarmsManager.Instance.LoadSettings();
-        LockManager.Instance.LoadSettings();
 
         await bootScreen.HideBootScreen();
     }

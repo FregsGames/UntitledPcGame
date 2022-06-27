@@ -116,6 +116,7 @@ public class LockManager : SerializedSingleton<LockManager>
         if(((NumericPassLock) lockedApp).password == password)
         {
             lockedApp.isLocked = false;
+            systemEventManager.OnAppUnlocked?.Invoke(app);
             SaveChanges();
             return true;
         }

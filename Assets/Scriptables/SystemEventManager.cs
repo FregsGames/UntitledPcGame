@@ -14,9 +14,9 @@ public class SystemEventManager : ScriptableObject
     public Action<string> OnNumericPopUpNumberSubmit;
     public Action OnPopUpCancel;
 
-
-
     public Action<KeyCode> OnKeyPressed;
+
+    public Action<App.AppType> OnAppUnlocked;
 
     public App RequestPopUp(string text, App.AppType appType)
     {
