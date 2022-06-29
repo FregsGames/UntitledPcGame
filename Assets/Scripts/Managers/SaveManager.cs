@@ -133,6 +133,10 @@ public class SaveManager : MonoBehaviour
     {
         return stringSaves.Where(item => item.Key.Contains(idFragment)).ToDictionary(t => t.Key, t => t.Value);
     }
+    public Dictionary<string, string> RetrieveStringThatEndsWith(string idFragment)
+    {
+        return stringSaves.Where(item => item.Key.EndsWith(idFragment)).ToDictionary(t => t.Key, t => t.Value);
+    }
 
     private async Task WriteInts()
     {

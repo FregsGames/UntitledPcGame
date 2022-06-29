@@ -17,6 +17,7 @@ public class SystemEventManager : ScriptableObject
     public Action<KeyCode> OnKeyPressed;
 
     public Action<App.AppType> OnAppUnlocked;
+    public Action<string> OnFileUnlocked;
 
     public App RequestPopUp(string text, App.AppType appType)
     {

@@ -56,17 +56,27 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     {
         eventManager.OnUIScaleChanged += UpdateSize;
         systemEventManager.OnAppUnlocked += CheckUnlock;
+        systemEventManager.OnFileUnlocked += CheckFileUnlock;
     }
 
     private void OnDisable()
     {
         eventManager.OnUIScaleChanged -= UpdateSize;
         systemEventManager.OnAppUnlocked -= CheckUnlock;
+        systemEventManager.OnFileUnlocked -= CheckFileUnlock;
     }
 
     private void CheckUnlock(AppType appType)
     {
         if(associatedAppType == appType)
+        {
+            lockIcon.gameObject.SetActive(false);
+        }
+    }
+
+    private void CheckFileUnlock(string id)
+    {
+        if (associatedAppID == id)
         {
             lockIcon.gameObject.SetActive(false);
         }
@@ -204,6 +214,12 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
         }
 
         associatedAppID = SaveManager.Instance.RetrieveString($"{ID}_associatedId");
+
+        if (associatedAppID != string.Empty)
+        {
+            lockIcon.gameObject.SetActive(LockManager.Instance.IsLocked(associatedAppID));
+        }
+
         immovable = SaveManager.Instance.RetrieveString($"{ID}_immovable").Equals("true");
         image.sprite = SpriteManager.Instance.SpritesDB.GetSprite(spriteKey);
         iconName.text = textValue;

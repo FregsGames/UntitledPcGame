@@ -16,6 +16,12 @@ public class InstantiatorManager : Singleton<InstantiatorManager>
             return null;
         }
 
+        if (LockManager.Instance.IsLocked(id))
+        {
+            LockManager.Instance.ResolveOpenAttempt(id);
+            return null;
+        }
+
         switch (type)
         {
             case AppType.LockedFolder:
