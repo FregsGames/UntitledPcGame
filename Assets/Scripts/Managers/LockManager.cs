@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static LockManager;
+using System.Linq;
 
 public class LockManager : SerializedSingleton<LockManager>
 {
@@ -21,11 +22,19 @@ public class LockManager : SerializedSingleton<LockManager>
 
     public void LoadSettings()
     {
-        LoadLockedApps();
-        LoadLockedFiles();
+        bool noSavedData = !LoadLockedApps();
+        noSavedData = !LoadLockedFiles() || noSavedData;
+
+        if (noSavedData)
+        {
+            foreach (var icon in FindObjectsOfType<Icon>(true))
+            {
+                icon.SetLock(lockedApps.Any(l => l.Key == icon.AssociatedAppType && l.Value.isLocked) || lockedFiles.Any(l => l.Key == icon.AssociatedAppID && l.Value.isLocked));
+            }
+        }
     }
 
-    private void LoadLockedFiles()
+    private bool LoadLockedFiles()
     {
         Dictionary<string, string> lockedDictionary = SaveManager.Instance.RetrieveStringThatEndsWith("_lockedFile");
         Dictionary<string, string> lockedTypeDictionary = SaveManager.Instance.RetrieveStringThatEndsWith("_lockTypeFile");
@@ -37,7 +46,7 @@ public class LockManager : SerializedSingleton<LockManager>
         }
         else
         {
-            return;
+            return false;
         }
 
         foreach (var lockitem in lockedDictionary)
@@ -59,9 +68,10 @@ public class LockManager : SerializedSingleton<LockManager>
                 lockedFiles[id].isLocked = lockitem.Value == "true";
             }
         }
+        return true;
     }
 
-    private void LoadLockedApps()
+    private bool LoadLockedApps()
     {
         Dictionary<string, string> lockedDictionary = SaveManager.Instance.RetrieveStringThatEndsWith("_locked");
         Dictionary<string, string> lockedTypeDictionary = SaveManager.Instance.RetrieveStringThatEndsWith("_lockType");
@@ -73,7 +83,7 @@ public class LockManager : SerializedSingleton<LockManager>
         }
         else
         {
-            return;
+            return false;
         }
 
         foreach (var lockitem in lockedDictionary)
@@ -95,6 +105,8 @@ public class LockManager : SerializedSingleton<LockManager>
                 lockedApps[GetAppEnum(enumName)].isLocked = lockitem.Value == "true";
             }
         }
+
+        return true;
     }
 
     private void SaveChanges()

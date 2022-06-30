@@ -39,6 +39,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     public IconsContainer Container { get; set; }
     public Vector3 Position { get => rect.position; }
     public App AssociatedApp { get => associatedApp; }
+    public string AssociatedAppID { get => associatedAppID; }
     public AppType AssociatedAppType { get => associatedAppType; }
     public GameObject BackgroundHover { get => backgroundHover; }
     private bool HasMoved { get => Input.mousePosition != originalPos && Container != null && dragging; }
@@ -182,6 +183,11 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     public void OnBeginDrag(PointerEventData eventData)
     {
         eventManager.OnIconStartDrag?.Invoke(this);
+    }
+
+    public void SetLock(bool state = true)
+    {
+        lockIcon.gameObject.SetActive(state);
     }
 
     public virtual void Serialize()
