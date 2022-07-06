@@ -26,16 +26,24 @@ public class BootScreen : MonoBehaviour
     [SerializeField]
     private float loadingBarTime = 0.5f;
 
-    public async Task ShowBootScreen()
+    public void ShowBootScreen()
     {
         raycaster.enabled = true;
         canvasGroup.alpha = 1;
-        loadingBar.fillAmount = 0;
+        ResetLoadBar();
         container.SetActive(true);
-
-        await loadingBar.DOFillAmount(1f, loadingBarTime).AsyncWaitForCompletion();
-
     }
+
+    public async Task LoadBarTo(float to)
+    {
+        await loadingBar.DOFillAmount(to, (to- loadingBar.fillAmount) * loadingBarTime).SetEase(Ease.Linear).AsyncWaitForCompletion();
+    }
+
+    public void ResetLoadBar()
+    {
+        loadingBar.fillAmount = 0;
+    }
+
     public async Task HideBootScreen()
     {
         raycaster.enabled = false;

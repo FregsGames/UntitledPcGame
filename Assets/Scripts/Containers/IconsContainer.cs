@@ -40,11 +40,7 @@ public class IconsContainer : App
     {
         if (SaveManager.Instance.RetrieveString(ID) != string.Empty)
         {
-            for (int i = transform.childCount - 1; i >= 0; i--)
-            {
-                Destroy(transform.GetChild(i).gameObject);
-            }
-
+            RemoveChildren();
             Deserialize();
         }
         else
@@ -55,6 +51,16 @@ public class IconsContainer : App
             Serialize();
             InitializeInnerContainers();
         }
+    }
+
+    public void RemoveChildren()
+    {
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+
+        InitializeGrid();
     }
 
     private void SerializeFirstDepthChildren()
@@ -118,7 +124,7 @@ public class IconsContainer : App
         return position;
     }
 
-    protected virtual void PositionateIcons()
+    public virtual void PositionateIcons()
     {
 
     }

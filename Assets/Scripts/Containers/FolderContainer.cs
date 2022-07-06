@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FolderContainer : IconsContainer
 {
-    protected override void PositionateIcons()
+    public override void PositionateIcons()
     {
         Icon[] icons = GetComponentsInChildren<Icon>();
 

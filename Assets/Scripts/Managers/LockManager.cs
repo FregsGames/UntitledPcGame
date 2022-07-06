@@ -22,32 +22,33 @@ public class LockManager : SerializedSingleton<LockManager>
 
     public void LoadSettings()
     {
-        bool noSavedData = !LoadLockedApps();
-        noSavedData = !LoadLockedFiles() || noSavedData;
-
-        if (noSavedData)
+        if (!SaveManager.Instance.SaveDataFound)
         {
             foreach (var icon in FindObjectsOfType<Icon>(true))
             {
                 icon.SetLock(lockedApps.Any(l => l.Key == icon.AssociatedAppType && l.Value.isLocked) || lockedFiles.Any(l => l.Key == icon.AssociatedAppID && l.Value.isLocked));
             }
         }
+        else
+        {
+            ClearAll();
+            LoadLockedFiles();
+            LoadLockedApps();
+        }
     }
 
-    private bool LoadLockedFiles()
+    public void ClearAll()
+    {
+        lockedApps.Clear();
+        lockedFiles.Clear();
+    }
+
+    private void LoadLockedFiles()
     {
         Dictionary<string, string> lockedDictionary = SaveManager.Instance.RetrieveStringThatEndsWith("_lockedFile");
         Dictionary<string, string> lockedTypeDictionary = SaveManager.Instance.RetrieveStringThatEndsWith("_lockTypeFile");
         Dictionary<string, string> lockedPassDictionary = SaveManager.Instance.RetrieveStringThatEndsWith("_lockPassFile");
 
-        if (lockedDictionary.Count > 0)
-        {
-            lockedFiles.Clear();
-        }
-        else
-        {
-            return false;
-        }
 
         foreach (var lockitem in lockedDictionary)
         {
@@ -68,23 +69,14 @@ public class LockManager : SerializedSingleton<LockManager>
                 lockedFiles[id].isLocked = lockitem.Value == "true";
             }
         }
-        return true;
     }
 
-    private bool LoadLockedApps()
+    private void LoadLockedApps()
     {
         Dictionary<string, string> lockedDictionary = SaveManager.Instance.RetrieveStringThatEndsWith("_locked");
         Dictionary<string, string> lockedTypeDictionary = SaveManager.Instance.RetrieveStringThatEndsWith("_lockType");
         Dictionary<string, string> lockedPassDictionary = SaveManager.Instance.RetrieveStringThatEndsWith("_lockPass");
 
-        if (lockedDictionary.Count > 0)
-        {
-            lockedApps.Clear();
-        }
-        else
-        {
-            return false;
-        }
 
         foreach (var lockitem in lockedDictionary)
         {
@@ -105,12 +97,30 @@ public class LockManager : SerializedSingleton<LockManager>
                 lockedApps[GetAppEnum(enumName)].isLocked = lockitem.Value == "true";
             }
         }
+    }
 
-        return true;
+    public void AddLock(App.AppType appType, string password)
+    {
+        if (lockedApps.ContainsKey(appType))
+        {
+            lockedApps[appType] = new NumericPassLock() {isLocked = true, lockType = LockType.NumericPass, password = password };
+        }
+        else
+        {
+            lockedApps.Add(appType, new NumericPassLock() { isLocked = true, lockType = LockType.NumericPass, password = password });
+        }
+        SaveChanges();
     }
 
     private void SaveChanges()
     {
+        SaveManager.Instance.RemoveEntriesThatContains("_locked");
+        SaveManager.Instance.RemoveEntriesThatContains("_lockType");
+        SaveManager.Instance.RemoveEntriesThatContains("_lockPass");
+        SaveManager.Instance.RemoveEntriesThatContains("_lockedFile");
+        SaveManager.Instance.RemoveEntriesThatContains("_lockTypeFile");
+        SaveManager.Instance.RemoveEntriesThatContains("_lockPassFile");
+
         foreach (var app in lockedApps)
         {
             SaveManager.Instance.Save($"{app.Key}_locked", app.Value.isLocked? "true" : "false");
@@ -201,7 +211,6 @@ public class LockManager : SerializedSingleton<LockManager>
             TryToUnlock(currentFile, input);
         }
     }
-
 
     private bool TryToUnlock(App.AppType app, string password)
     {

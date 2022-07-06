@@ -31,6 +31,7 @@ public class NotificationCard : MonoBehaviour, IPointerClickHandler
     public void Setup(NotificationCenter.Notification notification)
     {
         associatedApp = notification.associatedApp;
+        //ERROR AL CARGAR UNA PARTIDA Y QUE LLEGUE UNA NOTIF
         image.sprite = notification.sprite;
         title.text = notification.title;
         content.text = notification.content;

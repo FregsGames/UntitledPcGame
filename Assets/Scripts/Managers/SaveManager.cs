@@ -19,6 +19,8 @@ public class SaveManager : MonoBehaviour
 
     public Action OnLoadFinished;
 
+    public bool SaveDataFound { get; set; }
+
     // Odin Stuff
     [PropertySpace(10, 0)]
     [Button("Clear Save Data", ButtonSizes.Medium)]
@@ -29,7 +31,7 @@ public class SaveManager : MonoBehaviour
         File.Delete(Application.persistentDataPath + stringFile);
     }
 
-    private void RemoveEntriesThatContains(string fragment)
+    public void RemoveEntriesThatContains(string fragment)
     {
         List<string> keys = stringSaves.Where(e => e.Key.Contains(fragment))?.Select(e => e.Key).ToList();
 
@@ -154,7 +156,7 @@ public class SaveManager : MonoBehaviour
         await File.WriteAllTextAsync(Application.persistentDataPath + stringFile, stringJson);
     }
 
-    private void Read()
+    private bool Read()
     {
         if (!File.Exists(Application.persistentDataPath + intFile))
         {
@@ -203,6 +205,8 @@ public class SaveManager : MonoBehaviour
         reader.Close();
 
         OnLoadFinished?.Invoke();
+
+        return stringSaves.Count != 0 || floatSaves.Count != 0 || intSaves.Count != 0;
     }
 
     #region singleton
@@ -222,11 +226,12 @@ public class SaveManager : MonoBehaviour
 
     }
 
-    public void LoadSave()
+    public bool LoadSave()
     {
-        Read();
+        SaveDataFound = Read();
         Translations.Instance.LoadTranslationsOfCurrentLang();
         SoundManager.Instance.LoadSettings();
+        return SaveDataFound;
     }
 
     #endregion

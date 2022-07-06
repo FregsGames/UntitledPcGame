@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Desktop : IconsContainer
 {
-    protected override void PositionateIcons()
+    public override void PositionateIcons()
     {
         foreach (Transform child in transform)
         {

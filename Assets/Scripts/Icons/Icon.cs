@@ -56,23 +56,33 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     private void OnEnable()
     {
         eventManager.OnUIScaleChanged += UpdateSize;
-        systemEventManager.OnAppUnlocked += CheckUnlock;
+        systemEventManager.OnAppUnlocked += OnAppUnlocked;
         systemEventManager.OnFileUnlocked += CheckFileUnlock;
     }
 
     private void OnDisable()
     {
         eventManager.OnUIScaleChanged -= UpdateSize;
-        systemEventManager.OnAppUnlocked -= CheckUnlock;
+        systemEventManager.OnAppUnlocked -= OnAppUnlocked;
         systemEventManager.OnFileUnlocked -= CheckFileUnlock;
     }
 
-    private void CheckUnlock(AppType appType)
+    private void OnAppUnlocked(AppType appType)
     {
         if(associatedAppType == appType)
         {
             lockIcon.gameObject.SetActive(false);
         }
+    }
+
+    public void Setup (AppType appType, string text, string iconKey, bool locked)
+    {
+        iconName.text = text;
+        image.sprite = SpriteManager.Instance.SpritesDB.GetSprite(iconKey);
+        associatedAppType = appType;
+        lockIcon.gameObject.SetActive(locked);
+
+        Serialize();
     }
 
     private void CheckFileUnlock(string id)
