@@ -21,7 +21,7 @@ public class FirstGameLoader : SerializedSingleton<FirstGameLoader>
     }
     private void CreateFirstAlarm()
     {
-        var alarmTime = DateTime.Now.AddMinutes(2);
+        var alarmTime = DateTime.Now.AddMinutes(1);
         firstAlarmTime = (alarmTime.Hour, alarmTime.Minute);
 
         AlarmData alarmData = new AlarmData()
