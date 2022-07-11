@@ -12,7 +12,6 @@ public class FirstGameLoader : SerializedSingleton<FirstGameLoader>
     [SerializeField]
     private (int,int) firstAlarmTime;
 
-
     public void LoadFirstGameData()
     {
         CreateFirstAlarm();

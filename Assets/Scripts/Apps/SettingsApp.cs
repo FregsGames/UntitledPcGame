@@ -9,6 +9,12 @@ public class SettingsApp : App, IStateableApp
     private Slider soundSlider;
     [SerializeField]
     private TextMeshProUGUI volumeText;
+    [SerializeField]
+    private GameObject adminNotEnabledContainer;
+    [SerializeField]
+    private GameObject wifiContainer;
+    [SerializeField]
+    private Toggle wifiToggle;
 
     [SerializeField]
     private AppStateDictionary states;
@@ -27,16 +33,33 @@ public class SettingsApp : App, IStateableApp
         }
     }
 
+    public void EnableAdmin()
+    {
+        Computer.Instance.ComputerSettings.SetAdminEnabled(true);
+        adminNotEnabledContainer.SetActive(false);
+    }
+
+    public void ToggleWifi(bool state)
+    {
+        Computer.Instance.ComputerSettings.SetWifiEnabled(state);
+    }
+
     private void OnEnable()
     {
         soundSlider.SetValueWithoutNotify(SoundManager.Instance.Volume);
         volumeText.text = $"{Mathf.Round(SoundManager.Instance.Volume * 100)}%";
         soundSlider.onValueChanged.AddListener(AdjustVolume);
+
+        adminNotEnabledContainer.SetActive(!Computer.Instance.ComputerSettings.AdminEnabled);
+        wifiContainer.SetActive(Computer.Instance.ComputerSettings.AdminEnabled);
+
+        wifiToggle.onValueChanged.AddListener(ToggleWifi);
     }
 
     private void OnDisable()
     {
         soundSlider.onValueChanged.RemoveAllListeners();
+        wifiToggle.onValueChanged.RemoveAllListeners();
     }
 
     public void AdjustVolume(float vol)

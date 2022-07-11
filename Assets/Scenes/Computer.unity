@@ -607,6 +607,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSubfolderLevel: 10
+  eventManager: {fileID: 11400000, guid: 9aaa532c3ce371c4087327a6c4361902, type: 2}
+  wifiEnabled: 0
+  adminEnabled: 0
 --- !u!4 &459047583
 Transform:
   m_ObjectHideFlags: 0
@@ -2565,14 +2568,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 147991937924557728, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 147991937924557728, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 147991937924557728, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -2584,10 +2579,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OpenSettings
       objectReference: {fileID: 0}
-    - target: {fileID: 1512245258245519960, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: e2337fb873c8aab4db3ea0c2f43deee2, type: 3}
     - target: {fileID: 3331461594119591891, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
       propertyPath: m_Name
       value: DesktopToolBar
@@ -2601,10 +2592,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5735623516741496455, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5735623516741496455, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
@@ -2616,10 +2603,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6675491577550871500, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 8309658fda0488a44a45cf3a814a0672, type: 3}
     - target: {fileID: 6908074588607499295, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2713,14 +2696,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6999632747298188715, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 6999632747298188715, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 6999632747298188715, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -2734,10 +2709,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7259254778911863786, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259254778911863786, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
-      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7259254778911863786, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
@@ -2761,10 +2732,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7542697222677208765, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7542697222677208765, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
@@ -2776,6 +2743,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7627556318271324258, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7627556318271324258, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7627556318271324258, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7627556318271324258, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7627556318271324258, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7829750993801445673, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2783,14 +2770,6 @@ PrefabInstance:
     - target: {fileID: 7829750993801445673, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7829750993801445673, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 7829750993801445673, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 7829750993801445673, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -3413,8 +3392,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bootScreen: {fileID: 4207623}
-  loadFirstTimeGameIfNotSaveFile: 1
-  showBootScreen: 1
+  loadFirstTimeGameIfNotSaveFile: 0
+  showBootScreen: 0
 --- !u!4 &1807840301
 Transform:
   m_ObjectHideFlags: 0

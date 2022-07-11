@@ -23,18 +23,28 @@ public class Booter : MonoBehaviour
         LockManager.Instance.LoadSettings();
         Computer.Instance.Desktop.LoadState();
         Computer.Instance.NotificationCenter.Initialize();
+        Computer.Instance.ComputerSettings.Initialize();
 
-        await bootScreen.LoadBarTo(0.4f);
+        if (showBootScreen)
+        { 
+            await bootScreen.LoadBarTo(0.4f);
+        }
 
         FolderManager.Instance.Initialize();
         AlarmsManager.Instance.LoadSettings();
 
-        await bootScreen.LoadBarTo(0.6f);
+        if (showBootScreen)
+        {
+            await bootScreen.LoadBarTo(0.6f);
+        }
 
-        if (!saveExists || !loadFirstTimeGameIfNotSaveFile)
+        if (!saveExists && loadFirstTimeGameIfNotSaveFile)
         {
             Debug.Log("Save file not found, loading first time game");
-            await bootScreen.LoadBarTo(0.8f);
+            if (showBootScreen)
+            {
+                await bootScreen.LoadBarTo(0.8f);
+            }
             FirstGameLoader.Instance.LoadFirstGameData();
         }
         else
@@ -42,7 +52,10 @@ public class Booter : MonoBehaviour
             Debug.Log("Save file found");
         }
 
-        await bootScreen.LoadBarTo(1f);
+        if (showBootScreen)
+        {
+            await bootScreen.LoadBarTo(1);
+        }
         await bootScreen.HideBootScreen();
     }
 }
