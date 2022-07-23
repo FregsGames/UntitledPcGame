@@ -18,6 +18,7 @@ public class SystemEventManager : ScriptableObject
 
     public Action<App.AppType> OnAppUnlocked;
     public Action<string> OnFileUnlocked;
+    public Action<string> OnOtherUnlocked;
 
     public Action<bool> OnWifiEnabled;
 

@@ -7,18 +7,23 @@ using System.Linq;
 public class LockManager : SerializedSingleton<LockManager>
 {
     public enum LockType { NumericPass }
+    public enum CurrentlyUnlocking { none, app, file, other }
+
+
     [SerializeField]
     private Dictionary<App.AppType, Lock> lockedApps = new Dictionary<App.AppType, Lock>();
     [SerializeField]
     private Dictionary<string, Lock> lockedFiles = new Dictionary<string, Lock>();
+    [SerializeField]
+    private Dictionary<string, Lock> otherLocks = new Dictionary<string, Lock>();
 
 
     [SerializeField]
     private SystemEventManager systemEventManager;
 
-    private App.AppType currentApp;
-    private string currentFile;
-    private bool unlockingApp = true;
+    private App.AppType currentUnlockingApp;
+    private string currentUnlockingId;
+    private CurrentlyUnlocking currentlyUnlocking = CurrentlyUnlocking.none;
 
     public void LoadSettings()
     {
@@ -41,6 +46,7 @@ public class LockManager : SerializedSingleton<LockManager>
     {
         lockedApps.Clear();
         lockedFiles.Clear();
+        otherLocks.Clear();
     }
 
     private void LoadLockedFiles()
@@ -99,6 +105,34 @@ public class LockManager : SerializedSingleton<LockManager>
         }
     }
 
+    private void LoadOtherLocks()
+    {
+        Dictionary<string, string> lockedDictionary = SaveManager.Instance.RetrieveStringThatEndsWith("_otherLock");
+        Dictionary<string, string> lockedTypeDictionary = SaveManager.Instance.RetrieveStringThatEndsWith("_otherTypeLock");
+        Dictionary<string, string> lockedPassDictionary = SaveManager.Instance.RetrieveStringThatEndsWith("_otherPassLock");
+
+
+        foreach (var lockitem in lockedDictionary)
+        {
+            var id = lockitem.Key.Split("_")[0];
+            otherLocks.Add(id, null);
+
+            if (lockedTypeDictionary.ContainsKey($"{id}_otherTypeLock"))
+            {
+                if (lockedTypeDictionary[$"{id}_lockTypeFile"] == "NumericPass")
+                {
+                    otherLocks[id] = new NumericPassLock() { lockType = LockType.NumericPass };
+                    ((NumericPassLock)otherLocks[id]).password = lockedPassDictionary[$"{id}_lockPassFile"];
+                }
+                else
+                {
+                    // TODO
+                }
+                otherLocks[id].isLocked = lockitem.Value == "true";
+            }
+        }
+    }
+
     public void AddLock(App.AppType appType, string password)
     {
         if (lockedApps.ContainsKey(appType))
@@ -109,6 +143,34 @@ public class LockManager : SerializedSingleton<LockManager>
         {
             lockedApps.Add(appType, new NumericPassLock() { isLocked = true, lockType = LockType.NumericPass, password = password });
         }
+        SaveChanges();
+    }
+
+    public void AddLock(string id, bool isFile, string password)
+    {
+        if (isFile)
+        {
+            if (lockedFiles.ContainsKey(id))
+            {
+                lockedFiles[id] = new NumericPassLock() { isLocked = true, lockType = LockType.NumericPass, password = password };
+            }
+            else
+            {
+                lockedFiles.Add(id, new NumericPassLock() { isLocked = true, lockType = LockType.NumericPass, password = password });
+            }
+        }
+        else
+        {
+            if (otherLocks.ContainsKey(id))
+            {
+                otherLocks[id] = new NumericPassLock() { isLocked = true, lockType = LockType.NumericPass, password = password };
+            }
+            else
+            {
+                otherLocks.Add(id, new NumericPassLock() { isLocked = true, lockType = LockType.NumericPass, password = password });
+            }
+        }
+
         SaveChanges();
     }
 
@@ -142,6 +204,17 @@ public class LockManager : SerializedSingleton<LockManager>
                 SaveManager.Instance.Save($"{file.Key}_lockPassFile", ((NumericPassLock)file.Value).password);
             }
         }
+
+        foreach (var other in otherLocks)
+        {
+            SaveManager.Instance.Save($"{other.Key}_otherLock", other.Value.isLocked ? "true" : "false");
+            SaveManager.Instance.Save($"{other.Key}_otherTypeLock", other.Value.lockType.ToString());
+
+            if (other.Value is NumericPassLock)
+            {
+                SaveManager.Instance.Save($"{other.Key}_otherPassLock", ((NumericPassLock)other.Value).password);
+            }
+        }
     }
 
     public bool IsLocked(App.AppType app)
@@ -152,9 +225,16 @@ public class LockManager : SerializedSingleton<LockManager>
         return lockedApps.ContainsKey(app) && lockedApps[app].isLocked;
     }
 
-    public bool IsLocked(string id)
+    public bool IsLocked(string id, bool isFile)
     {
-        return lockedFiles.ContainsKey(id) && lockedFiles[id].isLocked;
+        if (isFile)
+        {
+            return lockedFiles.ContainsKey(id) && lockedFiles[id].isLocked;
+        }
+        else
+        {
+            return otherLocks.ContainsKey(id) && otherLocks[id].isLocked;
+        }
     }
 
     public void ResolveOpenAttempt(App.AppType app)
@@ -162,8 +242,9 @@ public class LockManager : SerializedSingleton<LockManager>
         switch (lockedApps[app].lockType)
         {
             case LockType.NumericPass:
-                unlockingApp = true;
-                currentApp = app;
+                currentlyUnlocking = CurrentlyUnlocking.app;
+                currentUnlockingApp = app;
+
                 systemEventManager.OnNumericPopUpNumberSubmit += OnNumericPassReceived;
                 systemEventManager.OnPopUpCancel += OnPopUpCancel;
                 ((NumericPopup)systemEventManager.RequestPopUp("Introduce la contraseña", App.AppType.NumericPopup)).Setup(4);
@@ -174,21 +255,40 @@ public class LockManager : SerializedSingleton<LockManager>
         }
     }
 
-    public void ResolveOpenAttempt(string id)
+    public void ResolveOpenAttempt(string id, bool file)
     {
-        switch (lockedFiles[id].lockType)
+        if (file)
         {
-            case LockType.NumericPass:
-                unlockingApp = false;
-                currentFile = id;
-                systemEventManager.OnNumericPopUpNumberSubmit += OnNumericPassReceived;
-                systemEventManager.OnPopUpCancel += OnPopUpCancel;
-                ((NumericPopup)systemEventManager.RequestPopUp("Introduce la contraseña", App.AppType.NumericPopup)).Setup(4);
-                break;
-            default:
-                systemEventManager.RequestPopUp("Esta app está bloqueada", App.AppType.ConfirmationPopup);
-                break;
+            switch (lockedFiles[id].lockType)
+            {
+                case LockType.NumericPass:
+                    currentlyUnlocking = CurrentlyUnlocking.file;
+                    currentUnlockingId = id;
+                    systemEventManager.OnNumericPopUpNumberSubmit += OnNumericPassReceived;
+                    systemEventManager.OnPopUpCancel += OnPopUpCancel;
+                    ((NumericPopup)systemEventManager.RequestPopUp("Introduce la contraseña", App.AppType.NumericPopup)).Setup(4);
+                    break;
+                default:
+                    systemEventManager.RequestPopUp("Esta app está bloqueada", App.AppType.ConfirmationPopup);
+                    break;
+            }
         }
+        else
+        {
+            switch (otherLocks[id].lockType)
+            {
+                case LockType.NumericPass:
+                    currentlyUnlocking = CurrentlyUnlocking.other;
+                    currentUnlockingId = id;
+                    systemEventManager.OnNumericPopUpNumberSubmit += OnNumericPassReceived;
+                    systemEventManager.OnPopUpCancel += OnPopUpCancel;
+                    ((NumericPopup)systemEventManager.RequestPopUp("Introduce la contraseña", App.AppType.NumericPopup)).Setup(4);
+                    break;
+                default:
+                    break;
+            }
+        }
+
     }
 
     private void OnPopUpCancel()
@@ -202,13 +302,19 @@ public class LockManager : SerializedSingleton<LockManager>
         systemEventManager.OnNumericPopUpNumberSubmit -= OnNumericPassReceived;
         systemEventManager.OnPopUpCancel -= OnPopUpCancel;
 
-        if (unlockingApp)
+        switch (currentlyUnlocking)
         {
-            TryToUnlock(currentApp, input);
-        }
-        else
-        {
-            TryToUnlock(currentFile, input);
+            case CurrentlyUnlocking.none:
+                break;
+            case CurrentlyUnlocking.app:
+                TryToUnlock(currentUnlockingApp, input);
+                break;
+            case CurrentlyUnlocking.file:
+            case CurrentlyUnlocking.other:
+                TryToUnlock(currentUnlockingId, input);
+                break;
+            default:
+                break;
         }
     }
 
@@ -238,10 +344,25 @@ public class LockManager : SerializedSingleton<LockManager>
 
     private bool TryToUnlock(string id, string password)
     {
-        if (!lockedFiles.ContainsKey(id))
-            return false;
+        Lock lockedApp;
 
-        Lock lockedApp = lockedFiles[id];
+        if (currentlyUnlocking == CurrentlyUnlocking.file)
+        {
+            if (!lockedFiles.ContainsKey(id))
+                return false;
+
+            lockedApp = lockedFiles[id];
+        }
+        else
+        {
+            if (!otherLocks.ContainsKey(id))
+                return false;
+
+            lockedApp = otherLocks[id];
+        }
+
+        if (lockedApp == null)
+            return false;
 
         if (!lockedApp.isLocked)
             return true;
@@ -252,7 +373,14 @@ public class LockManager : SerializedSingleton<LockManager>
         if (((NumericPassLock)lockedApp).password == password)
         {
             lockedApp.isLocked = false;
-            systemEventManager.OnFileUnlocked?.Invoke(id);
+            if(currentlyUnlocking == CurrentlyUnlocking.file)
+            {
+                systemEventManager.OnFileUnlocked?.Invoke(id);
+            }
+            else
+            {
+                systemEventManager.OnOtherUnlocked?.Invoke(id);
+            }
             SaveChanges();
             return true;
         }

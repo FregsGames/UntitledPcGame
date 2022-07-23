@@ -17,6 +17,7 @@ public class FirstGameLoader : SerializedSingleton<FirstGameLoader>
         CreateFirstAlarm();
         CreateLockForSecurityCameras();
         LoadDesktopIcons();
+        LockManager.instance.AddLock("wifi", false, "1234");
     }
     private void CreateFirstAlarm()
     {

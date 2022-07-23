@@ -15,13 +15,13 @@ namespace Assets.Scripts.Apps
 
         private void OnEnable()
         {
-            confirmButton.onClick.AddListener(() => { systemEventManager.OnPopUpSubmit?.Invoke(true); Close(); });
+            confirmButton?.onClick.AddListener(() => { systemEventManager.OnPopUpSubmit?.Invoke(true); Close(); });
             cancelButton.onClick.AddListener(() => { systemEventManager.OnPopUpCancel?.Invoke(); Close(); });
         }
 
         private void OnDisable()
         {
-            confirmButton.onClick.RemoveAllListeners();
+            confirmButton?.onClick.RemoveAllListeners();
             cancelButton.onClick.RemoveAllListeners();
         }
 

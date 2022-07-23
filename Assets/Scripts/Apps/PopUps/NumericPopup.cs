@@ -6,6 +6,7 @@ using TMPro;
 
 public class NumericPopup : App, IPopUp
 {
+
     [SerializeField]
     private Button confirmButton;
     [SerializeField]

@@ -233,7 +233,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
 
         if (associatedAppID != string.Empty)
         {
-            lockIcon.gameObject.SetActive(LockManager.Instance.IsLocked(associatedAppID));
+            lockIcon.gameObject.SetActive(LockManager.Instance.IsLocked(associatedAppID, true));
         }
 
         immovable = SaveManager.Instance.RetrieveString($"{ID}_immovable").Equals("true");

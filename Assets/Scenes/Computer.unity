@@ -257,6 +257,11 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!224 &4752375 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+  m_PrefabInstance: {fileID: 1117623943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &14377580
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,16 +319,36 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: lockedFiles
+      Entry: 7
+      Data: 2|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[LockManager+Lock,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 3|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
       Data: 1
     - Name: 
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 3
-      Data: 11
+      Entry: 1
+      Data: testFile
     - Name: $v
       Entry: 7
-      Data: 2|LockManager+NumericPassLock, Assembly-CSharp
+      Data: 4|LockManager+NumericPassLock, Assembly-CSharp
     - Name: lockType
       Entry: 3
       Data: 0
@@ -345,44 +370,20 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: lockedFiles
+    - Name: otherLocks
       Entry: 7
-      Data: 3|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[LockManager+Lock,
+      Data: 5|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[LockManager+Lock,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 4|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 6|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: testFile
-    - Name: $v
-      Entry: 7
-      Data: 5|LockManager+NumericPassLock, Assembly-CSharp
-    - Name: lockType
-      Entry: 3
       Data: 0
-    - Name: isLocked
-      Entry: 5
-      Data: true
-    - Name: password
-      Entry: 1
-      Data: 1234
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -1941,6 +1942,7 @@ RectTransform:
   - {fileID: 1595185506}
   - {fileID: 1811112379}
   - {fileID: 2139059910}
+  - {fileID: 4752375}
   m_Father: {fileID: 583071183}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2333,6 +2335,119 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1117623943
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 951066938}
+    m_Modifications:
+    - target: {fileID: 4923153172033386214, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 654fa0d6d2405e84d8147ac5695a8319, type: 3}
+    - target: {fileID: 6816965203222222887, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_text
+      value: Camera Control
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603959, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: id
+      value: eee3839e-508d-48c1-8677-0d8207f2c274
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603959, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: associatedAppType
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603960, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_Name
+      value: ControlIcon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -594
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 370
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816965203371603963, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e2fe982cb2ef4ec409051c1575639acc, type: 3}
 --- !u!1 &1117663026
 GameObject:
   m_ObjectHideFlags: 0
@@ -2537,6 +2652,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabManager: {fileID: 460371461}
   folderManager: {fileID: 5350537240276034781}
+  appRequirenments: {fileID: 11400000, guid: ea888b082510f2244b26c331b3e7492f, type: 2}
+  systemEventManager: {fileID: 11400000, guid: 9aaa532c3ce371c4087327a6c4361902, type: 2}
 --- !u!4 &1273578085
 Transform:
   m_ObjectHideFlags: 0
