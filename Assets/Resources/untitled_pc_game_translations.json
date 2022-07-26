@@ -1,0 +1,14 @@
+{
+  "data": [
+    {
+      "id": "test",
+      "spanish": "Esto es una prueba",
+      "english": "This is a test"
+    },
+    {
+      "id": "another_test",
+      "spanish": "Otra prueba",
+      "english": "Another test"
+    }
+  ]
+}

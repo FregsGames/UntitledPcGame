@@ -42,7 +42,7 @@ public class SettingsApp : App, IStateableApp
 
     public void ToggleWifi(bool state)
     {
-        if (state && !Computer.Instance.ComputerSettings.WifiPassKnown)
+        if (state && !Computer.Instance.ComputerSettings.WifiPassKnown && LockManager.Instance.IsLocked("wifi", false))
         {
             wifiToggle.SetIsOnWithoutNotify(false);
             LockManager.Instance.ResolveOpenAttempt("wifi", false);

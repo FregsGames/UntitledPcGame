@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
-public class Translations : MonoBehaviour
+public class Translations : SerializedMonoBehaviour
 {
     public Dictionary<string, string> currentDictionary;
     public SystemLanguage currentLanguage;
@@ -10,6 +10,14 @@ public class Translations : MonoBehaviour
 
     [SerializeField]
     private SystemEventManager eventManager;
+
+    [Button]
+    public void TestLoad()
+    {
+        var jsonTextFile = Resources.Load<TextAsset>("untitled_pc_game_translations");
+        TranslationData a = JsonUtility.FromJson<TranslationData>(jsonTextFile.text);
+        Debug.Log("Register count: " + a.data.Length);
+    }
 
     public void LoadTranslationsOfCurrentLang()
     {
@@ -25,12 +33,14 @@ public class Translations : MonoBehaviour
         }
 
         currentDictionary = new Dictionary<string, string>();
-        switch (currentLanguage)
+
+        var jsonTextFile = Resources.Load<TextAsset>("untitled_pc_game_translations");
+        TranslationData a = JsonUtility.FromJson<TranslationData>(jsonTextFile.text);
+
+        foreach (var fragment in a.data)
         {
-            default:
-                var jsonTextFile = Resources.Load<TextAsset>("english");
-                currentDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonTextFile.text);
-                break;
+            var value = fragment.GetType().GetProperty(currentLanguage.ToString()).GetValue(fragment, null);
+            currentDictionary.Add(fragment.Id, (string) value);
         }
 
         eventManager.OnLanguagueLoaded?.Invoke();

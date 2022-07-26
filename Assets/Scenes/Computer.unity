@@ -383,7 +383,31 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: wifi
+    - Name: $v
+      Entry: 7
+      Data: 7|LockManager+NumericPassLock, Assembly-CSharp
+    - Name: lockType
+      Entry: 3
       Data: 0
+    - Name: isLocked
+      Entry: 5
+      Data: false
+    - Name: password
+      Entry: 1
+      Data: 1234
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -575,6 +599,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2de78838d8f30b4d94f01ace0d71ada, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: currentDictionary
+      Entry: 6
+      Data: 
   currentLanguage: 10
   availableLanguages: 0a000000
   eventManager: {fileID: 11400000, guid: 9aaa532c3ce371c4087327a6c4361902, type: 2}
@@ -3834,10 +3870,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: FolderManager
       objectReference: {fileID: 0}
-    - target: {fileID: 5350537240148825847, guid: b889c6b0df1f63044a242d6f700367fb, type: 3}
-      propertyPath: desktop
-      value: 
-      objectReference: {fileID: 951066938}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b889c6b0df1f63044a242d6f700367fb, type: 3}
 --- !u!114 &5350537240276034781 stripped

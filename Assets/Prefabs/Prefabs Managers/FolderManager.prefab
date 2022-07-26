@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2352e7723c458948800405c69d5ef64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  folderPrefab: {fileID: 9093275790997172676, guid: 41233977f224af34f863b0554c8451e8, type: 3}
-  defaultWindowSize: {x: 1200, y: 600}
+  folderPrefab: {fileID: 398555692429077059, guid: 96d19652900cc3d4dbf14b2784cebee7, type: 3}
+  defaultFolderSize: {x: 1200, y: 600}
   poolBaseSize: 10
   poolInstantiatePos: {x: 10000, y: 10000}
