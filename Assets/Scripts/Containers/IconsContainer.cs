@@ -84,11 +84,11 @@ public class IconsContainer : App
     protected void InitializeGrid()
     {
         grid.Clear();
-
-        for (int i = 0; i < cols; i++)
+        for (int j = 0; j < rows; j++)
         {
-            for (int j = 0; j < rows; j++)
+            for (int i = 0; i < cols; i++)
             {
+
                 Vector3 position = GetGridPositionOfPoint(i, j);
 
                 FolderPosition key = new FolderPosition(new Vector2Int(i, j), position);
@@ -113,14 +113,14 @@ public class IconsContainer : App
 
         var stepY = (rect.rect.height - barsHeight) / rows;
         var startY = (
-            (windowTopBar != null) ? 
-            rect.position.y : 
+            (windowTopBar != null) ?
+            rect.position.y :
             rect.position.y + GameObject.Find("BottomBar").GetComponent<RectTransform>().rect.height +
             GameObject.Find("BottomBar").GetComponent<RectTransform>().position.y
-            ) + (stepY / 2f);
+            ) + (stepY / 2f) + stepY * (rows - 1);
 
         Vector3 position = new Vector3(
-            startX + stepX * i, startY + stepY * j, 0);
+            startX + stepX * i, startY - stepY * j, 0);
         return position;
     }
 
@@ -306,7 +306,14 @@ public class IconsContainer : App
                 }
                 else
                 {
-                    Gizmos.DrawSphere(key.absolutePosition, 15);
+                    if (i == 0 && j == 0)
+                    {
+                        Gizmos.DrawSphere(key.absolutePosition, 5);
+                    }
+                    else
+                    {
+                        Gizmos.DrawSphere(key.absolutePosition, 15);
+                    }
                 }
 
             }
