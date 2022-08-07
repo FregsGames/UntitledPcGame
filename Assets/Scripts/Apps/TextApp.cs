@@ -20,4 +20,9 @@ public class TextApp : App
     {
         inputField.SetTextWithoutNotify(SaveManager.Instance.RetrieveString($"{ID}_content"));
     }
+
+    public void SetText(string text)
+    {
+        inputField.text = text;
+    }
 }

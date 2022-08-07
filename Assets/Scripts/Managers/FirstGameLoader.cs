@@ -46,7 +46,17 @@ public class FirstGameLoader : SerializedSingleton<FirstGameLoader>
     {
         Computer.Instance.Desktop.RemoveChildren();
         var cameraIcon = Instantiate(iconPrefab, Computer.Instance.Desktop.transform).GetComponent<Icon>();
+        cameraIcon.RegenerateGUID();
         cameraIcon.Setup(App.AppType.SecurityCameras, "Security Cameras", "camera", true);
+
+        var personalNotes = Instantiate(iconPrefab, Computer.Instance.Desktop.transform).GetComponent<Icon>();
+        personalNotes.RegenerateGUID();
+        personalNotes.AssociatedAppID = "personalNotes";
+        personalNotes.Setup(App.AppType.TextFile, "Personal notes", "info", false);
+
+        SaveManager.Instance.Save("personalNotes_content", "Estas son tus notas personales.");
+
         Computer.Instance.Desktop.MoveIconTo(cameraIcon, Vector2.zero);
+        Computer.Instance.Desktop.MoveIconTo(personalNotes, Vector2.zero);
     }
 }

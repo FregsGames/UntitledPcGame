@@ -39,7 +39,7 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     public IconsContainer Container { get; set; }
     public Vector3 Position { get => rect.position; }
     public App AssociatedApp { get => associatedApp; }
-    public string AssociatedAppID { get => associatedAppID; }
+    public string AssociatedAppID { get => associatedAppID; set => associatedAppID = value; }
     public AppType AssociatedAppType { get => associatedAppType; }
     public GameObject BackgroundHover { get => backgroundHover; }
     private bool HasMoved { get => Input.mousePosition != originalPos && Container != null && dragging; }
