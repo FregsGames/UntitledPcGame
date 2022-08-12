@@ -8,6 +8,7 @@ public class TextApp : App
 
     public override void Serialize()
     {
+        base.Serialize();
         Dictionary<string, string> serialized = new Dictionary<string, string>();
 
         serialized.Add($"{ID}", ID);
@@ -18,6 +19,7 @@ public class TextApp : App
 
     public override void Deserialize()
     {
+        base.Deserialize();
         inputField.SetTextWithoutNotify(SaveManager.Instance.RetrieveString($"{ID}_content"));
     }
 

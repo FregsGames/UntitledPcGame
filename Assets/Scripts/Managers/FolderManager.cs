@@ -39,8 +39,8 @@ public class FolderManager : Singleton<FolderManager>
         }
 
         rect.sizeDelta = defaultFolderSize;
-        rect.position = new Vector3((ComputerScreen.instance.BackgroundSize.x - rect.sizeDelta.x) / 2,
-            (ComputerScreen.instance.BackgroundSize.y - rect.sizeDelta.y) / 2, 0);
+        rect.position = new Vector3((ComputerScreen.Instance.BackgroundSize.x - rect.sizeDelta.x) *ComputerScreen.Instance.ScreenRelation.x / 2,
+            (ComputerScreen.Instance.BackgroundSize.y - (rect.sizeDelta.y / 2f)) * ComputerScreen.Instance.ScreenRelation.y, 0);
 
         FolderContainer folderContainer = folder.GetComponentInChildren<FolderContainer>();
 

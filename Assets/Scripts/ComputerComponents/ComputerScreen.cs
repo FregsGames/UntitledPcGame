@@ -13,6 +13,10 @@ public class ComputerScreen : Singleton<ComputerScreen>
     private BlockPanel blockPanel;
     [SerializeField]
     private Transform desktop;
+    [SerializeField]
+    private CanvasScaler canvasScaler;
+    [SerializeField]
+    private Canvas canvas;
 
     [SerializeField]
     private UIEventManager eventManager;
@@ -34,6 +38,10 @@ public class ComputerScreen : Singleton<ComputerScreen>
     public Vector2 BackgroundSize { get => background.rect.size; }
     public BlockPanel BlockPanel { get => blockPanel; }
     public Transform Desktop { get => desktop; }
+    public CanvasScaler CanvasScaler { get => canvasScaler; }
+    public Canvas Canvas { get => canvas; }
+    public Vector2 ScreenRelation { get => new Vector2(canvas.renderingDisplaySize.x / canvasScaler.referenceResolution.x, canvas.renderingDisplaySize.y / canvasScaler.referenceResolution.y); }
+
 
     private void OnEnable()
     {

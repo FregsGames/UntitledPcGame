@@ -48,8 +48,11 @@ public class App : UniqueID, ISaveableState
 
     public virtual void RecenterOnUI()
     {
-        RectTransform rectTransform = GetComponent<RectTransform>();
-        rectTransform.anchoredPosition = new Vector2(Screen.width - rectTransform.rect.width, Screen.height - rectTransform.rect.height) / 2;
+        RectTransform rectTransform = root.GetComponent<RectTransform>();
+
+        rectTransform.position = new Vector3((ComputerScreen.Instance.BackgroundSize.x - rectTransform.sizeDelta.x) * ComputerScreen.Instance.ScreenRelation.x / 2,
+            (ComputerScreen.Instance.BackgroundSize.y + rectTransform.sizeDelta.y) * ComputerScreen.Instance.ScreenRelation.y / 2, 0);
+
         if (!gameObject.activeInHierarchy)
         {
             gameObject.SetActive(true);
@@ -67,10 +70,18 @@ public class App : UniqueID, ISaveableState
 
     public virtual void Serialize()
     {
+        SaveManager.Instance.Save($"{ID}_size_x", root.GetComponent<RectTransform>().sizeDelta.x);
+        SaveManager.Instance.Save($"{ID}_size_y", root.GetComponent<RectTransform>().sizeDelta.y);
     }
 
     public virtual void Deserialize()
     {
+        var savedXSize = SaveManager.Instance.RetrieveFloat($"{ID}_size_x", -1);
+        var savedYSize = SaveManager.Instance.RetrieveFloat($"{ID}_size_y", -1);
 
+        if(savedXSize > 0 && savedYSize > 0)
+        {
+            root.GetComponent<RectTransform>().sizeDelta = new Vector2(savedXSize, savedYSize);
+        }
     }
 }

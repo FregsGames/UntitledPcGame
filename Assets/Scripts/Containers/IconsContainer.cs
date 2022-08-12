@@ -103,7 +103,7 @@ public class IconsContainer : App
 
     private Vector3 GetGridPositionOfPoint(int i, int j)
     {
-        var stepX = rect.rect.width / cols;
+        var stepX = rect.rect.width / cols * ComputerScreen.Instance.ScreenRelation.x;
         var startX = rect.position.x + (stepX / 2f);
 
         var barsHeight = (windowTopBar != null) ?
@@ -111,11 +111,11 @@ public class IconsContainer : App
             : FindObjectOfType<ToolBar>().GetComponent<RectTransform>().rect.height +
             GameObject.Find("BottomBar").GetComponent<RectTransform>().rect.height;
 
-        var stepY = (rect.rect.height - barsHeight) / rows;
+        var stepY = (rect.rect.height - barsHeight) / rows * ComputerScreen.Instance.ScreenRelation.y;
         var startY = (
             (windowTopBar != null) ?
             rect.position.y :
-            rect.position.y + GameObject.Find("BottomBar").GetComponent<RectTransform>().rect.height +
+            rect.position.y + GameObject.Find("BottomBar").GetComponent<RectTransform>().rect.height * ComputerScreen.Instance.ScreenRelation.y  +
             GameObject.Find("BottomBar").GetComponent<RectTransform>().position.y
             ) + (stepY / 2f) + stepY * (rows - 1);
 
@@ -230,6 +230,7 @@ public class IconsContainer : App
 
     public override void Serialize()
     {
+        base.Serialize();
         Dictionary<string, string> serialized = new Dictionary<string, string>();
 
         serialized.Add($"{ID}", ID);
@@ -247,6 +248,7 @@ public class IconsContainer : App
 
     public override void Deserialize()
     {
+        base.Deserialize();
         rows = int.Parse(SaveManager.Instance.RetrieveString($"{ID}_rows"));
         cols = int.Parse(SaveManager.Instance.RetrieveString($"{ID}_cols"));
 

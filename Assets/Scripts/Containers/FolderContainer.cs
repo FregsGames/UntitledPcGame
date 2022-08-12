@@ -21,17 +21,6 @@ public class FolderContainer : IconsContainer
         }
     }
 
-    public override void RecenterOnUI()
-    {
-        RectTransform rectTransform = transform.parent.GetComponent<RectTransform>();
-        rectTransform.anchoredPosition = new Vector2(Screen.width - rectTransform.rect.width, Screen.height - rectTransform.rect.height) / 2;
-        if (!transform.parent.gameObject.activeInHierarchy)
-        {
-            transform.parent.gameObject.SetActive(true);
-            Open();
-        }
-    }
-
     public override void Close()
     {
         Serialize();

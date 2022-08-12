@@ -1570,6 +1570,8 @@ MonoBehaviour:
   background: {fileID: 951066938}
   blockPanel: {fileID: 6799351402648583330}
   desktop: {fileID: 951066938}
+  canvasScaler: {fileID: 583071181}
+  canvas: {fileID: 583071182}
   eventManager: {fileID: 11400000, guid: aec22e18a2f8fa240985198520e6577f, type: 2}
   iconsBaseSize: {x: 100, y: 100}
   bottomBarBaseSize: 108
@@ -5445,7 +5447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bootScreen: {fileID: 4207623}
-  loadFirstTimeGameIfNotSaveFile: 1
+  loadFirstTimeGameIfNotSaveFile: 0
   showBootScreen: 0
 --- !u!4 &1807840301
 Transform:
