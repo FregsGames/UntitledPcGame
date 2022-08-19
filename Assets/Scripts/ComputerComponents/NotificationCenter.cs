@@ -44,11 +44,6 @@ public class NotificationCenter : MonoBehaviour
 
         showingNotification = true;
         Notification notification = notificationQueue.Dequeue();
-
-        if(notificationCard == null)
-        {
-            notificationCard = Instantiate(notificationCardPrefab, Computer.Instance.Desktop.transform).GetComponent<NotificationCard>();
-        }
         notificationCard.Setup(notification);
 
         Sequence sequence = DOTween.Sequence();
