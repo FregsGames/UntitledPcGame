@@ -35,7 +35,10 @@ public class FolderContainer : IconsContainer
 
     public override bool MoveIconTo(Icon icon, Vector3 pos)
     {
-        if(icon != null)
+        if (IconContainsContainerRecursive(icon) || Icons().Contains(icon))
+            return false;
+
+        if (icon != null)
         {
             icon.transform.SetParent(container);
             icon.Container = this;

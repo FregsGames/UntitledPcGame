@@ -141,9 +141,11 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
                 if ((immovable && newContainer != Container) || (newContainer == associatedApp))
                     return;
 
-                if (newContainer.MoveIconTo(this, Input.mousePosition) && Container != newContainer)
+                var oldContainer = Container;
+
+                if (newContainer.MoveIconTo(this, Input.mousePosition) && oldContainer != newContainer)
                 {
-                    Container.RemoveIconIfAlreadyExists(this);
+                    oldContainer.RemoveIconIfAlreadyExists(this);
                     Container = newContainer;
                 }
             }
