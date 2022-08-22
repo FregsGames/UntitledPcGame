@@ -25,8 +25,14 @@ public class WindowTopBar : MonoBehaviour, IPointerClickHandler, IPointerDownHan
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (window.position.y >= Screen.height - 48 && eventData.delta.y > 0)
+        {
+            window.position = new Vector3(window.position.x, Screen.height - 48, 0);
+            return;
+        }
+
         if (Input.mousePosition.x < Screen.width &&
-            Input.mousePosition.y < Screen.height &&
+            Input.mousePosition.y - dragOffset.y < Screen.height - 48 &&
             Input.mousePosition.y > ComputerScreen.Instance.BottomBarHeight &&
             Input.mousePosition.x > 0)
         {
