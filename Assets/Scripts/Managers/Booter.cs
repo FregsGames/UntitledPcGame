@@ -7,6 +7,8 @@ public class Booter : MonoBehaviour
     private BootScreen bootScreen;
     [SerializeField]
     private bool loadFirstTimeGameIfNotSaveFile;
+    [SerializeField]
+    private Texture2D defaultCursor;
 
     [SerializeField]
     private bool showBootScreen = true;
@@ -24,6 +26,7 @@ public class Booter : MonoBehaviour
         Computer.Instance.Desktop.LoadState();
         Computer.Instance.NotificationCenter.Initialize();
         Computer.Instance.ComputerSettings.Initialize();
+        Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
 
         if (showBootScreen)
         { 

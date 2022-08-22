@@ -15,6 +15,7 @@ public class Computer : Singleton<Computer>
     [SerializeField]
     private SystemEventManager eventManager;
 
+
     public ComputerSettings ComputerSettings { get => computerSettings; set => computerSettings = value; }
     public Ram Ram { get => ram; set => ram = value; }
     public Desktop Desktop { get => desktop; set => desktop = value; }
@@ -35,4 +36,5 @@ public class Computer : Singleton<Computer>
             Application.Quit();
         }
     }
+
 }

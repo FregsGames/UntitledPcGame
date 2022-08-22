@@ -22,6 +22,10 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 5edb05e15646b5d4ba920b7c3473e4f5, type: 3}
     - {fileID: 21300000, guid: ca0ddcaef49105847a272d60e37b637c, type: 3}
     - {fileID: 21300000, guid: 654fa0d6d2405e84d8147ac5695a8319, type: 3}
+    - {fileID: 2800000, guid: c6b924ff9cf49e34c9e674c708f09f60, type: 3}
+    - {fileID: 2800000, guid: 824e6067133e3d04794fad94ced47bad, type: 3}
+    - {fileID: 2800000, guid: 0a1fdbe76c07f5248a28cee08c778fc5, type: 3}
+    - {fileID: 2800000, guid: b4bb9fbf14fea0247a2de3fac8d3263c, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -40,7 +44,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 8
+      Data: 9
     - Name: 
       Entry: 7
       Data: 
@@ -134,6 +138,86 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: cursor
+    - Name: $v
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: textures
+      Entry: 7
+      Data: 2|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.Texture2D,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 3|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: defaultCursor
+    - Name: $v
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: resize
+    - Name: $v
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: resize180
+    - Name: $v
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: resize45
+    - Name: $v
+      Entry: 10
+      Data: 9
     - Name: 
       Entry: 8
       Data: 

@@ -3190,7 +3190,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e047be0c62f33744cbea168395236d62, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e6ad5742fa99a7441b940f84d1c5c0a0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5579,6 +5579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bootScreen: {fileID: 4207623}
   loadFirstTimeGameIfNotSaveFile: 0
+  defaultCursor: {fileID: 2800000, guid: c6b924ff9cf49e34c9e674c708f09f60, type: 3}
   showBootScreen: 0
 --- !u!4 &1807840301
 Transform:
