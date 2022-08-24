@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -27,7 +28,12 @@ public class ToolBar : MonoBehaviour
         eventManager.OnWifiEnabled -= EnableIcon;
     }
 
-    public async void Save()
+    public void SaveNoAsync ()
+    {
+        _= Save();
+    }
+
+    public async Task Save()
     {
         ComputerScreen.Instance.BlockPanel.EnableBlock(true);
         await SaveManager.Instance.SaveChanges();

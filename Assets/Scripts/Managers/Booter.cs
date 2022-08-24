@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -13,7 +14,8 @@ public class Booter : MonoBehaviour
     [SerializeField]
     private bool showBootScreen = true;
 
-    private async Task Start()
+
+    public async UniTask Start()
     {
         if (showBootScreen)
         {

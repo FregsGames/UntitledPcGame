@@ -21,6 +21,7 @@ public class FolderManager : Singleton<FolderManager>
     public void Initialize()
     {
         computerScreen = ComputerScreen.Instance;
+        folderPool.Clear();
 
         for (int i = 0; i < poolBaseSize; i++)
         {

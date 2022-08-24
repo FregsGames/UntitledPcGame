@@ -41,6 +41,7 @@ public class FolderContainer : IconsContainer
         if (icon != null)
         {
             icon.transform.SetParent(container);
+            icon.transform.SetAsFirstSibling();
             icon.Container = this;
             SetupLayoutSizes();
             return true;

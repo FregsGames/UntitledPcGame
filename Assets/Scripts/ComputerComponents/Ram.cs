@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -17,6 +18,17 @@ public class Ram : SerializedMonoBehaviour
         systemEventManager.OnAppOpen += PushApp;
         systemEventManager.OnAppClosed += RemoveApp;
         systemEventManager.OnPopUpCancel = () => { SoundManager.Instance.PlaySound(SoundManager.Sound.Cancel); };
+        systemEventManager.OnRestart += Reset;
+    }
+
+    private void Reset()
+    {
+
+        var openedApps = currentlyOpenApps.Values.ToList();
+        foreach (var item in openedApps)
+        {
+            item.Close();
+        }
     }
 
     private void OnDisable()
@@ -24,6 +36,7 @@ public class Ram : SerializedMonoBehaviour
         systemEventManager.OnAppOpen -= PushApp;
         systemEventManager.OnAppClosed -= RemoveApp;
         systemEventManager.OnPopUpCancel = null;
+        systemEventManager.OnRestart -= Reset;
     }
 
     public bool IsAppOpen(AppType appType)

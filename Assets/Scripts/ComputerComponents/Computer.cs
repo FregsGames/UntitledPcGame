@@ -14,6 +14,10 @@ public class Computer : Singleton<Computer>
     private NotificationCenter notificationCenter;
     [SerializeField]
     private SystemEventManager eventManager;
+    [SerializeField]
+    private ToolBar toolbar;
+    [SerializeField]
+    private Booter booter;
 
 
     public ComputerSettings ComputerSettings { get => computerSettings; set => computerSettings = value; }
@@ -35,6 +39,13 @@ public class Computer : Singleton<Computer>
         {
             Application.Quit();
         }
+    }
+
+    public async void Restart()
+    {
+        eventManager.OnRestart?.Invoke();
+        await toolbar.Save();
+        await booter.Start();
     }
 
 }

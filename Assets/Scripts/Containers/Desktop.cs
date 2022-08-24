@@ -32,6 +32,7 @@ public class Desktop : IconsGridContainer
             grid[assignedPos] = icon;
             icon.SetPos(assignedPos.absolutePosition);
             icon.transform.SetParent(transform);
+            icon.transform.SetAsFirstSibling();
             Serialize();
             return true;
         }

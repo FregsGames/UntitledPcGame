@@ -27,6 +27,12 @@ public class AlarmsManager : Singleton<AlarmsManager>
     {
         OnAlarmCreated += AddAlarm;
         OnAlarmRemoved += RemoveAlarm;
+        eventManager.OnRestart += ClearAlarms;
+    }
+
+    private void ClearAlarms()
+    {
+        alarmList.Clear();
     }
 
     private void RemoveAlarm(AlarmData alarm)
@@ -65,12 +71,13 @@ public class AlarmsManager : Singleton<AlarmsManager>
     {
         OnAlarmRemoved -= RemoveAlarm;
         OnAlarmCreated -= AddAlarm;
+        eventManager.OnRestart -= ClearAlarms;
     }
 
     public void LoadSettings()
     {
         Dictionary<string, string> dictionary = SaveManager.Instance.RetrieveStringThatContains("alarm_");
-        List<string> keys =  dictionary.Where(e => e.Key.Equals("alarm_key")).Select(x => x.Value).ToList();
+        List<string> keys =  dictionary.Where(e => e.Key.Contains("alarm_key")).Select(x => x.Value).ToList();
 
         foreach (var key in keys)
         {
@@ -96,7 +103,7 @@ public class AlarmsManager : Singleton<AlarmsManager>
         foreach (var alarm in alarmList)
         {
             Dictionary<string, string> alarmInfo = new Dictionary<string, string>();
-            alarmInfo.Add($"alarm_key", alarm.Key);
+            alarmInfo.Add($"alarm_key_{alarm.Key}", alarm.Key);
             alarmInfo.Add($"alarm_{alarm.Key}_enabled", alarm.Value.enabled? "true" : "false");
             alarmInfo.Add($"alarm_{alarm.Key}_hour", alarm.Value.time.Item1.ToString());
             alarmInfo.Add($"alarm_{alarm.Key}_minute", alarm.Value.time.Item2.ToString());

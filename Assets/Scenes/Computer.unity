@@ -3016,6 +3016,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6908074588607499295, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
   m_PrefabInstance: {fileID: 1306580265}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &924811469 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3167453759037643148, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
+  m_PrefabInstance: {fileID: 1306580265}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f6f071a95d44f64f87bb11592b980c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &950865162
 GameObject:
   m_ObjectHideFlags: 0
@@ -3583,6 +3594,8 @@ MonoBehaviour:
   desktop: {fileID: 951066943}
   notificationCenter: {fileID: 916535028}
   eventManager: {fileID: 11400000, guid: 9aaa532c3ce371c4087327a6c4361902, type: 2}
+  toolbar: {fileID: 924811469}
+  booter: {fileID: 1807840300}
 --- !u!4 &998085578
 Transform:
   m_ObjectHideFlags: 0
@@ -4685,6 +4698,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6980872053051415801, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SaveNoAsync
+      objectReference: {fileID: 0}
     - target: {fileID: 6999632747298188715, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4795,7 +4812,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8939189128756332041, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowTurnOffPopUp
+      value: Restart
       objectReference: {fileID: 0}
     - target: {fileID: 8939189128756332041, guid: 3f45b8c0664bb01499b77dbd055db2b0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

@@ -151,6 +151,7 @@ public class IconsGridContainer : IconsContainer
             grid[folderPos] = icon;
             icon.SetPos(folderPos.absolutePosition);
             icon.transform.SetParent(transform);
+            icon.transform.SetAsFirstSibling();
             icon.Container = this;
         }
         else
