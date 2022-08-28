@@ -10,7 +10,22 @@ public class SpritesDB : SerializedScriptableObject
     private Dictionary<string, Sprite> sprites;
 
     [SerializeField]
+    private Dictionary<App.AppType, string> appsDefaultIcon;
+
+    [SerializeField]
     private Dictionary<string, Texture2D> textures;
+
+    public string GetSpriteID(App.AppType app)
+    {
+        if (appsDefaultIcon.ContainsKey(app))
+        {
+            return appsDefaultIcon[app];
+        }
+        else
+        {
+            return appsDefaultIcon[0];
+        }
+    }
 
     public Sprite GetSprite(string id)
     {

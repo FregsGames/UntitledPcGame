@@ -35,7 +35,6 @@ public class Booter : MonoBehaviour
             await bootScreen.LoadBarTo(0.4f);
         }
 
-        FolderManager.Instance.Initialize();
         AlarmsManager.Instance.LoadSettings();
 
         if (showBootScreen)
@@ -54,6 +53,7 @@ public class Booter : MonoBehaviour
         }
         else
         {
+            FolderManager.Instance.Initialize();
             Debug.Log("Save file found");
         }
 

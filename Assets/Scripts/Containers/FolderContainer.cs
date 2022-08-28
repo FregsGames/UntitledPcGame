@@ -159,10 +159,18 @@ public class FolderContainer : IconsContainer
     public override void Deserialize()
     {
         base.Deserialize();
-        var width = float.Parse(SaveManager.Instance.RetrieveString($"{ID}_xsize"));
-        var height = float.Parse(SaveManager.Instance.RetrieveString($"{ID}_ysize"));
 
-        root.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+        var widthString = SaveManager.Instance.RetrieveString($"{ID}_xsize");
+        var heightString = SaveManager.Instance.RetrieveString($"{ID}_ysize");
+
+        if(!string.IsNullOrEmpty(widthString) && !string.IsNullOrEmpty(heightString))
+        {
+            var width = float.Parse(SaveManager.Instance.RetrieveString($"{ID}_xsize"));
+            var height = float.Parse(SaveManager.Instance.RetrieveString($"{ID}_ysize"));
+
+            root.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+        }
+
 
         Dictionary<string, string> iconsIDs = SaveManager.Instance.RetrieveStringThatContains($"{ID}_icon_");
 

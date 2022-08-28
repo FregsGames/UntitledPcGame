@@ -247,7 +247,8 @@ public class LockManager : SerializedSingleton<LockManager>
 
                 systemEventManager.OnNumericPopUpNumberSubmit += OnNumericPassReceived;
                 systemEventManager.OnPopUpCancel += OnPopUpCancel;
-                ((NumericPopup)systemEventManager.RequestPopUp("Introduce la contraseña", App.AppType.NumericPopup)).Setup(4);
+                ((NumericPopup)systemEventManager.RequestPopUp("Introduce la contraseña", App.AppType.NumericPopup)).
+                    Setup(((NumericPassLock)lockedApps[app]).password.Length);
                 break;
             default:
                 systemEventManager.RequestPopUp("Esta app está bloqueada", App.AppType.ConfirmationPopup);
@@ -266,7 +267,8 @@ public class LockManager : SerializedSingleton<LockManager>
                     currentUnlockingId = id;
                     systemEventManager.OnNumericPopUpNumberSubmit += OnNumericPassReceived;
                     systemEventManager.OnPopUpCancel += OnPopUpCancel;
-                    ((NumericPopup)systemEventManager.RequestPopUp("Introduce la contraseña", App.AppType.NumericPopup)).Setup(4);
+                    ((NumericPopup)systemEventManager.RequestPopUp("Introduce la contraseña", App.AppType.NumericPopup)).
+                    Setup(((NumericPassLock)lockedFiles[id]).password.Length);
                     break;
                 default:
                     systemEventManager.RequestPopUp("Esta app está bloqueada", App.AppType.ConfirmationPopup);
@@ -282,7 +284,8 @@ public class LockManager : SerializedSingleton<LockManager>
                     currentUnlockingId = id;
                     systemEventManager.OnNumericPopUpNumberSubmit += OnNumericPassReceived;
                     systemEventManager.OnPopUpCancel += OnPopUpCancel;
-                    ((NumericPopup)systemEventManager.RequestPopUp("Introduce la contraseña", App.AppType.NumericPopup)).Setup(4);
+                    ((NumericPopup)systemEventManager.RequestPopUp("Introduce la contraseña", App.AppType.NumericPopup)).
+                    Setup(((NumericPassLock)otherLocks[id]).password.Length);
                     break;
                 default:
                     break;
