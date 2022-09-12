@@ -18,6 +18,8 @@ public class Computer : Singleton<Computer>
     private ToolBar toolbar;
     [SerializeField]
     private Booter booter;
+    [SerializeField]
+    private SpritesDB spriteDB;
 
 
     public ComputerSettings ComputerSettings { get => computerSettings; set => computerSettings = value; }
@@ -46,6 +48,30 @@ public class Computer : Singleton<Computer>
         eventManager.OnRestart?.Invoke();
         await toolbar.Save();
         await booter.Start();
+    }
+
+    public void CreateFile(string name, string text, App.AppType type, string folderLocation, string associateId = "")
+    {
+        SaveManager.Instance.Save($"{name}_associatedTypeOf", type.ToString());
+
+        var icon = spriteDB.GetSpriteID(type);
+        SaveManager.Instance.Save($"{name}_sprite", icon);
+
+        SaveManager.Instance.Save($"{name}_text", text);
+        SaveManager.Instance.Save("pc-manual_immovable", "false");
+
+        SaveManager.Instance.Save($"{folderLocation}_icon_{name}", name);
+
+        if (type == App.AppType.Folder)
+        {
+            SaveManager.Instance.Save($"{name}_associatedId", ($"{name}-folder"));
+            SaveManager.Instance.Save($"{name}-folder", $"{name}-folder");
+        }
+
+        if (!string.IsNullOrEmpty(associateId))
+        {
+            SaveManager.Instance.Save($"{name}_associatedId", ($"{associateId}"));
+        }
     }
 
 }

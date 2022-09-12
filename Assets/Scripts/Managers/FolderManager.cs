@@ -6,38 +6,23 @@ using UnityEngine;
 public class FolderManager : Singleton<FolderManager>
 {
     private ComputerScreen computerScreen;
-    private List<GameObject> folderPool = new List<GameObject>();
 
     [SerializeField]
     private GameObject folderPrefab;
     [Header("Default values")]
     [SerializeField]
     private Vector2 defaultFolderSize = new Vector2(1200, 600);
-    [SerializeField]
-    private int poolBaseSize = 10;
-    [SerializeField]
-    private Vector2 poolInstantiatePos = new Vector2(10000, 10000);
+
 
     public void Initialize()
     {
         computerScreen = ComputerScreen.Instance;
-        folderPool.Clear();
-
-        for (int i = 0; i < poolBaseSize; i++)
-        {
-            InstantiateFolder();
-        }
     }
 
     public GameObject OpenFolder(string id = "", bool lockedFolder = false)
     {
-        GameObject folder = folderPool.FirstOrDefault(w => !w.activeInHierarchy);
+        GameObject folder = InstantiateFolder();
         RectTransform rect = folder.GetComponent<RectTransform>();
-
-        if (folder == null)
-        {
-            folder = InstantiateFolder();
-        }
 
         rect.sizeDelta = defaultFolderSize;
         rect.position = new Vector3((ComputerScreen.Instance.BackgroundSize.x - rect.sizeDelta.x) *ComputerScreen.Instance.ScreenRelation.x / 2,
@@ -67,9 +52,7 @@ public class FolderManager : Singleton<FolderManager>
 
     private GameObject InstantiateFolder()
     {
-        var window = Instantiate(folderPrefab, poolInstantiatePos, Quaternion.identity, computerScreen.Desktop);
-        window.SetActive(false);
-        folderPool.Add(window);
+        var window = Instantiate(folderPrefab, Vector3.one * 10000, Quaternion.identity, computerScreen.Desktop);
         return window;
     }
 

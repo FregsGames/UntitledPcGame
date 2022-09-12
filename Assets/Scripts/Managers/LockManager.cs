@@ -33,6 +33,7 @@ public class LockManager : SerializedSingleton<LockManager>
             {
                 icon.SetLock(lockedApps.Any(l => l.Key == icon.AssociatedAppType && l.Value.isLocked) || lockedFiles.Any(l => l.Key == icon.AssociatedAppID && l.Value.isLocked));
             }
+            SaveChanges();
         }
         else
         {

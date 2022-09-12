@@ -30,9 +30,8 @@ public class Testing : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            Computer.Instance.NotificationCenter.RequestNotification(testingSprite, "Titulaso de la notificación", "bla bal 1231 esto esun texot asjd otre 213 1oi g", null);
-            //((NumericPopup) eventManager.RequestPopUp("Pruebesita", App.AppType.NumericPopup)).Setup("1234");
-        }
+            MailManager.Instance.Send("first");
+         }
     }
 #endif
 }

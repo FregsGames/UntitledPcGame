@@ -7,4 +7,6 @@ public class UIEventManager : ScriptableObject
     public Action<Icon> OnIconStartDrag;
     public Action<Icon> OnEndStartDrag;
     public Action<float> OnUIScaleChanged;
+
+    public Action<string> OnMailButtonClicked;
 }

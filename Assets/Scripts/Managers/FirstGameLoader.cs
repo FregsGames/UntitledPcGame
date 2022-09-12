@@ -8,8 +8,6 @@ public class FirstGameLoader : SerializedSingleton<FirstGameLoader>
 {
     [SerializeField]
     private GameObject iconPrefab;
-    [SerializeField]
-    private SpritesDB spriteDB;
     [Header("Debug")]
     [SerializeField]
     private (int,int) firstAlarmTime;
@@ -69,34 +67,10 @@ public class FirstGameLoader : SerializedSingleton<FirstGameLoader>
         Computer.Instance.Desktop.MoveIconTo(personalNotes, Vector2.zero);
         Computer.Instance.Desktop.MoveIconTo(folder, Vector2.zero);
 
-        CreateFile("manuals", "Manuales", App.AppType.Folder, "main-folder");
-        CreateFile("network-manual-icon", "Manual del red", App.AppType.TextFile, "manuals-folder", "network-manual");
-        CreateFile("pc-manual-icon", "Manual del Pc", App.AppType.TextFile, "manuals-folder", "pc-manual");
+        Computer.Instance.CreateFile("manuals", "Manuales", App.AppType.Folder, "main-folder");
+        Computer.Instance.CreateFile("network-manual-icon", "Manual del red", App.AppType.TextFile, "manuals-folder", "network-manual");
+        Computer.Instance.CreateFile("pc-manual-icon", "Manual del Pc", App.AppType.TextFile, "manuals-folder", "pc-manual");
 
         SaveManager.Instance.Save("network-manual_content", "Bienvenido al manual de configuración de red de Moon Os. Con este manual podrás Lorem ipsum dolor sit amet consectetur adipiscing elit ultricies dictum, suscipit augue suspendisse sodales facilisis ullamcorper hendrerit scelerisque eu sollicitudin, lectus dapibus ut aptent pharetra placerat conubia nisl. Proin torquent ad dictum eleifend purus tellus velit sapien, commodo pretium libero consequat odio magna sem, nostra varius habitasse curabitur gravida scelerisque sagittis. Mauris blandit facilisis nostra iaculis suspendisse condimentum, hendrerit turpis conubia urna eros tortor, pretium hac vulputate commodo auctor.");
-    }
-
-    private void CreateFile(string name, string text, App.AppType type, string folderLocation, string associateId = "")
-    {
-        SaveManager.Instance.Save($"{name}_associatedTypeOf", type.ToString());
-
-        var icon = spriteDB.GetSpriteID(type);
-        SaveManager.Instance.Save($"{name}_sprite", icon);
-        
-        SaveManager.Instance.Save($"{name}_text", text);
-        SaveManager.Instance.Save("pc-manual_immovable", "false");
-
-        SaveManager.Instance.Save($"{folderLocation}_icon_{name}", name);
-
-        if(type == App.AppType.Folder)
-        {
-            SaveManager.Instance.Save($"{name}_associatedId", ($"{name}-folder"));
-            SaveManager.Instance.Save($"{name}-folder", $"{name}-folder");
-        }
-
-        if (!string.IsNullOrEmpty(associateId))
-        {
-            SaveManager.Instance.Save($"{name}_associatedId", ($"{associateId}"));
-        }
     }
 }

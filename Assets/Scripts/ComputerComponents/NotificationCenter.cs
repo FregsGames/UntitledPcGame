@@ -9,6 +9,8 @@ public class NotificationCenter : MonoBehaviour
 {
     [SerializeField]
     private GameObject notificationCardPrefab;
+    [SerializeField]
+    private SpritesDB spriteDB;
 
     private NotificationCard notificationCard;
     private Queue<Notification> notificationQueue = new Queue<Notification>();
@@ -20,13 +22,18 @@ public class NotificationCenter : MonoBehaviour
         notificationCard = Instantiate(notificationCardPrefab, Computer.Instance.Desktop.transform).GetComponent<NotificationCard>();
     }
 
-    public void RequestNotification(Sprite sprite, string title, string content, App associatedApp)
+    public void RequestNotification(string sprite, string title, string content, App associatedApp)
     {
+        if(notificationCard == null)
+        {
+            notificationCard = Instantiate(notificationCardPrefab, Computer.Instance.Desktop.transform).GetComponent<NotificationCard>();
+        }
+
         Notification notification = new Notification()
         {
             content = content,
             title = title,
-            sprite = sprite,
+            sprite = spriteDB.GetSprite(sprite),
             associatedApp = associatedApp
         };
 

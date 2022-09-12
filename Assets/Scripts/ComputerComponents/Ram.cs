@@ -44,6 +44,11 @@ public class Ram : SerializedMonoBehaviour
         return currentlyOpenApps.Values.FirstOrDefault(app => app.Type == appType) != null;
     }
 
+    public App GetOpenedApp(string id)
+    {
+        return currentlyOpenApps.Values.FirstOrDefault(app => app.ID == id);
+    }
+
     private void PushApp(App app)
     {
         if (currentlyOpenApps.ContainsValue(app))

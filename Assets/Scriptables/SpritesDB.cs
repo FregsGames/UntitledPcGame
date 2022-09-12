@@ -29,6 +29,9 @@ public class SpritesDB : SerializedScriptableObject
 
     public Sprite GetSprite(string id)
     {
+        if (string.IsNullOrEmpty(id))
+            return null;
+
         if (sprites.ContainsKey(id))
         {
             return sprites[id];

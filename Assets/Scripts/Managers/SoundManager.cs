@@ -34,7 +34,7 @@ public class SoundManager : SerializedMonoBehaviour
         if (sounds.TryGetValue(sound, out audioClip))
         {
             soundAudioSource.PlayOneShot(audioClip);
-            Debug.Log($"[AUDIO] playing {audioClip.name}");
+            //Debug.Log($"[AUDIO] playing {audioClip.name}");
         }
     }
 

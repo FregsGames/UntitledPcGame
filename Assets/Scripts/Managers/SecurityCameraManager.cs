@@ -28,12 +28,4 @@ public class SecurityCameraManager : SerializedSingleton<SecurityCameraManager>
     {
         await SceneManager.UnloadSceneAsync(name);
     }
-
-    private void Start()
-    {
-        //await UniTask.Delay(10000);
-        //var render = await LoadSecurityCamera("Room00");
-
-        //GameObject.Find("CamerasApp(Clone)").GetComponentInChildren<RawImage>().texture = render;
-    }
 }

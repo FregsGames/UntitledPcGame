@@ -78,7 +78,9 @@ public class Icon : UniqueID, IPointerClickHandler, IPointerDownHandler, IPointe
     public void Setup (AppType appType, string text, string iconKey, bool locked)
     {
         iconName.text = text;
-        image.sprite = SpriteManager.Instance.SpritesDB.GetSprite(iconKey);
+        image.sprite = string.IsNullOrEmpty(iconKey)
+            ? SpriteManager.Instance.SpritesDB.GetSprite(SpriteManager.Instance.SpritesDB.GetSpriteID(appType))  :
+            SpriteManager.Instance.SpritesDB.GetSprite(iconKey);
         associatedAppType = appType;
         lockIcon.gameObject.SetActive(locked);
 

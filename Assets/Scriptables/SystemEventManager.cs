@@ -24,6 +24,10 @@ public class SystemEventManager : ScriptableObject
 
     public Action<bool> OnWifiEnabled;
 
+    public Action<string> OnFileDownloadRequest;
+
+    public Action<string> OnMailReceived;
+
     public App RequestPopUp(string text, App.AppType appType)
     {
         if (!appType.ToString().Contains("Popup", StringComparison.OrdinalIgnoreCase))

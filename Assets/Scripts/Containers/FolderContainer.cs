@@ -88,7 +88,10 @@ public class FolderContainer : IconsContainer
 
     private void RemoveChildren()
     {
-
+        for (int i = container.transform.childCount - 1; i >= 0; i--)
+        {
+            DestroyImmediate(container.GetChild(i).gameObject);
+        }
     }
 
     public void SetupLayoutSizes()
@@ -171,6 +174,7 @@ public class FolderContainer : IconsContainer
             root.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
         }
 
+        RemoveChildren();
 
         Dictionary<string, string> iconsIDs = SaveManager.Instance.RetrieveStringThatContains($"{ID}_icon_");
 

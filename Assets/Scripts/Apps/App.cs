@@ -17,7 +17,8 @@ public class App : UniqueID, ISaveableState
         Alarms = 10,
         SecurityCameras = 11,
         OkPopup = 12,
-        CameraController = 13
+        CameraController = 13,
+        Mail = 14
     }
     [SerializeField]
     protected AppType type;
@@ -42,7 +43,6 @@ public class App : UniqueID, ISaveableState
         Serialize();
         systemEventManager.OnAppClosed?.Invoke(ID);
 
-
         Destroy(gameObject);
     }
 
@@ -55,6 +55,7 @@ public class App : UniqueID, ISaveableState
 
         if (!gameObject.activeInHierarchy)
         {
+            Deserialize();
             gameObject.SetActive(true);
             Open();
         }

@@ -74,7 +74,7 @@ public class AlarmsManager : Singleton<AlarmsManager>
         eventManager.OnRestart -= ClearAlarms;
     }
 
-    public void LoadSettings()
+    public void Initialize()
     {
         Dictionary<string, string> dictionary = SaveManager.Instance.RetrieveStringThatContains("alarm_");
         List<string> keys =  dictionary.Where(e => e.Key.Contains("alarm_key")).Select(x => x.Value).ToList();

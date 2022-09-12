@@ -14,7 +14,6 @@ public class Booter : MonoBehaviour
     [SerializeField]
     private bool showBootScreen = true;
 
-
     public async UniTask Start()
     {
         if (showBootScreen)
@@ -35,7 +34,7 @@ public class Booter : MonoBehaviour
             await bootScreen.LoadBarTo(0.4f);
         }
 
-        AlarmsManager.Instance.LoadSettings();
+        AlarmsManager.Instance.Initialize();
 
         if (showBootScreen)
         {
@@ -54,8 +53,12 @@ public class Booter : MonoBehaviour
         else
         {
             FolderManager.Instance.Initialize();
+            DownloadManager.Instance.Initialize();
+            MailManager.Instance.Initialize();
             Debug.Log("Save file found");
         }
+
+        GameManager.Instance.Initialize();
 
         if (showBootScreen)
         {
