@@ -1,9 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using DG.Tweening;
-using System;
 
 public class CameraControllerApp : App
 {
@@ -18,9 +15,12 @@ public class CameraControllerApp : App
     [SerializeField]
     private CameraControllerButton right;
 
+    [SerializeField]
+    private TextMeshProUGUI connectionText;
+
     public void Connect()
     {
-        sceneCamera = FindObjectOfType<SecurityCamera>();
+        FindCamera();
     }
 
     private void OnEnable()
@@ -29,28 +29,66 @@ public class CameraControllerApp : App
         left.OnPressed += OnPressedLeft;
         up.OnPressed += OnPressedUp;
         down.OnPressed += OnPressedDown;
-        
+        systemEventManager.OnCameraOn += FindCamera;
+        systemEventManager.OnCameraOff += DisableCamera;
+
 
         Connect();
     }
 
+    private void DisableCamera()
+    {
+        sceneCamera = null;
+        connectionText.text = "desconectado";
+        connectionText.color = Color.red;
+    }
+
+    private void FindCamera()
+    {
+        sceneCamera = FindObjectOfType<SecurityCamera>();
+
+        if(sceneCamera != null)
+        {
+
+            connectionText.text = "conectado";
+            connectionText.color = Color.green;
+        }
+        else
+        {
+            connectionText.text = "desconectado";
+            connectionText.color = Color.red;
+        }
+    }
+
     private void OnPressedRight()
     {
+        if (sceneCamera == null)
+            return;
+
         StartCoroutine(MoveRight(right, false));
     }
 
     private void OnPressedLeft()
     {
+        if (sceneCamera == null)
+            return;
+
         StartCoroutine(MoveRight(left, true));
     }
 
     private void OnPressedUp()
     {
+        if (sceneCamera == null)
+            return;
+
         StartCoroutine(MoveUp(up, true));
     }
 
     private void OnPressedDown()
     {
+        if (sceneCamera == null)
+            return;
+
         StartCoroutine(MoveUp(down, false));
     }
 
@@ -60,6 +98,8 @@ public class CameraControllerApp : App
         left.OnPressed -= OnPressedLeft;
         up.OnPressed -= OnPressedUp;
         down.OnPressed -= OnPressedDown;
+
+        systemEventManager.OnCameraOn -= FindCamera;
     }
 
     private IEnumerator MoveRight(CameraControllerButton button, bool right)

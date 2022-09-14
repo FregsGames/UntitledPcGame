@@ -44,10 +44,12 @@ public class CamerasApp : App, IStateableApp
     {
         currentCameraName = name;
         rawImage.texture = texure;
+        systemEventManager.OnCameraOn?.Invoke();
     }
 
     public void BackButton()
     {
+        systemEventManager.OnCameraOff?.Invoke();
         SecurityCameraManager.Instance.CloseCamera(currentCameraName);
         LoadState(AppsStates.CameraState.General);
         currentCameraName = "";

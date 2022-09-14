@@ -28,6 +28,9 @@ public class SystemEventManager : ScriptableObject
 
     public Action<string> OnMailReceived;
 
+    public Action OnCameraOn;
+    public Action OnCameraOff;
+
     public App RequestPopUp(string text, App.AppType appType)
     {
         if (!appType.ToString().Contains("Popup", StringComparison.OrdinalIgnoreCase))

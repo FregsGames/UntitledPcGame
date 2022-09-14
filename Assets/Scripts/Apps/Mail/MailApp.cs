@@ -50,6 +50,15 @@ public class MailApp : App, IStateableApp
 
     private void OnEnable()
     {
+        if (!Computer.Instance.ComputerSettings.WifiEnabled)
+        {
+            LoadState(AppsStates.MailState.NoConnection);
+        }
+        else
+        {
+            LoadState(AppsStates.MailState.General);
+        }
+
         MailPreviewButton[] mailPreviewButtons = GetComponentsInChildren<MailPreviewButton>();
 
         for (int i = mailPreviewButtons.Length - 1; i >= 0; i--)
