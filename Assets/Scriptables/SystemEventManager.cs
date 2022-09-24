@@ -31,6 +31,8 @@ public class SystemEventManager : ScriptableObject
     public Action OnCameraOn;
     public Action OnCameraOff;
 
+    public Action<App> OnVirusDefeated;
+
     public App RequestPopUp(string text, App.AppType appType)
     {
         if (!appType.ToString().Contains("Popup", StringComparison.OrdinalIgnoreCase))
