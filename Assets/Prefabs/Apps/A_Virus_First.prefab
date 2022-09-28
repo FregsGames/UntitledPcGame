@@ -169,7 +169,7 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
-  m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_GlobalFontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_OnFocusSelectAll: 0
   m_ResetOnDeActivation: 0
   m_RestoreOriginalTextOnEscape: 0
@@ -245,8 +245,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter text...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -530,51 +530,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'New Text
-
-    New Text
-
-    New Text
-
-    New Text
-
-    New Text
-
-    New
-    Text
-
-    New TextNew Text
-
-    New Text
-
-    New Text
-
-    New Text
-
-    New
-    Text
-
-    New Text
-
-    New Text
-
-    New Text
-
-    New Text
-
-    New Text
-
-    New
-    Text
-
-    New Text
-
-    New Text
-
-    New Text'
+  m_text: "myHostname = window.location.hostname;\r\nvar myTLD = \".\" + myHostname.substring(myHostname.indexOf(\"wupload\")
+    + \"wupload.\".length).split(\".\")[0];\r\n\r\nfunction afterLoad() {\r\n  return\r\n}\r\nieFixForFileSelectionOnChangeEventTimer
+    = null;\r\n\r\nfunction ieFixForFileSelectionOnChangeEvent(a) {\r\n  $(\"#siteName\").toggle();\r\n 
+    if ($(\"#inputFileSelection\").val() == \"\") {\r\n    ieFixForFileSelectionOnChangeEventTimer
+    = setTimeout(\"ieFixForFileSelectionOnChangeEvent()\", 200)\r\n  } else {\r\n   
+    $(\"body\")[0].focus()\r\n  }\r\n}\r\nfunction urlencode(a) {\r\n  return escape(a.toString().replace(/%/g,
+    \"%25\").replace(/\\+/g, \"%2B\")).replace(/%25/g, \"%\")\r\n}"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -598,8 +563,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 23
+  m_fontSizeBase: 23
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1199,8 +1164,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 23
+  m_fontSizeBase: 23
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1323,8 +1288,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1739,12 +1704,36 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4903890452659452794, guid: c67bdc1657724e048b6d74ae9913dae4, type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 8305340669924285844}
+    - target: {fileID: 4903890452659452794, guid: c67bdc1657724e048b6d74ae9913dae4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5806954463246949695}
     - target: {fileID: 4903890452659452794, guid: c67bdc1657724e048b6d74ae9913dae4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Close
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010269653460445194, guid: c67bdc1657724e048b6d74ae9913dae4, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010269653460445194, guid: c67bdc1657724e048b6d74ae9913dae4, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f64627eefeabbd64a84a65f1b5214561, type: 3}
+    - target: {fileID: 8010269653460445194, guid: c67bdc1657724e048b6d74ae9913dae4, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010269653460445194, guid: c67bdc1657724e048b6d74ae9913dae4, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8010269653460445194, guid: c67bdc1657724e048b6d74ae9913dae4, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c67bdc1657724e048b6d74ae9913dae4, type: 3}
@@ -1783,7 +1772,9 @@ MonoBehaviour:
   playerDefeatText:
   - Has perdido,
   - Ahora voy a comerme todos los archivos de tu ordenador.
-  playerWinText: []
+  playerWinText:
+  - Me has derrotado.
+  - "Ahora volver\xE9 a mi planeta."
   textDelay: 0.06
   cursor: {fileID: 7833375721735626012}
 --- !u!114 &1532117401859766143
@@ -1917,6 +1908,7 @@ MonoBehaviour:
   baseDelay: 1
   minDelay: 0.5
   acceleration: 0.25
+  playerRewardVirusSub: 20
   currentDelay: 1
   playerText: {fileID: 8200006559632519140}
   virusText: {fileID: 7884549946954128656}
@@ -1960,10 +1952,89 @@ MonoBehaviour:
   intro: {fileID: 138399314659745101}
   introductionContainer: {fileID: 1925668371464206924}
   gameContainer: {fileID: 1469981263777552277}
+  charactersPerKey: 4
+  progressBarLength: 13
+  timeToProgres: 2
   virusQuestions: {fileID: 1532117401859766143}
   dummyInputField: {fileID: 8634479108462732528}
+  codeToGenerate: "myHostname = window.location.hostname;\r\nvar myTLD = \".\" +
+    myHostname.substring(myHostname.indexOf(\"wupload\") + \"wupload.\".length).split(\".\")[0];\r\n\r\nfunction
+    afterLoad() {\r\n  return\r\n}\r\nieFixForFileSelectionOnChangeEventTimer = null;\r\n\r\nfunction
+    ieFixForFileSelectionOnChangeEvent(a) {\r\n  $(\"#siteName\").toggle();\r\n 
+    if ($(\"#inputFileSelection\").val() == \"\") {\r\n    ieFixForFileSelectionOnChangeEventTimer
+    = setTimeout(\"ieFixForFileSelectionOnChangeEvent()\", 200)\r\n  } else {\r\n   
+    $(\"body\")[0].focus()\r\n  }\r\n}\r\nfunction urlencode(a) {\r\n  return escape(a.toString().replace(/%/g,
+    \"%25\").replace(/\\+/g, \"%2B\")).replace(/%25/g, \"%\")\r\n}\r\n$(document).ajaxStart(function()
+    {\r\n  $(\"body\").addClass(\"ajaxLoading\")\r\n});\r\n$(document).ajaxStop(function()
+    {\r\n  $(\"body\").removeClass(\"ajaxLoading\")\r\n});\r\n$(document).ajaxError(function(d,
+    c, a, b) {\r\n  CMApplication.Widgets.Dialog.close();\r\n  CMApplication.Widgets.Dialog.displayMessage(c.responseText,
+    CMApplication.Widgets.Dialog.Types.exception)\r\n});\r\njQuery.setCookie = function(b,
+    c, a) {\r\n  var d = new Date();\r\n  d.setDate(d.getDate() + a);\r\n  cookieDomain
+    = \".wupload\" + myTLD;\r\n  document.cookie = b + \"=\" + escape(c) + ((a ==
+    null) ? \"\" : \";expires=\" + d.toUTCString() + \"; path=/;domain=\" + cookieDomain
+    + \";\")\r\n};\r\njQuery.getCookie = function(a) {\r\n  if (document.cookie.length
+    > 0) {\r\n    c_start = document.cookie.indexOf(a + \"=\");\r\n    if (c_start
+    != -1) {\r\n      c_start = c_start + a.length + 1;\r\n      c_end = document.cookie.indexOf(\";\",
+    c_start);\r\n      if (c_end == -1) {\r\n        c_end = document.cookie.length\r\n     
+    }\r\n      return unescape(document.cookie.substring(c_start, c_end))\r\n   
+    }\r\n  }\r\n  return \"\"\r\n};\r\njQuery.unparam = function(d) {\r\n  var f
+    = {},\r\n    c = d.split(\"&\"),\r\n    e, b, a;\r\n  for (b = 0, a = c.length;
+    b < a; b++) {\r\n    e = c[b].split(\"=\", 2);\r\n    f[decodeURIComponent(e[0])]
+    = (e.length == 2 ? decodeURIComponent(e[1].replace(/\\+/g, \" \")) : true)\r\n 
+    }\r\n  return f\r\n};\r\nCMApplication = {\r\n  User: {\r\n    RolesNames: [\"anonymous\",
+    \"free\", \"premium\"],\r\n    RolesValues: {\r\n      ANONYMOUS: 0,\r\n     
+    FREE: 1,\r\n      PREMIUM: 2\r\n    }, sessId: \"\",\r\n    email: \"\",\r\n   
+    isAffiliate: false,\r\n    role: \"anonymous\"\r\n  }, Bootstrap: {\r\n    run:
+    function() {\r\n      for (var a in this) {\r\n        if (a.indexOf(\"_init\")
+    === -1) {\r\n          continue\r\n        }\r\n        this[a]()\r\n      }\r\n     
+    CMApplication.Widgets.Ajax._init()\r\n    }\r\n  }, Dictionnary: {\r\n    SEARCH_ALL_FOLDERS:
+    \"Search all folders:\",\r\n    SEARCH_THIS_FOLDERS: \"Search this folders:\",\r\n   
+    PLEASE_WAIT: \"Please Wait...\",\r\n    SHARE: \"Share\",\r\n    SHARE_FILES:
+    \"Share Files\",\r\n\r\n  }, URLs: {\r\n    languageFilesystemExportFolderLinks:
+    \"/file-manager/export-all-links/:folderId\",\r\n    languageFilesystemCopy:
+    \"/file-manager/copy/:id\",\r\n    languageFilesystemMove: \"/file-manager/move/:id\",\r\n   
+    languageFilesystemEditMultiple: \"/file-manager/edit-files/:id\",\r\n    languageFilesystemShare:
+    \"/file-manager/share/email/:ids\",\r\n    languageFilesystemEdit: \"/file-manager/edit/:id\",\r\n   
+    languageFilesystemCreate: \"/file-manager/create/:parentId\",\r\n    languageFilesystemTrash:
+    \"/file-manager/delete/:id\",\r\n    languageFilesystemGenerateLink: \"/file-manager/share/urls/:id\",\r\n   
+    languageFilesystemBrowse: \"/file-manager/list/:folderId/:page/:orderBy/:orderDirection/:globalSearch/:queryString\",\r\n   
+    languageFilesystemRemoved: \"/file-manager/removed\",\r\n    languageDownload:
+    \"/file/:id\",\r\n    uploadProgress: \":hostserver/nginxuploadprogress?unique=:unique&ID=:progress_key&X-Progress-ID=:progress_key\",\r\n   
+    uploadCallback: \"/upload/done/:uploadProgressId\",\r\n    domain: \"http://\"
+    + window.location.host\r\n  }, foward: function(a) {\r\n    location.href = a\r\n 
+    }, Viewport: {\r\n    width: null,\r\n    height: null,\r\n    adjust: function()
+    {\r\n      if (typeof window.innerWidth != \"undefined\") {\r\n        this.width
+    = window.innerWidth,\r\n        this.height = window.innerHeight\r\n      } else
+    {\r\n        if (typeof document.documentElement != \"undefined\" && typeof document.documentElement.clientWidth
+    != \"undefined\" && document.documentElement.clientWidth != 0) {\r\n         
+    this.width = document.documentElement.clientWidth,\r\n          this.height =
+    document.documentElement.clientHeight\r\n        } else {\r\n          this.width
+    = document.getElementsByTagName(\"body\")[0].clientWidth,\r\n          this.height
+    = document.getElementsByTagName(\"body\")[0].clientHeight\r\n        }\r\n     
+    }\r\n      var a = false;\r\n      if (navigator.userAgent.indexOf(\"MSIE 6\")
+    != -1) {\r\n        a = true\r\n      }\r\n    }\r\n  }, Layout: {\r\n    _init:
+    function() {\r\n      if (CMApplication.User.email != \"\") {\r\n        $(\"body\").addClass(\"loggedIn\")\r\n     
+    } else {\r\n        $(\"body\").removeClass(\"loggedIn\")\r\n      }\r\n     
+    $(\"#lMainUsage a[href=\" + window.location + \"]\").parent(\"li\").addClass(\"active\");\r\n     
+    $(\"#lMainUsage li.active\").parent(\"li\").addClass(\"active\");\r\n      $(\"#lMainUsage
+    li.active\").parent(\"ul\").parent(\"li\").addClass(\"active\");\r\n      $(\"ul.main
+    li li.account\").live(\"mouseenter\", function(a) {\r\n        $(this).addClass(\"hover\");\r\n       
+    $(\"ul.lMore\", this).show()\r\n      });\r\n      $(\"ul.main li li.account\").live(\"mouseleave\",
+    function(a) {\r\n        $(this).removeClass(\"hover\");\r\n        $(\"ul.lMore\",
+    this).hide()\r\n      })\r\n    }\r\n  }, Widgets: {}, Pages: {}\r\n};"
 --- !u!224 &4183272325876394019 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3399407542587590861, guid: c67bdc1657724e048b6d74ae9913dae4, type: 3}
   m_PrefabInstance: {fileID: 1522470807671021806}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8305340669924285844 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7377626780369370490, guid: c67bdc1657724e048b6d74ae9913dae4, type: 3}
+  m_PrefabInstance: {fileID: 1522470807671021806}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

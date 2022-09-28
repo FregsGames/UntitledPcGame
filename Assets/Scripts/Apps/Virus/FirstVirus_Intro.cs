@@ -51,6 +51,7 @@ public class FirstVirus_Intro : MonoBehaviour
         cursor.SetActive(false);
 
         StartCoroutine(ShowText(Dialogue.Defeat));
+        StartCoroutine(ListenPlayer());
     }
 
     public void WinDialogue()
@@ -60,6 +61,7 @@ public class FirstVirus_Intro : MonoBehaviour
         cursor.SetActive(false);
 
         StartCoroutine(ShowText(Dialogue.Win));
+        StartCoroutine(ListenPlayer());
     }
 
     private IEnumerator ShowText(Dialogue dialogue)
@@ -111,6 +113,8 @@ public class FirstVirus_Intro : MonoBehaviour
             cursor.SetActive(false);
         }
         ended = true;
+
+        yield return new WaitForSeconds(2);
 
 
         switch (dialogue)

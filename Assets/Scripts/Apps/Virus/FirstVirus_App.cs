@@ -1,20 +1,11 @@
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class FirstVirus_App : App
 {
-    private string codeToGenerate = "Lorem ipsum dolor sit amet consectetur adipiscing elit fringilla, est diam aliquet senectus rhoncus morbi suscipit fames, " +
-        "facilisi dis lacinia varius sodales tempus vivamus. Rhoncus nec tincidunt rutrum sem senectus habitant risus platea nibh, neque interdum feugiat volutpat mauris" +
-        " aliquet laoreet at cursus ad, ultricies himenaeos sapien non nulla iaculis ac sagittis. Maecenas tristique dis in bibendum interdum placerat himenaeos tempus, " +
-        "inceptos netus nisi vehicula dapibus erat proin torquent nisl, primis congue iaculis vitae facilisis sed eleifend.Ligula fames ornare lacus mi suscipit convallis " +
-        "curae nulla, platea vivamus senectus facilisis porttitor quis tempus parturient montes, iaculis litora malesuada magna volutpat nisi faucibus.Mi quis vel suspendisse " +
-        "proin gravida volutpat facilisis sodales nunc, dignissim primis venenatis elementum lectus magnis per fusce, at justo commodo euismod litora natoque nibh est.Pretium " +
-        "litora placerat potenti nunc venenatis lacinia mattis non integer mauris natoque dis, luctus fringilla convallis neque ridiculus iaculis lobortis gravida nostra odio.";
 
     [SerializeField]
     private float baseDelay = 1f;
@@ -22,6 +13,9 @@ public class FirstVirus_App : App
     private float minDelay = 0.05f;
     [SerializeField]
     private float acceleration = 0.01f;
+
+    [SerializeField]
+    private int playerRewardVirusSub = 20;
 
     [SerializeField]
     private float currentDelay;
@@ -54,6 +48,13 @@ public class FirstVirus_App : App
     private string answer = "";
     private int currentQuestionIndex = 0;
     private string textBackup = "";
+    private bool playerAnsweredCorrectly = false;
+    [SerializeField]
+    private int charactersPerKey = 2;
+    [SerializeField]
+    private int progressBarLength = 20;
+    [SerializeField]
+    private float timeToProgres = 2f;
 
     [SerializeField]
     private FirstVirus_Questions virusQuestions;
@@ -61,8 +62,9 @@ public class FirstVirus_App : App
     [SerializeField]
     private TMP_InputField dummyInputField;
 
-    private EventSystem eventSystem;
-
+    [SerializeField]
+    [TextArea]
+    private string codeToGenerate;
 
     private void OnEnable()
     {
@@ -73,8 +75,6 @@ public class FirstVirus_App : App
         gameContainer.SetActive(false);
         introductionContainer.SetActive(true);
         intro.StartDialogue();
-
-        eventSystem = FindObjectOfType<EventSystem>();
     }
 
     private void OnDisable()
@@ -89,7 +89,7 @@ public class FirstVirus_App : App
     {
         gameContainer.SetActive(true);
         introductionContainer.SetActive(false);
-        StartCoroutine(ShowText());
+        StartCoroutine(ShowVirusText());
         StartCoroutine(ListenPlayer());
     }
 
@@ -112,20 +112,25 @@ public class FirstVirus_App : App
         {
             if (Input.anyKeyDown & !answerMode)
             {
-                writtenPlayerText += codeToGenerate[index];
-                playerText.text = playerText.text + codeToGenerate[index];
-
-                playerProgressBar.fillAmount = writtenPlayerText.Length * 1.0f / codeToGenerate.Length;
-                index++;
-
-                if (currentQuestionIndex < questionFillAmounts.Count && playerProgressBar.fillAmount >= questionFillAmounts[currentQuestionIndex])
+                for (int i = 0; i < charactersPerKey; i++)
                 {
-                    SetQuestion();
-                }
+                    writtenPlayerText += codeToGenerate[index];
+                    playerText.text = playerText.text + codeToGenerate[index];
 
-                if (index == codeToGenerate.Length)
-                {
-                    yield return StartCoroutine(SetPlayerWin());
+                    playerProgressBar.fillAmount = writtenPlayerText.Length * 1.0f / codeToGenerate.Length;
+                    index++;
+
+                    if (currentQuestionIndex < questionFillAmounts.Count && playerProgressBar.fillAmount >= questionFillAmounts[currentQuestionIndex])
+                    {
+                        yield return SetQuestion();
+                        break;
+                    }
+
+                    if (index == codeToGenerate.Length)
+                    {
+                        yield return StartCoroutine(SetPlayerWin());
+                        break;
+                    }
                 }
             }
 
@@ -147,18 +152,17 @@ public class FirstVirus_App : App
     {
         if (Input.anyKeyDown)
         {
-            eventSystem.SetSelectedGameObject(dummyInputField.gameObject);
+            dummyInputField.Select();
+            dummyInputField.ActivateInputField();
         }
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
             playerText.text = playerText.text + "</color>";
             playerText.text = playerText.text + "\n";
-            answerMode = false;
             dummyInputField.onValueChanged.RemoveAllListeners();
             textBackup = "";
-            // Feedback de respuesta correcta/incorrecta
-            CheckAnswer();
+            StartCoroutine(CheckAnswer());
         }
     }
 
@@ -168,14 +172,20 @@ public class FirstVirus_App : App
         playerText.text = textBackup + inputFieldText;
     }
 
-    private void SetQuestion()
+    private IEnumerator SetQuestion()
     {
         answerMode = true;
         answer = "";
         dummyInputField.text = "";
-        
-        eventSystem.SetSelectedGameObject(dummyInputField.gameObject);
-        playerText.text = playerText.text + "\n" + "<#ff4f00>" + virusQuestions.GetQuestion(currentQuestionIndex) + "</color>" + "\n";
+
+        playerText.text = playerText.text + "\n" + "<#ff4f00>";
+
+        foreach (var questionChar in virusQuestions.GetQuestion(currentQuestionIndex))
+        {
+            playerText.text = playerText.text + questionChar;
+            yield return new WaitForSeconds(0.05f);
+        }
+        playerText.text = playerText.text + "</color>" + "\n";
         playerText.text = playerText.text + "<#4080ff>";
         dummyInputField.onValueChanged.AddListener(UpdateAnswer);
         textBackup = playerText.text;
@@ -191,15 +201,50 @@ public class FirstVirus_App : App
         intro.WinDialogue();
     }
 
-    private void CheckAnswer()
+    private IEnumerator CheckAnswer()
     {
+        yield return StartCoroutine(LoadBar());
+
+        bool correct = virusQuestions.CheckAnwser(answer, currentQuestionIndex);
+
+        playerText.text = playerText.text + " " + (correct ? "<#FFFFFF>SUCCESS!</color>" : "<#E52222>ERROR!</color>") + "\n";
+
         RewardPlayer(virusQuestions.CheckAnwser(answer, currentQuestionIndex));
         currentQuestionIndex++;
+        answerMode = false;
+
+    }
+
+    private IEnumerator LoadBar()
+    {
+        string backupText = playerText.text;
+
+        for (int i = 0; i < progressBarLength; i++)
+        {
+            playerText.text = backupText + "loading... [";
+
+            for (int j = 0; j < progressBarLength; j++)
+            {
+                playerText.text += (j <= i ? "#" : "_");
+            }
+
+            float percentage = ((i + 1) * 1.0f / progressBarLength) * 100;
+
+            playerText.text += $"] {percentage.ToString("F0")}%";
+
+            yield return new WaitForSeconds(timeToProgres / progressBarLength);
+        }
     }
 
     private void RewardPlayer(bool reward)
     {
-        //TODO
+        if (reward)
+        {
+            playerAnsweredCorrectly = true;
+        }
+        else
+        {
+        }
     }
 
     private List<float> GetQuestionPoints()
@@ -221,7 +266,7 @@ public class FirstVirus_App : App
         return result;
     }
 
-    private IEnumerator ShowText()
+    private IEnumerator ShowVirusText()
     {
         currentDelay = baseDelay;
         int index = 0;
@@ -230,6 +275,16 @@ public class FirstVirus_App : App
 
         while (index < codeToGenerate.Length && !gameEnded)
         {
+            if (playerAnsweredCorrectly)
+            {
+                currentDelay = baseDelay;
+                playerAnsweredCorrectly = false;
+                var reduction = index < playerRewardVirusSub ? index : playerRewardVirusSub;
+
+                virusText.text = virusText.text.Substring(0, virusText.text.Length - reduction);
+                index -= reduction;
+            }
+
             virusText.text = virusText.text + codeToGenerate[index];
             virusProgressBar.fillAmount = enemyAnimationCurve.Evaluate(virusText.text.Length * 1.0f / codeToGenerate.Length);
             index++;
