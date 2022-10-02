@@ -139,12 +139,17 @@ public class FirstVirus_App : App
                 ProcessPlayerInputAnswer();
             }
 
-            if (playerText.rectTransform.rect.height > playerTextParentRect.rect.height)
-            {
-                playerText.rectTransform.anchoredPosition = new Vector2(playerText.rectTransform.anchoredPosition.x, playerText.rectTransform.rect.height - playerTextParentRect.rect.height);
-            }
+            AdjustScroll();
 
             yield return 0;
+        }
+    }
+
+    private void AdjustScroll()
+    {
+        if (playerText.rectTransform.rect.height > playerTextParentRect.rect.height)
+        {
+            playerText.rectTransform.anchoredPosition = new Vector2(playerText.rectTransform.anchoredPosition.x, playerText.rectTransform.rect.height - playerTextParentRect.rect.height);
         }
     }
 
@@ -183,8 +188,10 @@ public class FirstVirus_App : App
         foreach (var questionChar in virusQuestions.GetQuestion(currentQuestionIndex))
         {
             playerText.text = playerText.text + questionChar;
+            AdjustScroll();
             yield return new WaitForSeconds(0.05f);
         }
+
         playerText.text = playerText.text + "</color>" + "\n";
         playerText.text = playerText.text + "<#4080ff>";
         dummyInputField.onValueChanged.AddListener(UpdateAnswer);
@@ -221,7 +228,7 @@ public class FirstVirus_App : App
 
         for (int i = 0; i < progressBarLength; i++)
         {
-            playerText.text = backupText + "loading... [";
+            playerText.text = backupText + "processing... [";
 
             for (int j = 0; j < progressBarLength; j++)
             {
