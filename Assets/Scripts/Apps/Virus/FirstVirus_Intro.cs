@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using System;
 
@@ -25,12 +26,22 @@ public class FirstVirus_Intro : MonoBehaviour
     private bool ended = false;
 
     public Action OnIntroEnded;
-    public Action OnDefeatDialogueEnded;
-    public Action OnWinDialogueEnded;
+    public Action<bool> OnEndDialogueEnded;
 
     [SerializeField]
     private GameObject cursor;
 
+    [SerializeField]
+    private Image mouth;
+
+    [SerializeField]
+    private Sprite mouthIdle;
+
+    [SerializeField]
+    private Sprite[] mouthSprites;
+
+    [SerializeField]
+    private float mouthDelay = 0.1f;
 
     public enum Dialogue {Intro, Defeat, Win }
 
@@ -98,11 +109,13 @@ public class FirstVirus_Intro : MonoBehaviour
                 }
 
                 introText.text = introText.text + textFragment[index];
+                mouth.sprite = mouthSprites[index % 4];
                 index++;
                 yield return new WaitForSeconds(textDelay);
             }
 
             cursor.SetActive(true);
+            mouth.sprite = mouthIdle;
 
             while (!skip)
             {
@@ -123,10 +136,10 @@ public class FirstVirus_Intro : MonoBehaviour
                 OnIntroEnded?.Invoke();
                 break;
             case Dialogue.Defeat:
-                OnDefeatDialogueEnded?.Invoke();
+                OnEndDialogueEnded?.Invoke(false);
                 break;
             case Dialogue.Win:
-                OnWinDialogueEnded?.Invoke();
+                OnEndDialogueEnded?.Invoke(true);
                 break;
             default:
                 break;

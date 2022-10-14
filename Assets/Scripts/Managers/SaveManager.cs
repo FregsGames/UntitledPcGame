@@ -209,6 +209,7 @@ public class SaveManager : MonoBehaviour
         return stringSaves.Count != 0 || floatSaves.Count != 0 || intSaves.Count != 0;
     }
 
+
     #region singleton
     //Singleton
     public static SaveManager Instance;
@@ -235,4 +236,19 @@ public class SaveManager : MonoBehaviour
     }
 
     #endregion
+
+    [Button]
+    private void ShowContent()
+    {
+        foreach (var item in stringSaves)
+        {
+            if (item.Value == null || item.Key == null)
+                continue;
+
+            if(item.Value.Contains("network") || item.Key.Contains("network"))
+            {
+                Debug.Log(item.Key + " : " + item.Value);
+            }
+        }
+    }
 }

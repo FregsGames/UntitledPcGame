@@ -28,6 +28,8 @@ public class SystemEventManager : ScriptableObject
 
     public Action<string> OnMailReceived;
 
+    public Action<bool> OnAntivirusOpened;
+
     public Action OnCameraOn;
     public Action OnCameraOff;
 

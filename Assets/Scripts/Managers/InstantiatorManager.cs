@@ -38,6 +38,12 @@ public class InstantiatorManager : Singleton<InstantiatorManager>
             return null;
         }
 
+        if(type == AppType.Antivirus && Computer.Instance.ComputerSettings.VirusActive)
+        {
+            systemEventManager.RequestPopUp("Hay un virus activo, debes de abrir el antivirus antes", App.AppType.OkPopup);
+            return null;
+        }
+
         switch (type)
         {
             case AppType.LockedFolder:

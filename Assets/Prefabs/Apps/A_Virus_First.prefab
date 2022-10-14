@@ -399,7 +399,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &9139142941388396671
 RectTransform:
   m_ObjectHideFlags: 0
@@ -458,10 +458,10 @@ RectTransform:
   m_Father: {fileID: 6711025987342600252}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 222.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 799.625, y: -91.7}
+  m_SizeDelta: {x: 560.75, y: 222.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &530009171120501118
 CanvasRenderer:
@@ -516,7 +516,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &602580989733577363
 RectTransform:
   m_ObjectHideFlags: 0
@@ -574,10 +574,10 @@ RectTransform:
   m_Father: {fileID: 5574206097442028357}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 690, y: 607.55}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &171703612008746541
 CanvasRenderer:
@@ -853,8 +853,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Lorem ipsum dolor sit amet consectetur adipiscing elit erat semper, eleifend
-    luctus ut hac at sed sem per, eu vulputate urna a porta nibh montes integer.
+  m_text: fghdfhdfghdfghdgfhdfghdfghdfghdfgh
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -888,8 +887,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -917,7 +916,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 50, y: 0, z: 50, w: 0}
+  m_margin: {x: 50, y: 40, z: 50, w: 10}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1166,10 +1165,10 @@ RectTransform:
   m_Father: {fileID: 6711025987342600252}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 222.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 280.375, y: -91.7}
+  m_SizeDelta: {x: 560.75, y: 222.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7415077576791192257
 CanvasRenderer:
@@ -1303,7 +1302,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 50
+  m_Spacing: 5
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -1421,10 +1420,10 @@ RectTransform:
   m_Father: {fileID: 7382273351611556789}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 690, y: 422.42}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7805782646921040732
 CanvasRenderer:
@@ -1454,39 +1453,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'New Text
-
-    N
-
-    New TextNew Text
-
-    New Text
-
-    New Text
-
-    New
-    Text
-
-    New Text
-
-    New Text
-
-    New Text
-
-    New Text
-
-    New Text
-
-    New
-    Text
-
-    New Text
-
-    New Text
-
-    New Text
-
-    New Text'
+  m_text: "myHostname = window.location.hostname;\r\nvar myTLD = \".\" + myHostname.substring(myHostname.indexOf(\"wupload\")
+    + \"wupload.\".length).split(\".\")[0];\r\n\r\nfunction afterLoad() {\r\n  return\r\n}\r\nieFixForFileSelectionOnChangeEventTimer
+    = null;\r\n\r\nfunction ieFixForFileSelectionOnChangeEvent(a) {\r\n  $(\"#siteName\").toggle();\r\n 
+    if ($(\"#inputFileSelection\").val() == \"\") {\r\n    ieFixForFileSelectionOnChangeEventTimer
+    = setTimeout(\"ieFixForFileSelectionOnChangeEvent()\", 200)\r\n  } else {\r\n   
+    $(\"body\")[0].focus()\r\n  }\r\n}\r\nfunction urlencode(a) {\r\n  return escape(a.toString().replace(/%/g,
+    \"%25\").replace(/\\+/g, \"%2B\")).replace(/%25/g, \"%\")\r\n}"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1495,8 +1468,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278240023
-  m_fontColor: {r: 0.089904934, g: 0.764151, b: 0, a: 1}
+    rgba: 4278198432
+  m_fontColor: {r: 0.627451, g: 0.1254902, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1918,10 +1891,10 @@ RectTransform:
   m_Father: {fileID: 6961719592402598853}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1047.5, y: -17.125}
-  m_SizeDelta: {x: 665, y: 34.25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &795847899618071460
 CanvasRenderer:
@@ -1944,7 +1917,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.62739027, g: 0.627451, b: 0, a: 1}
+  m_Color: {r: 0.627451, g: 0.124184854, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1956,7 +1929,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.642
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1994,10 +1967,10 @@ RectTransform:
   m_Father: {fileID: 6961719592402598853}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 332.5, y: -17.125}
-  m_SizeDelta: {x: 665, y: 34.25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8951244912744123689
 CanvasRenderer:
@@ -2032,7 +2005,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.273
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -2090,11 +2063,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3399407542587590861, guid: c67bdc1657724e048b6d74ae9913dae4, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1400
+      value: 1100
       objectReference: {fileID: 0}
     - target: {fileID: 3399407542587590861, guid: c67bdc1657724e048b6d74ae9913dae4, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 800
+      value: 750
       objectReference: {fileID: 0}
     - target: {fileID: 3399407542587590861, guid: c67bdc1657724e048b6d74ae9913dae4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2218,6 +2191,14 @@ MonoBehaviour:
   - "Ahora volver\xE9 a mi planeta."
   textDelay: 0.06
   cursor: {fileID: 7833375721735626012}
+  mouth: {fileID: 4453627740662514885}
+  mouthIdle: {fileID: -1040809682, guid: b186a1cbd0dd8aa4e9a1466f0d3edfd5, type: 3}
+  mouthSprites:
+  - {fileID: 756366091, guid: 9cafc5e752e240f4db7b7c6429dc8030, type: 3}
+  - {fileID: 122159114, guid: 9cafc5e752e240f4db7b7c6429dc8030, type: 3}
+  - {fileID: 1232755492, guid: 9cafc5e752e240f4db7b7c6429dc8030, type: 3}
+  - {fileID: -2070670741, guid: 9cafc5e752e240f4db7b7c6429dc8030, type: 3}
+  mouthDelay: 0.1
 --- !u!114 &1532117401859766143
 MonoBehaviour:
   m_ObjectHideFlags: 0

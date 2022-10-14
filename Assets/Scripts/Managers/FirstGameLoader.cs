@@ -12,7 +12,6 @@ public class FirstGameLoader : SerializedSingleton<FirstGameLoader>
     [SerializeField]
     private (int,int) firstAlarmTime;
 
-
     public void LoadFirstGameData()
     {
         CreateFirstAlarm();
@@ -68,9 +67,9 @@ public class FirstGameLoader : SerializedSingleton<FirstGameLoader>
         Computer.Instance.Desktop.MoveIconTo(folder, Vector2.zero);
 
         Computer.Instance.CreateFile("manuals", "Manuales", App.AppType.Folder, "main-folder");
-        Computer.Instance.CreateFile("network-manual-icon", "Manual del red", App.AppType.TextFile, "manuals-folder", "network-manual");
-        Computer.Instance.CreateFile("pc-manual-icon", "Manual del Pc", App.AppType.TextFile, "manuals-folder", "pc-manual");
+        Computer.Instance.CreateFile("network-manual-icon", "Manual del red", App.AppType.TextFile, "manuals-folder", "network-manual-textfile");
+        Computer.Instance.CreateFile("pc-manual-icon", "Manual del Pc", App.AppType.TextFile, "manuals-folder", "pc-manual-textfile");
 
-        SaveManager.Instance.Save("network-manual_content", "Bienvenido al manual de configuración de red de Moon Os. Con este manual podrás Lorem ipsum dolor sit amet consectetur adipiscing elit ultricies dictum, suscipit augue suspendisse sodales facilisis ullamcorper hendrerit scelerisque eu sollicitudin, lectus dapibus ut aptent pharetra placerat conubia nisl. Proin torquent ad dictum eleifend purus tellus velit sapien, commodo pretium libero consequat odio magna sem, nostra varius habitasse curabitur gravida scelerisque sagittis. Mauris blandit facilisis nostra iaculis suspendisse condimentum, hendrerit turpis conubia urna eros tortor, pretium hac vulputate commodo auctor.");
+        SaveManager.Instance.Save("network-manual-textfile_content", "Bienvenido al manual de configuración de red de Moon Os. Con este manual podrás Lorem ipsum dolor sit amet consectetur adipiscing elit ultricies dictum, suscipit augue suspendisse sodales facilisis ullamcorper hendrerit scelerisque eu sollicitudin, lectus dapibus ut aptent pharetra placerat conubia nisl. Proin torquent ad dictum eleifend purus tellus velit sapien, commodo pretium libero consequat odio magna sem, nostra varius habitasse curabitur gravida scelerisque sagittis. Mauris blandit facilisis nostra iaculis suspendisse condimentum, hendrerit turpis conubia urna eros tortor, pretium hac vulputate commodo auctor.");
     }
 }

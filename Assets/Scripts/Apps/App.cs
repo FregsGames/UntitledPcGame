@@ -19,7 +19,8 @@ public class App : UniqueID, ISaveableState
         OkPopup = 12,
         CameraController = 13,
         Mail = 14,
-        FirstVirus = 15
+        FirstVirus = 15,
+        Antivirus = 16
     }
     [SerializeField]
     protected AppType type;

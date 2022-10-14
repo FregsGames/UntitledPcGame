@@ -13,12 +13,18 @@ public class ComputerSettings : MonoBehaviour
     private bool wifiEnabled = false;
     [SerializeField]
     private bool adminEnabled = false;
+    [SerializeField]
+    private bool antivirusEnabled = false;
+    [SerializeField]
+    private bool virusActive = false;
 
     public int MaxSubfolderLevel { get => maxSubfolderLevel; set => maxSubfolderLevel = value; }
 
     public bool WifiEnabled { get => wifiEnabled; private set => wifiEnabled = value; }
     public bool AdminEnabled { get => adminEnabled; private set => adminEnabled = value; }
     public bool WifiPassKnown { get; set; }
+    public bool AntivirusEnabled { get => antivirusEnabled; set => antivirusEnabled = value; }
+    public bool VirusActive { get => virusActive; set => virusActive = value; }
 
     private void OnEnable()
     {

@@ -45,6 +45,7 @@ public class FirstVirus_App : App
 
     private bool gameEnded = false;
     private bool answerMode = false;
+    private bool checkingAnswer = false;
     private string answer = "";
     private int currentQuestionIndex = 0;
     private string textBackup = "";
@@ -69,20 +70,24 @@ public class FirstVirus_App : App
     private void OnEnable()
     {
         intro.OnIntroEnded += StartMiniGame;
-        intro.OnDefeatDialogueEnded += CloseApp;
-        intro.OnWinDialogueEnded += CloseApp;
+        intro.OnEndDialogueEnded += CloseApp;
         gameEnded = false;
         gameContainer.SetActive(false);
         introductionContainer.SetActive(true);
         intro.StartDialogue();
+
+        Computer.Instance.ComputerSettings.VirusActive = true;
     }
+
+
 
     private void OnDisable()
     {
         intro.OnIntroEnded -= StartMiniGame;
-        intro.OnDefeatDialogueEnded -= CloseApp;
-        intro.OnWinDialogueEnded -= CloseApp;
+        intro.OnEndDialogueEnded -= CloseApp;
         dummyInputField.onValueChanged.RemoveAllListeners();
+
+        Computer.Instance.ComputerSettings.VirusActive = false;
     }
 
     private void StartMiniGame()
@@ -93,8 +98,12 @@ public class FirstVirus_App : App
         StartCoroutine(ListenPlayer());
     }
 
-    private void CloseApp()
+    private void CloseApp(bool win)
     {
+        if (win)
+        {
+            systemEventManager.OnVirusDefeated?.Invoke(this);
+        }
         Close();
     }
 
@@ -161,12 +170,13 @@ public class FirstVirus_App : App
             dummyInputField.ActivateInputField();
         }
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && !checkingAnswer)
         {
             playerText.text = playerText.text + "</color>";
             playerText.text = playerText.text + "\n";
             dummyInputField.onValueChanged.RemoveAllListeners();
             textBackup = "";
+            checkingAnswer = true;
             StartCoroutine(CheckAnswer());
         }
     }
@@ -219,7 +229,7 @@ public class FirstVirus_App : App
         RewardPlayer(virusQuestions.CheckAnwser(answer, currentQuestionIndex));
         currentQuestionIndex++;
         answerMode = false;
-
+        checkingAnswer = false;
     }
 
     private IEnumerator LoadBar()
