@@ -6129,7 +6129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bootScreen: {fileID: 4207623}
-  loadFirstTimeGameIfNotSaveFile: 1
+  loadFirstTimeGameIfNotSaveFile: 0
   defaultCursor: {fileID: 2800000, guid: c6b924ff9cf49e34c9e674c708f09f60, type: 3}
   showBootScreen: 0
 --- !u!4 &1807840301
@@ -6517,8 +6517,8 @@ MonoBehaviour:
     SerializationNodes:
     - Name: securityCameras
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[UnityEngine.RenderTexture,
-        UnityEngine.CoreModule]], mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[SecurityCameraManager+CameraInfo,
+        Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
@@ -6536,8 +6536,20 @@ MonoBehaviour:
       Entry: 1
       Data: Room00
     - Name: $v
+      Entry: 7
+      Data: 2|SecurityCameraManager+CameraInfo, Assembly-CSharp
+    - Name: state
+      Entry: 3
+      Data: 0
+    - Name: texture
       Entry: 10
       Data: 0
+    - Name: name
+      Entry: 1
+      Data: Oficina
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 

@@ -1,22 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
 
 public class CameraButton : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI text;
-
     [SerializeField]
     private Button button;
-
-    [SerializeField]
     private string cameraName;
 
     public string CameraName { get => cameraName; set => cameraName = value; }
+
+    public void Setup(string text, string cameraName, bool locked)
+    {
+        this.text.text = text;
+
+        if (locked)
+        {
+            button.enabled = false;
+            this.cameraName = cameraName + " (Bloqueado)";
+        }
+        else
+        {
+            this.cameraName = cameraName;
+        }
+    }
 
     private void OnEnable()
     {
