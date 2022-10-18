@@ -23,6 +23,7 @@ public class SystemEventManager : ScriptableObject
     public Action<string> OnOtherUnlocked;
 
     public Action<bool> OnWifiEnabled;
+    public Action<bool> OnAdminEnabled;
 
     public Action<string> OnFileDownloadRequest;
 

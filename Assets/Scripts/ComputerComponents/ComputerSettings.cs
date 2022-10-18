@@ -62,6 +62,7 @@ public class ComputerSettings : MonoBehaviour
     {
         adminEnabled = state;
         SaveManager.Instance.Save("settings_admin_enabled", state ? 1 : 0);
+        eventManager.OnAdminEnabled?.Invoke(state);
     }
 
     public void SetWifiEnabled(bool state)

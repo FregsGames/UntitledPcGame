@@ -6129,9 +6129,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bootScreen: {fileID: 4207623}
-  loadFirstTimeGameIfNotSaveFile: 0
+  loadFirstTimeGameIfNotSaveFile: 1
   defaultCursor: {fileID: 2800000, guid: c6b924ff9cf49e34c9e674c708f09f60, type: 3}
-  showBootScreen: 0
+  showBootScreen: 1
 --- !u!4 &1807840301
 Transform:
   m_ObjectHideFlags: 0

@@ -32,6 +32,7 @@ public class FirstGameLoader : SerializedSingleton<FirstGameLoader>
             time = firstAlarmTime
         };
         AlarmsManager.Instance.OnAlarmCreated?.Invoke(alarmData);
+        LockManager.instance.AddLock("admin", false, firstAlarmTime.Item1.ToString() + firstAlarmTime.Item2.ToString());
     }
 
     private void CreateLockForSecurityCameras()

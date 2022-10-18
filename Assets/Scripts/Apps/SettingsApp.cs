@@ -35,9 +35,15 @@ public class SettingsApp : App, IStateableApp
 
     public void EnableAdmin()
     {
-        Computer.Instance.ComputerSettings.SetAdminEnabled(true);
-        adminNotEnabledContainer.SetActive(false);
-        wifiContainer.SetActive(true);
+        if (LockManager.Instance.IsLocked("admin", false))
+        {
+            LockManager.Instance.ResolveOpenAttempt("admin", false);
+        }
+        else
+        {
+            Computer.Instance.ComputerSettings.SetAdminEnabled(true);
+        }
+
     }
 
     public void ToggleWifi(bool state)
@@ -66,6 +72,13 @@ public class SettingsApp : App, IStateableApp
         wifiToggle.onValueChanged.AddListener(ToggleWifi);
 
         systemEventManager.OnOtherUnlocked += OnOtherUnlocked;
+        systemEventManager.OnAdminEnabled += ShowAdminOptions;
+    }
+
+    private void ShowAdminOptions(bool state)
+    {
+        adminNotEnabledContainer.SetActive(!state);
+        wifiContainer.SetActive(state);
     }
 
     private void OnOtherUnlocked(string key)
@@ -74,6 +87,11 @@ public class SettingsApp : App, IStateableApp
         {
             wifiToggle.SetIsOnWithoutNotify(true);
         }
+
+        if (key == "admin")
+        {
+            Computer.Instance.ComputerSettings.SetAdminEnabled(true);
+        }
     }
 
     private void OnDisable()
@@ -81,6 +99,7 @@ public class SettingsApp : App, IStateableApp
         soundSlider.onValueChanged.RemoveAllListeners();
         wifiToggle.onValueChanged.RemoveAllListeners();
         systemEventManager.OnOtherUnlocked -= OnOtherUnlocked;
+        systemEventManager.OnAdminEnabled -= ShowAdminOptions;
     }
 
     public void AdjustVolume(float vol)
